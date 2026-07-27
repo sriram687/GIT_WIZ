@@ -28,7 +28,7 @@ The agent's next response usually inspects the log, reproduces the failure local
 
 ## Configurable behavior
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   ciFailed:
     enabled: true # default
@@ -85,7 +85,7 @@ AO fingerprints the set of failing checks (name + status + conclusion). If the s
 
 `retries` controls how many reaction attempts AO makes before giving up and escalating to a human:
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   ci-failed:
     retries: 3 # escalate after 3 failed attempts (default: unlimited)

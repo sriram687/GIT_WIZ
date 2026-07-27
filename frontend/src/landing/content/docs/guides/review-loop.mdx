@@ -31,7 +31,7 @@ A single structured prompt with:
 
 ## Configurable behavior
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   reviewRequested:
     enabled: true # default
@@ -98,7 +98,7 @@ Not every review comment is from a human. AO recognises a hardcoded list of know
 
 A typical configuration pairing:
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   changes-requested:
     auto: true
@@ -109,7 +109,7 @@ reactions:
     priority: "info" # advisory bot feedback — log and proceed
 ```
 
-The bot list is hardcoded in each SCM plugin and is not currently configurable via `agent-orchestrator.yaml`.
+The bot list is hardcoded in each SCM plugin and is not currently configurable via `git-wiz.yaml`.
 
 ## Review polling throttle
 

@@ -1,6 +1,6 @@
-# Agent Orchestrator Architecture
+# GIT_WIZ Architecture
 
-Agent Orchestrator is a long-running Go daemon that supervises multiple parallel AI coding agent sessions. Each session runs in an isolated git worktree with its own runtime, while the daemon coordinates lifecycle, observes external state, and routes feedback.
+GIT_WIZ is a long-running Go daemon that supervises multiple parallel AI coding agent sessions. Each session runs in an isolated git worktree with its own runtime, while the daemon coordinates lifecycle, observes external state, and routes feedback.
 
 ## Table of Contents
 
@@ -853,7 +853,7 @@ These rules are **load-bearing** — changing them breaks fundamental architectu
 
 ## Summary
 
-Agent Orchestrator's architecture is designed around:
+GIT_WIZ's architecture is designed around:
 
 - **Separation of concerns** — Observation, persistence, and display are distinct layers
 - **Port-based design** — Core code depends on interfaces, not implementations

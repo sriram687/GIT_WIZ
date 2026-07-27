@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
-	"github.com/aoagents/agent-orchestrator/backend/internal/mobilebridge"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
+	"github.com/sriram687/GIT_WIZ/backend/internal/mobilebridge"
 )
 
 const mobileUnencryptedWarning = "Traffic on this connection is not encrypted. Only use it on a network you trust."

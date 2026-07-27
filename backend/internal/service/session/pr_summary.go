@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apierr"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apierr"
 )
 
 // PRSummary is the user-facing SCM read model for one PR owned by a session.

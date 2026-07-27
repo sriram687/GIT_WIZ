@@ -567,7 +567,7 @@ export async function ensureUpdatePrefs(stateDir: string): Promise<void> {
 		buttons: ["Enable auto-updates", "Not now"],
 		defaultId: 0,
 		cancelId: 1,
-		message: "Keep Agent Orchestrator up to date automatically?",
+		message: "Keep GIT_WIZ up to date automatically?",
 		detail: "You can change this later in Settings.",
 	});
 	if (optIn.response !== 0) {

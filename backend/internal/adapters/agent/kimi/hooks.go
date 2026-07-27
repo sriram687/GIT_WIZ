@@ -8,18 +8,18 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 const (
 	kimiInstructionsDirName  = ".kimi-code"
 	kimiInstructionsFileName = "AGENTS.md"
-	kimiInstructionsSentinel = "<!-- managed by agent-orchestrator: kimi system prompt -->"
-	kimiInstructionsEnd      = "<!-- /managed by agent-orchestrator: kimi system prompt -->"
+	kimiInstructionsSentinel = "<!-- managed by git-wiz: kimi system prompt -->"
+	kimiInstructionsEnd      = "<!-- /managed by git-wiz: kimi system prompt -->"
 
-	kimiHooksSentinelStart = "# managed by agent-orchestrator: kimi hooks"
-	kimiHooksSentinelEnd   = "# /managed by agent-orchestrator: kimi hooks"
+	kimiHooksSentinelStart = "# managed by git-wiz: kimi hooks"
+	kimiHooksSentinelEnd   = "# /managed by git-wiz: kimi hooks"
 )
 
 // GetAgentHooks installs AO's standing system prompt through Kimi's
@@ -254,7 +254,7 @@ func kimiSystemPromptText(inline, file string) (string, error) {
 
 func kimiInstructionFile(systemPrompt string) string {
 	return kimiInstructionsSentinel + "\n\n" +
-		"# Agent Orchestrator Session Instructions\n\n" +
+		"# GIT_WIZ Session Instructions\n\n" +
 		strings.TrimRight(systemPrompt, "\n") + "\n\n" +
 		kimiInstructionsEnd + "\n"
 }

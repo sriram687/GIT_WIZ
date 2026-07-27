@@ -5,9 +5,9 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/observe"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/observe"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // Default activity observation settings.

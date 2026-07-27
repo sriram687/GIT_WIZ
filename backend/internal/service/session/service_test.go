@@ -12,10 +12,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apierr"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	sessionmanager "github.com/aoagents/agent-orchestrator/backend/internal/session_manager"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apierr"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	sessionmanager "github.com/sriram687/GIT_WIZ/backend/internal/session_manager"
 )
 
 type fakeTelemetrySink struct{ events []ports.TelemetryEvent }

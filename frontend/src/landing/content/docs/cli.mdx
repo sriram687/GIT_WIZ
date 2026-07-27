@@ -44,7 +44,7 @@ ao
 | `--dev`             | —       | Use Next.js dev server with hot reload (monorepo only; ignored in npm installs) |
 | `--interactive`     | —       | Prompt to configure config settings                                             |
 
-Positional `[project]` — project id, local path, or repo URL. If omitted and no config exists in `cwd`, AO creates `agent-orchestrator.yaml`.
+Positional `[project]` — project id, local path, or repo URL. If omitted and no config exists in `cwd`, AO creates `git-wiz.yaml`.
 
 If AO is already running, you'll get an interactive prompt to open/restart/spawn-new/quit. Non-TTY callers get info + `process.exit(0)`.
 
@@ -181,7 +181,7 @@ Behavior depends on how AO was installed — git, npm-global, pnpm-global, or un
 
 ### `ao config-help`
 
-> Show config schema and guide for creating `agent-orchestrator.yaml`
+> Show config schema and guide for creating `git-wiz.yaml`
 
 No flags.
 
@@ -368,7 +368,7 @@ A few env vars affect every command:
 | ----------------------------------- | ------------------------------------------------------------------------------------ |
 | `AO_DATA_DIR`                       | Override the `~/.ao` base directory.                                                 |
 | `AO_LOG_LEVEL`                      | `error` · `warn` · `info` · `debug` · `trace`                                        |
-| `AO_CONFIG_PATH`                    | Absolute path to a specific `agent-orchestrator.yaml`. Overrides CWD-based search.   |
+| `AO_CONFIG_PATH`                    | Absolute path to a specific `git-wiz.yaml`. Overrides CWD-based search.   |
 | `AO_SESSION_ID` · `AO_SESSION_NAME` | Auto-set inside spawned sessions; used by `claim-pr` default                         |
 | `AO_PROJECT_ID`                     | Set by AO inside spawned sessions. Used by `ao spawn` to resolve the active project. |
 | `PORT`                              | Next.js dashboard port. Overrides `config.port`.                                     |

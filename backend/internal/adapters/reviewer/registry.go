@@ -6,11 +6,11 @@ package reviewer
 import (
 	"fmt"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/reviewer/claudecode"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/reviewer/codex"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/reviewer/opencode"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/reviewer/claudecode"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/reviewer/codex"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/reviewer/opencode"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // Adapter is a registered reviewer: a ports.Reviewer that names its harness.

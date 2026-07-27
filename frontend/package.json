@@ -1,16 +1,16 @@
 {
-	"name": "agent-orchestrator",
-	"productName": "Agent Orchestrator",
+	"name": "git-wiz",
+	"productName": "GIT_WIZ",
 	"version": "0.10.3",
 	"private": true,
-	"description": "Electron + TypeScript frontend for the agent-orchestrator rewrite",
-	"author": "Agent Orchestrator",
+	"description": "Electron + TypeScript frontend for the git-wiz rewrite",
+	"author": "GIT_WIZ",
 	"license": "MIT",
-	"homepage": "https://github.com/aoagents/agent-orchestrator",
+	"homepage": "https://github.com/sriram687/GIT_WIZ",
 	"main": ".vite/build/main.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/aoagents/agent-orchestrator"
+		"url": "https://github.com/sriram687/GIT_WIZ"
 	},
 	"scripts": {
 		"build:daemon": "node ./scripts/build-daemon.mjs",

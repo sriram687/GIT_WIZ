@@ -5,12 +5,12 @@ import (
 	"errors"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/devimport"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/legacyimport"
-	agentsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/agent"
-	projectsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/project"
-	sessionsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/session"
+	"github.com/sriram687/GIT_WIZ/backend/internal/devimport"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/legacyimport"
+	agentsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/agent"
+	projectsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/project"
+	sessionsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/session"
 )
 
 // HTTP response envelopes for the projects surface — the SINGLE definition of

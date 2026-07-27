@@ -1,6 +1,6 @@
-# Agent Orchestrator — Mobile
+# GIT_WIZ — Mobile
 
-Expo (expo-router) mobile supervisor for Agent Orchestrator. Four tabs — Kanban, PRs,
+Expo (expo-router) mobile supervisor for GIT_WIZ. Four tabs — Kanban, PRs,
 Orchestrator, Settings — plus a spawn flow, a session screen with a live terminal, and a
 preview browser. It is a **thin client**: it talks to the AO daemon running on your
 computer over your local network (or Tailscale). It never runs agents itself.

@@ -36,7 +36,7 @@ cd ~/code/my-repo
 ao start
 ```
 
-On the first run, AO creates `agent-orchestrator.yaml`, starts the dashboard, and starts an orchestrator session for the project. The dashboard URL is printed in the terminal, usually `http://localhost:3000`.
+On the first run, AO creates `git-wiz.yaml`, starts the dashboard, and starts an orchestrator session for the project. The dashboard URL is printed in the terminal, usually `http://localhost:3000`.
 
 Keep this terminal running. It owns the dashboard and lifecycle polling.
 
@@ -128,11 +128,11 @@ ao session cleanup
 
 | Item                      | What it means                                                                                    |
 | ------------------------- | ------------------------------------------------------------------------------------------------ |
-| `agent-orchestrator.yaml` | Project config: plugins, projects, reactions, runtime, and notifier choices.                     |
+| `git-wiz.yaml` | Project config: plugins, projects, reactions, runtime, and notifier choices.                     |
 | Orchestrator session      | A coordinating session started by `ao start`; it supervises worker sessions.                     |
 | Worker session            | The agent process that works on one issue or prompt.                                             |
 | Worktree                  | An isolated checkout for the worker's branch.                                                    |
-| Session metadata          | Files under `~/.agent-orchestrator/...` that let AO track branch, PR, status, and runtime state. |
+| Session metadata          | Files under `~/.git-wiz/...` that let AO track branch, PR, status, and runtime state. |
 
 ## If Something Looks Wrong
 
@@ -140,9 +140,9 @@ ao session cleanup
 | --------------------------------------- | ----------------------------------------------------------------------------- |
 | Dashboard is not updating               | Make sure the `ao start` terminal is still running.                           |
 | `ao spawn` warns that AO is not running | Start AO with `ao start` before spawning.                                     |
-| GitHub issue or PR data is missing      | Run `gh auth status` and check the `repo` field in `agent-orchestrator.yaml`. |
+| GitHub issue or PR data is missing      | Run `gh auth status` and check the `repo` field in `git-wiz.yaml`. |
 | Agent started but does nothing          | Open the session terminal and send a clear instruction with `ao send`.        |
-| Windows spawn fails with tmux errors    | Set `defaults.runtime: process` in `agent-orchestrator.yaml`.                 |
+| Windows spawn fails with tmux errors    | Set `defaults.runtime: process` in `git-wiz.yaml`.                 |
 
 ## Next
 

@@ -27,7 +27,7 @@ It will:
 1. Auto-detect OpenClaw on `localhost` (or prompt for the URL).
 2. Read `hooks.token` from your OpenClaw config.
 3. If the token is missing, show where to add/generate it from the OpenClaw side.
-4. Write only `agent-orchestrator.yaml`; AO does not generate the token or write shell-profile exports.
+4. Write only `git-wiz.yaml`; AO does not generate the token or write shell-profile exports.
 5. Let you review and change the URL, OpenClaw config path, or routing preset before saving.
 
 Non-interactive variant:
@@ -47,7 +47,7 @@ ao setup openclaw --status
 
 After setup, your config looks like:
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 notifiers:
   openclaw:
     plugin: openclaw
@@ -88,7 +88,7 @@ The OpenClaw config keeps the actual secret:
 
 Token is read in this order:
 
-1. `token` in `agent-orchestrator.yaml` if explicitly configured
+1. `token` in `git-wiz.yaml` if explicitly configured
 2. `hooks.token` from `openclawConfigPath`
 3. Env var `OPENCLAW_HOOKS_TOKEN` as a legacy fallback
 

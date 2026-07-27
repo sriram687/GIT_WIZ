@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 func TestManifest(t *testing.T) {
@@ -283,7 +283,7 @@ func TestGetAgentHooksInstallsSystemPromptInstructions(t *testing.T) {
 	text := string(data)
 	for _, want := range []string{
 		kimiInstructionsSentinel,
-		"# Agent Orchestrator Session Instructions",
+		"# GIT_WIZ Session Instructions",
 		"follow AO rules",
 	} {
 		if !strings.Contains(text, want) {

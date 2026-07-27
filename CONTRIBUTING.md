@@ -27,7 +27,7 @@ Non-trivial work? Comment on the issue or ping Discord first. Get a thumbs-up, t
 
 1. **Join Discord** — say hi and get guidance
 2. **Read the contract** — [AGENTS.md](AGENTS.md) (layout, commands, hard rules, PR hygiene)
-3. **Pick something focused** — [open issues](https://github.com/AgentWrapper/agent-orchestrator/issues); prefer `good-first-issue` / `help wanted`
+3. **Pick something focused** — [open issues](https://github.com/sriram687/GIT_WIZ/issues); prefer `good-first-issue` / `help wanted`
 4. **Claim it** — comment `I'd like to work on this` and wait for assignment
 5. **Open a clear PR** — narrow change, link the issue, user-visible impact, tests
 6. **Iterate** — address review; maintainers merge
@@ -48,4 +48,4 @@ Also follow **PR hygiene** in [AGENTS.md](AGENTS.md): branch from `main`, one is
 
 Be respectful, constructive, and assume good intent. Report problems to maintainers via Discord DM.
 
-Thanks for making agent-orchestrator better for the next person who shows up.
+Thanks for making git-wiz better for the next person who shows up.

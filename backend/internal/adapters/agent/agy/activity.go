@@ -1,7 +1,7 @@
 package agy
 
 import (
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 )
 
 // DeriveActivityState maps an Agy hook event onto an AO activity state. The

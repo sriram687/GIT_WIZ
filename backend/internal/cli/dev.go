@@ -11,8 +11,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/devimport"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/devimport"
 )
 
 type devImportProjectsOptions struct {

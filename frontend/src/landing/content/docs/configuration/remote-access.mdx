@@ -39,7 +39,7 @@ By default the AO dashboard binds to `localhost:3000` and is only accessible fro
 4. Bind AO to all interfaces so Tailscale traffic can reach it:
 
    ```yaml
-   # agent-orchestrator.yaml
+   # git-wiz.yaml
    port: 3000
    ```
 
@@ -222,7 +222,7 @@ HOST=0.0.0.0 NEXT_PUBLIC_TERMINAL_WS_PATH=/ws/terminal ao start
 
 ### Pinning WebSocket ports
 
-By default AO auto-detects available ports for the WebSocket servers starting at 14800/14801. To pin them (required when configuring a reverse proxy), set them in `agent-orchestrator.yaml`:
+By default AO auto-detects available ports for the WebSocket servers starting at 14800/14801. To pin them (required when configuring a reverse proxy), set them in `git-wiz.yaml`:
 
 ```yaml
 port: 3000

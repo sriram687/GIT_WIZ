@@ -151,10 +151,10 @@ export function validateGateArgs({ apiKey, repo, tag } = {}) {
 }
 
 // GitHub release Linux .deb URL for a tag. Forge publishes to v<version>; the
-// asset is agent-orchestrator_<version>_amd64.deb (version = tag without "v").
+// asset is git-wiz_<version>_amd64.deb (version = tag without "v").
 export function releaseDebUrl(repo, tag) {
 	const version = String(tag).replace(/^v/, "");
-	return `https://github.com/${repo}/releases/download/${tag}/agent-orchestrator_${version}_amd64.deb`;
+	return `https://github.com/${repo}/releases/download/${tag}/git-wiz_${version}_amd64.deb`;
 }
 
 // runPodSuite spins one ephemeral Daytona pod, installs the release build, and

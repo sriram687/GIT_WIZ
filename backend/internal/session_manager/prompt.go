@@ -246,7 +246,7 @@ func workerSystemPrompt(project promptProject) string {
 
 	return fmt.Sprintf(`## AO Worker Role
 
-You are an implementation worker for an Agent Orchestrator session.
+You are an implementation worker for an GIT_WIZ session.
 
 Your job is to complete the assigned task in this workspace. Inspect the relevant code and tests before editing, keep changes scoped to the task, verify the behavior you touched, and report blockers clearly.
 

@@ -1,7 +1,7 @@
 export function AOLogo() {
   return (
     <span
-      aria-label="Agent Orchestrator"
+      aria-label="GIT_WIZ"
       className="inline-flex items-center gap-2 font-sans text-base font-medium leading-none tracking-[-0.5px] text-foreground"
     >
       <img
@@ -12,7 +12,7 @@ export function AOLogo() {
         aria-hidden="true"
         className="size-5 shrink-0"
       />
-      <span>Agent Orchestrator</span>
+      <span>GIT_WIZ</span>
     </span>
   );
 }

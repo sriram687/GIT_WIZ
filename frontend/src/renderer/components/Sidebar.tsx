@@ -180,7 +180,7 @@ export function Sidebar({
 	});
 	const isNightly = typeof appVersion === "string" && appVersion.includes("-nightly.");
 
-	// agent-orchestrator's sidebar resize: drag the right edge (200-420px,
+	// git-wiz's sidebar resize: drag the right edge (200-420px,
 	// persisted), double-click to reset to 240px. Drives --ao-sidebar-w on :root,
 	// which the provider forwards into shadcn's --sidebar-width.
 	const {
@@ -256,7 +256,7 @@ export function Sidebar({
 						</TooltipContent>
 					</Tooltip>
 					<span className="sidebar-expanded-chrome min-w-0 flex-1 truncate text-sm font-bold tracking-tight-lg text-foreground group-data-[collapsible=icon]:hidden">
-						Agent Orchestrator
+						GIT_WIZ
 					</span>
 					{isNightly && (
 						<span className="sidebar-expanded-chrome shrink-0 rounded-full bg-purple-subtle px-1.5 py-0.5 text-micro font-semibold leading-none text-purple-accent group-data-[collapsible=icon]:hidden">

@@ -19,11 +19,11 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	aoprocess "github.com/aoagents/agent-orchestrator/backend/internal/process"
-	"github.com/aoagents/agent-orchestrator/backend/internal/sessionguard"
-	"github.com/aoagents/agent-orchestrator/backend/internal/skillassets"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	aoprocess "github.com/sriram687/GIT_WIZ/backend/internal/process"
+	"github.com/sriram687/GIT_WIZ/backend/internal/sessionguard"
+	"github.com/sriram687/GIT_WIZ/backend/internal/skillassets"
 )
 
 // Sentinel errors returned by the Session Manager; callers match them with

@@ -9,9 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd"
-	agentsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/agent"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd"
+	agentsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/agent"
 )
 
 type fakeAgentCatalog struct {

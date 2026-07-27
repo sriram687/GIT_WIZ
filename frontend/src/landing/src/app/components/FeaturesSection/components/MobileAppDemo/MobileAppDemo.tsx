@@ -29,7 +29,7 @@ const mobileTheme = {
   green: "#74b98a",
 } as const;
 
-type Project = "All" | "agent-orchestrator-mo" | "meetyou" | "adorable";
+type Project = "All" | "git-wiz-mo" | "meetyou" | "adorable";
 type Tab = "Kanban" | "Orchestrator" | "PRs" | "Settings";
 
 type Session = {
@@ -74,7 +74,7 @@ const sessions: Session[] = [
 
 const projects: Project[] = [
   "All",
-  "agent-orchestrator-mo",
+  "git-wiz-mo",
   "meetyou",
   "adorable",
 ];

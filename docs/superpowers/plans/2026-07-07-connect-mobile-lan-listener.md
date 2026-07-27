@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Let a physical phone use Agent Orchestrator over the local network through a second, on-demand, password-authenticated HTTP listener inside the daemon, without changing the existing loopback behaviour.
+**Goal:** Let a physical phone use GIT_WIZ over the local network through a second, on-demand, password-authenticated HTTP listener inside the daemon, without changing the existing loopback behaviour.
 
 **Architecture:** The daemon keeps its `127.0.0.1` **Loopback Listener** exactly as today (desktop/CLI, unauthenticated). A new **LAN Listener** binds `0.0.0.0` only while "Connect Mobile" is enabled; it wraps the _same_ chi router in one extra `authMiddleware`. Auth is decided by _which socket the request arrived on_, not by inspecting the request. Transport is plaintext HTTP (home-network-only). The phone pairs by scanning a QR that carries only `host`+`port`, then types the rotating 8-char password (shown on the desktop) into a popup; the password rides as `Authorization: Bearer <pw>` on REST and the RN WebSocket.
 
@@ -14,7 +14,7 @@
 - The **Loopback Listener must remain byte-for-byte unchanged** — no auth, same bind, same routes. Zero desktop/CLI regression.
 - Daemon API is code-first: edit `backend/internal/httpd/controllers/dto.go` + `backend/internal/httpd/apispec/specgen/build.go`, then run `npm run api` to regenerate the OpenAPI spec + frontend TS types. Never hand-edit generated artifacts.
 - CLI stays a thin HTTP client; do not open storage/runtime directly.
-- Renderer clones agent-orchestrator's look; build UI from `frontend/src/renderer/components/ui/*` primitives (per DESIGN.md).
+- Renderer clones git-wiz's look; build UI from `frontend/src/renderer/components/ui/*` primitives (per DESIGN.md).
 - Password format: **8 chars, alphanumeric `[A-Za-z0-9]`**, generated with `crypto/rand`. Stored **hashed only** (SHA-256 hex is sufficient here — it is a rotating LAN enabler, not a human password; constant-time compare on the hash). Never persist the plaintext to disk.
 - Auth scheme everywhere: `Authorization: Bearer <password>`.
 - Default LAN port **3011**; ephemeral fallback if taken; the QR/status must always report the _actually-bound_ port.
@@ -425,7 +425,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/mobilebridge"
+	"github.com/sriram687/GIT_WIZ/backend/internal/mobilebridge"
 )
 
 func newAuthUnderTest(pw string, now func() time.Time) (http.Handler, *lockout) {
@@ -498,8 +498,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
-	"github.com/aoagents/agent-orchestrator/backend/internal/mobilebridge"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
+	"github.com/sriram687/GIT_WIZ/backend/internal/mobilebridge"
 )
 
 // authState holds the current password hash for the LAN listener. Swapped
@@ -636,7 +636,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/mobilebridge"
+	"github.com/sriram687/GIT_WIZ/backend/internal/mobilebridge"
 )
 
 func TestLANManagerAuthGatesSharedHandler(t *testing.T) {
@@ -885,8 +885,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
-	"github.com/aoagents/agent-orchestrator/backend/internal/mobilebridge"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
+	"github.com/sriram687/GIT_WIZ/backend/internal/mobilebridge"
 )
 
 const mobileUnencryptedWarning = "Traffic on this connection is not encrypted. Only use it on a network you trust."

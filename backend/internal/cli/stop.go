@@ -8,8 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/runfile"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/runfile"
 )
 
 const defaultStopTimeout = 10 * time.Second

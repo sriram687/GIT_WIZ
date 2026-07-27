@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	agentregistry "github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/registry"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	agentregistry "github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/registry"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 var (

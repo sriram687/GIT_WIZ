@@ -31,14 +31,14 @@ receive: `urgent-only`, `urgent-action`, or `all`. For scriptable setup, pass
 
 ## Use
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 notifiers:
   webhook:
     plugin: webhook
     url: https://example.com/ao-events
     headers:
       Authorization: "Bearer ${MY_TOKEN}"
-      X-Source: "agent-orchestrator"
+      X-Source: "git-wiz"
     retries: 5 # default 3
     retryDelayMs: 2000 # default 1000
 

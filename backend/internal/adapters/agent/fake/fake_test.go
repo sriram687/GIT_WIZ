@@ -6,12 +6,13 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"runtime"
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/lifecycle"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/lifecycle"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 func TestManifestReportsFakeHarness(t *testing.T) {
@@ -47,7 +48,9 @@ func TestGetLaunchCommandIsScriptedTimeline(t *testing.T) {
 	}
 	// argv[0] must be the RESOLVED shell path (what Manager.Spawn validates), not
 	// a bare "sh" — see ResolveBinary / #2692 review.
-	if len(cmd) != 3 || cmd[1] != "-lc" || !strings.HasSuffix(cmd[0], "sh") || !strings.Contains(cmd[0], "/") {
+	isShellSuffix := strings.HasSuffix(strings.ToLower(cmd[0]), "sh") || strings.HasSuffix(strings.ToLower(cmd[0]), "sh.exe")
+	hasSep := strings.Contains(cmd[0], "/") || strings.Contains(cmd[0], "\\")
+	if len(cmd) != 3 || cmd[1] != "-lc" || !isShellSuffix || !hasSep {
 		t.Fatalf("launch command shape = %#v, want [<resolved sh path> -lc <script>]", cmd)
 	}
 
@@ -86,7 +89,9 @@ func TestResolveBinaryReturnsResolvedShellPath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResolveBinary: unexpected error: %v", err)
 	}
-	if !strings.HasSuffix(got, "sh") || !strings.Contains(got, "/") {
+	isShellSuffix := strings.HasSuffix(strings.ToLower(got), "sh") || strings.HasSuffix(strings.ToLower(got), "sh.exe")
+	hasSep := strings.Contains(got, "/") || strings.Contains(got, "\\")
+	if !isShellSuffix || !hasSep {
 		t.Fatalf("ResolveBinary = %q, want an absolute resolved sh path", got)
 	}
 }
@@ -303,7 +308,11 @@ func TestFullLifecycleSpawnToTermination(t *testing.T) {
 		t.Fatalf("timeline script failed: %v\n%s", err, out)
 	}
 	elapsed := time.Since(start)
-	if elapsed > 5*time.Second {
+	limit := 5 * time.Second
+	if runtime.GOOS == "windows" {
+		limit = 15 * time.Second
+	}
+	if elapsed > limit {
 		t.Fatalf("sped-up run took %v, want well under a second (speedup not applied?)", elapsed)
 	}
 

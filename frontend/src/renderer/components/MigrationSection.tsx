@@ -113,7 +113,7 @@ export function MigrationSection() {
 			</CardHeader>
 			<CardContent className="flex flex-col gap-4">
 				<p className="text-xs leading-row text-muted-foreground">
-					Import projects and orchestrator sessions from an earlier Agent Orchestrator install. Your old files are never
+					Import projects and orchestrator sessions from an earlier GIT_WIZ install. Your old files are never
 					modified, and this is safe to run more than once.
 				</p>
 

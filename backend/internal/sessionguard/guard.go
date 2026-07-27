@@ -14,8 +14,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // SessionReader is the single store read the guard needs: the session's

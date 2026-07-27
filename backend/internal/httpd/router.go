@@ -14,13 +14,13 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/daemonmeta"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/controllers"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	"github.com/aoagents/agent-orchestrator/backend/internal/telemetrymeta"
-	"github.com/aoagents/agent-orchestrator/backend/internal/terminal"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/daemonmeta"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/controllers"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/telemetrymeta"
+	"github.com/sriram687/GIT_WIZ/backend/internal/terminal"
 )
 
 // ControlDeps carries the daemon-control hooks the router exposes, such as the

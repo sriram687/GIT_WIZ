@@ -1,10 +1,10 @@
 ---
 title: Introduction
-description: Learn what Agent Orchestrator does, when to use it, and where to start.
+description: Learn what GIT_WIZ does, when to use it, and where to start.
 ---
 
 
-Agent Orchestrator (**AO**) runs AI coding agents in isolated git worktrees and tracks each one until it becomes a pull request.
+GIT_WIZ (**AO**) runs AI coding agents in isolated git worktrees and tracks each one until it becomes a pull request.
 
 Use it when you have several well-scoped issues and want agents working on them in parallel — each in its own checkout, terminal, and branch, all visible from one dashboard.
 
@@ -57,7 +57,7 @@ AO is built from plugins. The default setup works out of the box for common GitH
 | SCM         | How PRs, reviews, and CI are read | GitHub, GitLab                              |
 | Notifier    | Where AO sends updates            | desktop, Slack, Discord, webhook            |
 
-Most users start with the defaults and only edit `agent-orchestrator.yaml` when they need a different agent, runtime, tracker, or notification target.
+Most users start with the defaults and only edit `git-wiz.yaml` when they need a different agent, runtime, tracker, or notification target.
 
 ## Platform Support
 
@@ -82,7 +82,7 @@ Most users start with the defaults and only edit `agent-orchestrator.yaml` when 
 		href="/docs/installation"
 	/>
 	<Card title="Quickstart" description="Spawn one agent on one issue and watch it open a PR." href="/docs/quickstart" />
-	<Card title="Configuration" description="Understand the `agent-orchestrator.yaml` file." href="/docs/configuration" />
+	<Card title="Configuration" description="Understand the `git-wiz.yaml` file." href="/docs/configuration" />
 	<Card
 		title="Guides"
 		description="Run parallel issues, recover from CI failures, and handle review loops."

@@ -157,7 +157,7 @@ export function ConnectMobileModal({ open, onOpenChange }: ConnectMobileModalPro
 					<DialogHeader className="items-center gap-1.5 text-center">
 						<DialogTitle className="settings-dialog-title text-center">Connect Mobile</DialogTitle>
 						<DialogDescription className="max-w-(--size-settings-mobile-desc) text-center text-control font-normal leading-4 text-settings-muted">
-							Pair the Agent Orchestrator mobile app with this desktop over your LAN.
+							Pair the GIT_WIZ mobile app with this desktop over your LAN.
 						</DialogDescription>
 					</DialogHeader>
 

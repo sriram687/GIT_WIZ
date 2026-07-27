@@ -294,13 +294,13 @@ function ImportModePicker({
 		<div
 			className="relative isolate flex w-full max-w-(--size-import-modal-max) flex-col items-stretch gap-8 rounded-welcome-panel border border-[var(--color-border-import-modal)] bg-[var(--color-bg-import-modal)] p-8 shadow-[var(--shadow-import-modal)]"
 			role={dialog ? undefined : "group"}
-			aria-label={dialog ? undefined : "Import to Agent Orchestrator"}
+			aria-label={dialog ? undefined : "Import to GIT_WIZ"}
 		>
 			<div className={cn("relative z-[1] flex flex-col items-start gap-1", onClose && "pr-8")}>
 				{dialog ? (
-					<Dialog.Title className="import-title">Import to Agent Orchestrator</Dialog.Title>
+					<Dialog.Title className="import-title">Import to GIT_WIZ</Dialog.Title>
 				) : (
-					<h2 className="import-title">Import to Agent Orchestrator</h2>
+					<h2 className="import-title">Import to GIT_WIZ</h2>
 				)}
 				{dialog ? (
 					<Dialog.Description className="import-description">What are you importing?</Dialog.Description>

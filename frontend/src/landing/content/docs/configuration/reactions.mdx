@@ -13,7 +13,7 @@ You do not need to configure reactions to start. AO ships with defaults for CI f
 
 Use this while onboarding AO to a sensitive repo. You still see notifications, but AO stops sending recovery prompts to agents automatically.
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   ci-failed:
     auto: false
@@ -27,7 +27,7 @@ reactions:
 
 ### Give CI Recovery More Attempts
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   ci-failed:
     retries: 3
@@ -38,7 +38,7 @@ reactions:
 
 ### Escalate Stuck Agents Faster
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   agent-stuck:
     priority: urgent
@@ -49,7 +49,7 @@ reactions:
 
 `approved-and-green` does not merge by default. It notifies you that the PR is ready.
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   approved-and-green:
     auto: false
@@ -119,7 +119,7 @@ reactions:
 
 Reaction `priority` maps to `notificationRouting` in the global config:
 
-```yaml title="~/.agent-orchestrator/config.yaml"
+```yaml title="~/.git-wiz/config.yaml"
 notificationRouting:
   urgent: [desktop, composio]
   action: [desktop]
@@ -129,7 +129,7 @@ notificationRouting:
 
 Named notifier instances are configured separately:
 
-```yaml title="~/.agent-orchestrator/config.yaml"
+```yaml title="~/.git-wiz/config.yaml"
 notifiers:
   desktop:
     plugin: desktop
@@ -142,7 +142,7 @@ notifiers:
 
 Put reaction overrides in a local project config to affect only that project:
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 reactions:
   ci-failed:
     retries: 4

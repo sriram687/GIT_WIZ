@@ -9,15 +9,15 @@
 package activitydispatch
 
 import (
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/activitystate"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/agy"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/claudecode"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/codex"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/droid"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/fake"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/opencode"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/vibe"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/activitystate"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/agy"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/claudecode"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/codex"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/droid"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/fake"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/opencode"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/vibe"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 )
 
 // DeriveFunc maps a native agent hook event and its raw stdin payload onto an AO

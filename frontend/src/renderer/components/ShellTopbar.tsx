@@ -36,7 +36,7 @@ const noDragStyle = isMac ? ({ WebkitAppRegion: "no-drag" } as React.CSSProperti
 // board/orchestrator + inspector controls (orchestrators open the Kanban board;
 // workers open their orchestrator); otherwise it's the dashboard crumb plus the
 // Orchestrator launcher when a project is in scope. Merges the old
-// DashboardTopbar/Topbar pair — agent-orchestrator keeps those as two components
+// DashboardTopbar/Topbar pair — git-wiz keeps those as two components
 // aligned only by CSS.
 export function ShellTopbar() {
 	const navigate = useNavigate();

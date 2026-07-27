@@ -4,8 +4,8 @@ import (
 	"errors"
 	"log/slog"
 
-	trackergithub "github.com/aoagents/agent-orchestrator/backend/internal/adapters/tracker/github"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	trackergithub "github.com/sriram687/GIT_WIZ/backend/internal/adapters/tracker/github"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 func newGitHubTracker() (ports.Tracker, error) {

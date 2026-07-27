@@ -45,8 +45,8 @@ interface TrackItem {
 	summary: string;
 }
 
-const repoName = "AgentWrapper/agent-orchestrator";
-const repoAvatar = "https://github.com/AgentWrapper.png?size=64";
+const repoName = "sriram687/GIT_WIZ";
+const repoAvatar = "https://github.com/sriram687.png?size=64";
 
 const previewTokenStyle = {
 	"--preview-background": "oklch(0.153 0.006 107.1)",
@@ -2082,7 +2082,7 @@ export function AppMockup() {
 		<div
 			ref={windowRef}
 			role="img"
-			aria-label="Preview of the Agent Orchestrator board: agent tasks move across Working, Needs you, In review, and Ready to merge, each card showing its agent, branch, and pull request state."
+			aria-label="Preview of the GIT_WIZ board: agent tasks move across Working, Needs you, In review, and Ready to merge, each card showing its agent, branch, and pull request state."
 			className="absolute z-10 select-none overflow-hidden rounded-xl border border-[var(--preview-border)] bg-[var(--preview-background)] font-sans tracking-[-0.5px] text-[var(--preview-foreground)] antialiased shadow-[0_30px_80px_-24px_rgba(0,0,0,0.75)] [&_.font-mono]:tracking-normal"
 			style={{
 				...previewTokenStyle,

@@ -8,16 +8,16 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 const (
 	vibeDirName       = ".vibe"
 	vibeHooksFileName = "hooks.toml"
 
-	vibeHooksSentinelStart = "# managed by agent-orchestrator: vibe hooks"
-	vibeHooksSentinelEnd   = "# /managed by agent-orchestrator: vibe hooks"
+	vibeHooksSentinelStart = "# managed by git-wiz: vibe hooks"
+	vibeHooksSentinelEnd   = "# /managed by git-wiz: vibe hooks"
 )
 
 // GetAgentHooks installs Vibe callbacks that capture the native session id.

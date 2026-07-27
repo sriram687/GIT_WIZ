@@ -4,7 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { aoBridge } from "../../lib/bridge";
 import { cn } from "../../lib/utils";
 
-/** TestFlight beta for the Agent Orchestrator iOS app. */
+/** TestFlight beta for the GIT_WIZ iOS app. */
 export const TESTFLIGHT_URL = "https://testflight.apple.com/join/t4U3fu2H";
 
 /** Android internal-testing signup form. */

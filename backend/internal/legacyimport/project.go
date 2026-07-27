@@ -8,7 +8,7 @@ import (
 
 	yaml "gopkg.in/yaml.v3"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 )
 
 // mapPermission maps a legacy AgentPermissionMode to the rewrite PermissionMode

@@ -6,13 +6,13 @@ import { writeFileSync } from "node:fs";
 
 // Default GitHub release target (production). aoagents was the temporary rewrite
 // home; releases land on AgentWrapper (spec §1.1).
-const DEFAULT_RELEASE_REPO = "AgentWrapper/agent-orchestrator";
+const DEFAULT_RELEASE_REPO = "sriram687/GIT_WIZ";
 
 // The packaged binary name (no extension). Single source of truth: the packager
 // names the exe/ELF from this, and the NSIS + deb makers must point their
 // shortcut/launcher at the SAME name. Drift here means a broken Start menu
 // shortcut on Windows (#2414) or "could not find the Electron app binary" on deb.
-const EXECUTABLE_NAME = "agent-orchestrator";
+const EXECUTABLE_NAME = "git-wiz";
 
 // parseReleaseRepo turns an "owner/repo" string (from AO_RELEASE_REPO) into the
 // publisher-github { owner, name } shape, falling back to the production default
@@ -29,8 +29,8 @@ function parseReleaseRepo(value: string | undefined): { owner: string; name: str
 const config: ForgeConfig = {
 	packagerConfig: {
 		asar: true,
-		appBundleId: "dev.agent-orchestrator.desktop",
-		name: "Agent Orchestrator",
+		appBundleId: "dev.git-wiz.desktop",
+		name: "GIT_WIZ",
 		executableName: EXECUTABLE_NAME,
 		appCategoryType: "public.app-category.developer-tools",
 		// App icon. electron-packager appends the per-platform extension
@@ -75,7 +75,7 @@ const config: ForgeConfig = {
 				"provider: github",
 				`owner: ${owner}`,
 				`repo: ${name}`,
-				"updaterCacheDirName: agent-orchestrator-updater",
+				"updaterCacheDirName: git-wiz-updater",
 				"",
 			].join("\n");
 			writeFileSync("app-update.yml", yml);
@@ -88,10 +88,10 @@ const config: ForgeConfig = {
 		// custom install dir or proper uninstaller (issue #401).
 		new MakerNSIS(
 			{
-				appId: "dev.agent-orchestrator.desktop",
-				productName: "Agent Orchestrator",
+				appId: "dev.git-wiz.desktop",
+				productName: "GIT_WIZ",
 				// Match the packaged binary name so the Start menu shortcut targets
-				// the real "agent-orchestrator.exe" (not "Agent Orchestrator.exe").
+				// the real "git-wiz.exe" (not "GIT_WIZ.exe").
 				executableName: EXECUTABLE_NAME,
 				icon: "assets/icon.ico",
 			},
@@ -104,8 +104,8 @@ const config: ForgeConfig = {
 		// prefer a system package.
 		new MakerAppImage(
 			{
-				appId: "dev.agent-orchestrator.desktop",
-				productName: "Agent Orchestrator",
+				appId: "dev.git-wiz.desktop",
+				productName: "GIT_WIZ",
 				icon: "assets/icon.png",
 			},
 			["linux"],
@@ -116,11 +116,11 @@ const config: ForgeConfig = {
 				options: {
 					// Must match packagerConfig.executableName, or the deb maker
 					// looks for the package name and fails with "could not find
-					// the Electron app binary". (Both are "agent-orchestrator".)
+					// the Electron app binary". (Both are "git-wiz".)
 					bin: EXECUTABLE_NAME,
 					icon: "assets/icon.png",
-					maintainer: "Agent Orchestrator",
-					homepage: "https://github.com/aoagents/agent-orchestrator",
+					maintainer: "GIT_WIZ",
+					homepage: "https://github.com/sriram687/GIT_WIZ",
 				},
 			},
 		},
@@ -131,7 +131,7 @@ const config: ForgeConfig = {
 					icon: "assets/icon.png",
 					// rpmbuild rejects a spec with an empty License field.
 					license: "MIT",
-					homepage: "https://github.com/aoagents/agent-orchestrator",
+					homepage: "https://github.com/sriram687/GIT_WIZ",
 				},
 			},
 		},
@@ -142,8 +142,8 @@ const config: ForgeConfig = {
 			// Release target is build-time overridable so a fork run publishes to the
 			// fork without a source edit. AO_RELEASE_REPO is "owner/repo"; it defaults
 			// to the production target. The dev/test loop sets
-			// AO_RELEASE_REPO=harshitsinghbhandari/agent-orchestrator (spec §1.1, §8).
-			// Note: aoagents/agent-orchestrator was the temporary rewrite home and is
+			// AO_RELEASE_REPO=harshitsinghbhandari/git-wiz (spec §1.1, §8).
+			// Note: sriram687/GIT_WIZ was the temporary rewrite home and is
 			// intentionally NOT the default; releases land on AgentWrapper.
 			config: {
 				repository: parseReleaseRepo(process.env.AO_RELEASE_REPO),

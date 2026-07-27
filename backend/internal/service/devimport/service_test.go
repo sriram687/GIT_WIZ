@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/storage/sqlite"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/storage/sqlite"
 )
 
 func TestRunProjectsDryRunWritesNothing(t *testing.T) {

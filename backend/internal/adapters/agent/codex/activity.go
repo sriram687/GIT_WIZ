@@ -1,6 +1,6 @@
 package codex
 
-import "github.com/aoagents/agent-orchestrator/backend/internal/domain"
+import "github.com/sriram687/GIT_WIZ/backend/internal/domain"
 
 // DeriveActivityState maps a Codex hook event onto an AO activity state. The
 // bool is false when the event carries no activity signal.

@@ -4,8 +4,8 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/cdc"
-	"github.com/aoagents/agent-orchestrator/backend/internal/storage/sqlite"
+	"github.com/sriram687/GIT_WIZ/backend/internal/cdc"
+	"github.com/sriram687/GIT_WIZ/backend/internal/storage/sqlite"
 )
 
 // cdcPipeline owns the running CDC poller and live-event broadcaster. The DB

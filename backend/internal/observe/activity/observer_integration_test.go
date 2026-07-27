@@ -7,12 +7,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/codex"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/runtime/tmux"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/lifecycle"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	"github.com/aoagents/agent-orchestrator/backend/internal/storage/sqlite"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/codex"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/runtime/tmux"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/lifecycle"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/storage/sqlite"
 )
 
 func TestObserverIntegrationReconcilesRealTmuxOutputIntoSQLite(t *testing.T) {

@@ -6,15 +6,15 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/cdc"
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apispec"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/controllers"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	prsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/pr"
-	projectsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/project"
-	reviewsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/review"
+	"github.com/sriram687/GIT_WIZ/backend/internal/cdc"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apispec"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/controllers"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	prsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/pr"
+	projectsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/project"
+	reviewsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/review"
 )
 
 // APIDeps bundles every service the API layer's controllers depend on.

@@ -20,11 +20,11 @@ export async function generateMetadata({
   const doc = getDocPage(slug ?? []);
   if (!doc) return { title: "Docs" };
   return {
-    title: `${doc.title} | Agent Orchestrator Docs`,
+    title: `${doc.title} | GIT_WIZ Docs`,
     description: doc.description,
     alternates: { canonical: doc.url },
     openGraph: {
-      title: `${doc.title} | Agent Orchestrator Docs`,
+      title: `${doc.title} | GIT_WIZ Docs`,
       description: doc.description,
       url: doc.url,
       images: ["/opengraph-image"],
@@ -53,7 +53,7 @@ export default async function DocsPage({ params }: { params: Promise<{ slug?: st
               <p className="mt-3 max-w-2xl text-pretty text-muted-foreground">{doc.description}</p>
             ) : (
               <p className="mt-3 max-w-2xl text-pretty text-muted-foreground">
-                Product docs for running, extending, and operating Agent Orchestrator.
+                Product docs for running, extending, and operating GIT_WIZ.
               </p>
             )}
           </div>

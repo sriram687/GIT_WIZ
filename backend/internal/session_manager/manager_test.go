@@ -15,9 +15,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/workspace/scratch"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/workspace/scratch"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 var ctx = context.Background()
@@ -2270,6 +2270,7 @@ func TestSpawn_DefaultsBranchFromSessionID(t *testing.T) {
 func TestSpawn_DefaultsBranchUnderDevNamespaceForDevDataDir(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
 	m, st, _, _ := newManager()
 	m.dataDir = filepath.Join(home, ".ao", "dev", "data")
 
@@ -2293,6 +2294,7 @@ func TestSpawn_DefaultsBranchUnderDevNamespaceForDevDataDir(t *testing.T) {
 func TestSpawn_ExplicitBranchBypassesDevNamespace(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
 	m, st, _, _ := newManager()
 	m.dataDir = filepath.Join(home, ".ao", "dev", "data")
 
@@ -3883,7 +3885,12 @@ func TestSpawnAndRestore_PrependsResolvedBinaryAndNodeDirsToRuntimePATH(t *testi
 			t.Fatal(err)
 		}
 	}
-	want := strings.Join([]string{binDir, nodeDir, filepath.Dir(daemonExe), "/usr/bin"}, string(os.PathListSeparator))
+	var want string
+	if runtime.GOOS == "windows" {
+		want = strings.Join([]string{binDir, filepath.Dir(daemonExe), "/usr/bin"}, string(os.PathListSeparator))
+	} else {
+		want = strings.Join([]string{binDir, nodeDir, filepath.Dir(daemonExe), "/usr/bin"}, string(os.PathListSeparator))
+	}
 
 	for _, operation := range []string{"spawn", "restore"} {
 		t.Run(operation, func(t *testing.T) {
@@ -3956,7 +3963,7 @@ func TestSpawn_DoesNotAddNodeRuntimeForNativeBinary(t *testing.T) {
 	if nodeLookups != 0 {
 		t.Fatalf("node LookPath calls = %d, want 0 for native binary", nodeLookups)
 	}
-	want := strings.Join([]string{binDir, "/ao/bin", "/usr/bin"}, string(os.PathListSeparator))
+	want := strings.Join([]string{binDir, filepath.FromSlash("/ao/bin"), "/usr/bin"}, string(os.PathListSeparator))
 	if got := rt.lastCfg.Env["PATH"]; got != want {
 		t.Fatalf("runtime env PATH = %q, want %q", got, want)
 	}

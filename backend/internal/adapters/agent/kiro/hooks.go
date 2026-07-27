@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 const (
@@ -29,7 +29,7 @@ const (
 	kiroHookCommandPrefix = "ao hooks kiro "
 
 	kiroAgentName        = "ao"
-	kiroAgentDescription = "Agent Orchestrator session instructions"
+	kiroAgentDescription = "GIT_WIZ session instructions"
 )
 
 // kiroHookFile is the on-disk shape of .kiro/agents/ao.json. It is used by

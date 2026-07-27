@@ -9,10 +9,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/lifecycle"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	reviewcore "github.com/aoagents/agent-orchestrator/backend/internal/review"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/lifecycle"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	reviewcore "github.com/sriram687/GIT_WIZ/backend/internal/review"
 )
 
 // ErrInvalid and ErrNotFound re-export the engine sentinels so the HTTP

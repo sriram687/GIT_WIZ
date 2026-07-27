@@ -7,7 +7,7 @@ import { isMacPlatform, usePlatform } from "../../hooks/useOS";
 import { DownloadButton } from "../DownloadButton";
 import { ProductDemo } from "./components/ProductDemo";
 
-const INSTALL_COMMAND = "brew install agentwrapper/tap/agent-orchestrator";
+const INSTALL_COMMAND = "brew install sriram687/tap/git-wiz";
 // Wraps at the path separators instead of mid-word once the pill goes two-line.
 const INSTALL_COMMAND_PARTS = INSTALL_COMMAND.split("/");
 

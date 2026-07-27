@@ -10,9 +10,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apierr"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apierr"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // TestRequestLoggerRecords5xxCause: the wire envelope collapses unrecognized

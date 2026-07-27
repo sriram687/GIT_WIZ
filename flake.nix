@@ -1,5 +1,5 @@
 {
-  description = "agent-orchestrator development shell";
+  description = "git-wiz development shell";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";

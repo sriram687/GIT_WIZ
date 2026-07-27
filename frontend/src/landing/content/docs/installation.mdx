@@ -97,7 +97,7 @@ opencode --help
 
 ### Start AO in a repo
 
-**Desktop app:** open Agent Orchestrator and add the repository you want it to manage. The app starts the daemon, dashboard, and an orchestrator session for the project.
+**Desktop app:** open GIT_WIZ and add the repository you want it to manage. The app starts the daemon, dashboard, and an orchestrator session for the project.
 
 <details className="ao-legacy-cli-details">
 <summary>
@@ -139,8 +139,8 @@ yarn global add @aoagents/ao
     <Tab value="from source">
 
 ```bash
-git clone https://github.com/AgentWrapper/agent-orchestrator
-cd agent-orchestrator
+git clone https://github.com/sriram687/git-wiz
+cd git-wiz
 pnpm install
 pnpm build
 pnpm --filter @aoagents/ao link --global
@@ -161,7 +161,7 @@ cd ~/code/my-repo
 ao start
 ```
 
-If there is no `agent-orchestrator.yaml`, AO creates one. You can also start from a path or clone from a URL:
+If there is no `git-wiz.yaml`, AO creates one. You can also start from a path or clone from a URL:
 
 ```bash
 ao start ~/code/my-repo
@@ -214,7 +214,7 @@ ao doctor --fix
 	<Card title="Quickstart" description="Run one worker session from start to pull request." href="/docs/quickstart" />
 	<Card
 		title="Configuration"
-		description="Understand the generated `agent-orchestrator.yaml`."
+		description="Understand the generated `git-wiz.yaml`."
 		href="/docs/configuration"
 	/>
 	<Card title="Platforms" description="Choose the right runtime and notifier for your OS." href="/docs/platforms" />

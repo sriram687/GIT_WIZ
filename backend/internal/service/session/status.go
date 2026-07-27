@@ -3,7 +3,7 @@ package session
 import (
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 )
 
 // noSignalGrace is how long after spawn/restore a session may stay silent

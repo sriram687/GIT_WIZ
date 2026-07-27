@@ -12,8 +12,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // ciFailureLogTailLines is the number of trailing lines of a failed job's

@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 const (
@@ -21,7 +21,7 @@ const (
 	copilotHooksFileName = "ao.json"
 
 	copilotAgentsDir     = ".github/agents"
-	copilotAgentSentinel = "<!-- managed by agent-orchestrator: copilot agent profile -->"
+	copilotAgentSentinel = "<!-- managed by git-wiz: copilot agent profile -->"
 
 	// copilotHooksVersion is the schema version of the hooks file (Copilot uses 1).
 	copilotHooksVersion = 1
@@ -169,7 +169,7 @@ func installCopilotAgent(workspacePath, sessionID, inlinePrompt, promptFile stri
 func copilotAgentProfile(agentName, sessionID, systemPrompt string) string {
 	return "---\n" +
 		"name: " + agentName + "\n" +
-		"description: Agent Orchestrator role profile for AO session " + strings.TrimSpace(sessionID) + ". Use for all work in this session.\n" +
+		"description: GIT_WIZ role profile for AO session " + strings.TrimSpace(sessionID) + ". Use for all work in this session.\n" +
 		"target: github-copilot\n" +
 		"---\n\n" +
 		copilotAgentSentinel + "\n\n" +
@@ -200,7 +200,7 @@ func ignoreCopilotPath(workspacePath, pattern string) error {
 	if body != "" {
 		body += "\n"
 	}
-	body += "# agent-orchestrator Copilot session files\n" + pattern + "\n"
+	body += "# git-wiz Copilot session files\n" + pattern + "\n"
 	if err := hookutil.AtomicWriteFile(excludePath, []byte(body), 0o600); err != nil {
 		return fmt.Errorf("write %s: %w", excludePath, err)
 	}

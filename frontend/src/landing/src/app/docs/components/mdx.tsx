@@ -215,13 +215,13 @@ export function PlatformSupport({
   );
 }
 
-const RELEASES_URL = "https://github.com/AgentWrapper/agent-orchestrator/releases";
+const RELEASES_URL = "https://github.com/sriram687/GIT_WIZ/releases";
 
 export function InstallDownloads() {
   return (
     <div className="my-6 rounded-xl border border-border bg-muted/30 p-5">
       <div className="mb-3 flex items-center justify-between">
-        <div className="text-sm font-semibold text-foreground">Get Agent Orchestrator</div>
+        <div className="text-sm font-semibold text-foreground">Get GIT_WIZ</div>
         <a href={RELEASES_URL} className="text-xs text-muted-foreground transition-colors hover:text-foreground">
           View releases →
         </a>

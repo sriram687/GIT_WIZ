@@ -26,14 +26,14 @@ export async function generateMetadata({
     description: entry.description,
     alternates: { canonical: entry.url },
     openGraph: {
-      title: `${entry.title} | Agent Orchestrator`,
+      title: `${entry.title} | GIT_WIZ`,
       description: entry.description,
       url: entry.url,
       images: ["/opengraph-image"],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${entry.title} | Agent Orchestrator`,
+      title: `${entry.title} | GIT_WIZ`,
       description: entry.description,
       images: ["/opengraph-image"],
     },

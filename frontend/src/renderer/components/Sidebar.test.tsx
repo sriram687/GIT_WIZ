@@ -361,7 +361,7 @@ describe("Sidebar", () => {
 			useUiStore.getState().requestCreateProject();
 		});
 
-		expect(await screen.findByRole("dialog", { name: "Import to Agent Orchestrator" })).toBeInTheDocument();
+		expect(await screen.findByRole("dialog", { name: "Import to GIT_WIZ" })).toBeInTheDocument();
 	});
 
 	it("keeps the create-project shortcut available when there are no projects", async () => {
@@ -371,7 +371,7 @@ describe("Sidebar", () => {
 			useUiStore.getState().requestCreateProject();
 		});
 
-		expect(await screen.findByRole("dialog", { name: "Import to Agent Orchestrator" })).toBeInTheDocument();
+		expect(await screen.findByRole("dialog", { name: "Import to GIT_WIZ" })).toBeInTheDocument();
 	});
 
 	it("reveals dashboard and orchestrator buttons alongside the kebab on the project row", () => {
@@ -398,7 +398,7 @@ describe("Sidebar", () => {
 		renderSidebar({ onCreateProject });
 
 		await user.click(screen.getByLabelText("New project"));
-		expect(screen.getByRole("dialog", { name: "Import to Agent Orchestrator" })).toBeInTheDocument();
+		expect(screen.getByRole("dialog", { name: "Import to GIT_WIZ" })).toBeInTheDocument();
 		expect(window.ao!.app.chooseDirectory).not.toHaveBeenCalled();
 		await user.click(screen.getByRole("button", { name: /^Project/i }));
 

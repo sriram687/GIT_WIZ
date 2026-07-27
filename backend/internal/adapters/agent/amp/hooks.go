@@ -8,15 +8,15 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 const (
 	ampPluginDirName  = ".amp"
 	ampPluginSubDir   = "plugins"
 	ampPluginFileName = "ao-system-prompt.ts"
-	ampPluginSentinel = "agent-orchestrator: managed amp system prompt plugin"
+	ampPluginSentinel = "git-wiz: managed amp system prompt plugin"
 )
 
 // GetAgentHooks installs AO's Amp system-prompt plugin into the worktree-local

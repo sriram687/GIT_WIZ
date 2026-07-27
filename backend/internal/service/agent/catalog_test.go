@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters"
-	agentregistry "github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/registry"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters"
+	agentregistry "github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/registry"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 type fakeAgent struct {

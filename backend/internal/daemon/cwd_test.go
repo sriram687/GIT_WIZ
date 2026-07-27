@@ -7,6 +7,7 @@ import (
 )
 
 func TestStabilizeWorkingDirectoryChdirsToDataDir(t *testing.T) {
+	dataDir := filepath.Join(t.TempDir(), "ao-data")
 	oldCWD, err := os.Getwd()
 	if err != nil {
 		t.Fatal(err)
@@ -17,7 +18,6 @@ func TestStabilizeWorkingDirectoryChdirsToDataDir(t *testing.T) {
 		}
 	})
 
-	dataDir := filepath.Join(t.TempDir(), "ao-data")
 	if err := stabilizeWorkingDirectory(dataDir); err != nil {
 		t.Fatalf("stabilizeWorkingDirectory: %v", err)
 	}

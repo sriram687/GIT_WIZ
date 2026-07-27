@@ -14,7 +14,7 @@ import fs from "node:fs/promises";
 // main spreads process.env into the daemon child), so a stale daemon from a prior
 // run — or anything already bound to the default 3001 — can NOT be mistaken for the
 // app under test: nothing else is on our ephemeral port or writes our run file.
-const APP_BIN = process.env.AO_APP_BIN || "/usr/lib/agent-orchestrator/agent-orchestrator";
+const APP_BIN = process.env.AO_APP_BIN || "/usr/lib/git-wiz/git-wiz";
 
 interface RunFile {
 	pid: number;
@@ -82,19 +82,19 @@ test("REAL-001 packaged app launches + window paints @T0 @real", async () => {
 	const win = await app.firstWindow();
 	expect(win).toBeTruthy();
 	// Prove the AO renderer SCREEN mounted (INS-002 first-run/home UI) — not just
-	// that some document painted. The AO brand string "Agent Orchestrator" is
+	// that some document painted. The AO brand string "GIT_WIZ" is
 	// rendered into the app shell (sidebar) and the first-run home/welcome
-	// ("Welcome to Agent Orchestrator"), so its presence in VISIBLE body text is an
+	// ("Welcome to GIT_WIZ"), so its presence in VISIBLE body text is an
 	// AO-specific proof the renderer mounted. A Chromium/Electron error page has no
 	// AO brand text (fails), and an unmounted shell (empty #root) has no visible
 	// text (fails). document.title is deliberately NOT used: index.html sets it to
-	// "Agent Orchestrator" statically, so it is present even if React never mounts.
+	// "GIT_WIZ" statically, so it is present even if React never mounts.
 	await expect
 		.poll(
 			() =>
 				win.evaluate(() => {
 					const text = document.body?.innerText ?? "";
-					return document.readyState === "complete" && text.includes("Agent Orchestrator");
+					return document.readyState === "complete" && text.includes("GIT_WIZ");
 				}),
 			{ timeout: 30_000, intervals: [500] },
 		)
@@ -136,7 +136,7 @@ test("REAL-002 bundled daemon reaches ready (real SQLite) @T0 @real", async () =
 
 	const body = await (await fetch(url)).json();
 	expect(body.status).toBe("ready");
-	expect(body.service).toBe("agent-orchestrator-daemon");
+	expect(body.service).toBe("git-wiz-daemon");
 	// Attribution: the ready daemon is the exact process this launch's run file
 	// recorded — not a stale daemon that happened to answer on some shared port.
 	expect(body.pid).toBe(info!.pid);

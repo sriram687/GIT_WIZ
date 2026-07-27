@@ -22,7 +22,7 @@ const REDACTED_LOCAL_PATH = "[redacted-local-path]";
 const REDACTED_LOCAL_URL = "[redacted-local-url]";
 const REDACTED_SECRET = "[redacted-secret]";
 const DISCORD_INVITE_URL = "https://discord.com/invite/UZv7JjxbwG";
-const GITHUB_NEW_ISSUE_URL = "https://github.com/AgentWrapper/agent-orchestrator/issues/new";
+const GITHUB_NEW_ISSUE_URL = "https://github.com/sriram687/GIT_WIZ/issues/new";
 const SUPPORT_EMAIL = "support@aoagents.dev";
 
 const LOCAL_URL_PATTERN =

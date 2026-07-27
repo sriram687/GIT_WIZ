@@ -119,7 +119,7 @@ describe("global board first launch", () => {
 		respondWith([], []);
 		renderBoard(<SessionsBoard />);
 
-		expect(await screen.findByText("Import to Agent Orchestrator")).toBeInTheDocument();
+		expect(await screen.findByText("Import to GIT_WIZ")).toBeInTheDocument();
 		expect(screen.getByText("What are you importing?")).toBeInTheDocument();
 		expect(screen.getByRole("button", { name: "Workspace" })).toBeInTheDocument();
 		expect(screen.getByRole("button", { name: "Project" })).toBeInTheDocument();
@@ -163,7 +163,7 @@ describe("global board first launch", () => {
 		renderBoard(<SessionsBoard />);
 
 		expect(await screen.findByText("fix the bug")).toBeInTheDocument();
-		expect(screen.queryByText("Import to Agent Orchestrator")).not.toBeInTheDocument();
+		expect(screen.queryByText("Import to GIT_WIZ")).not.toBeInTheDocument();
 		expect(columnCount()).toBe(4);
 	});
 });
@@ -177,7 +177,7 @@ describe("project board with no sessions", () => {
 		// Board header + empty state each offer the pair; the orchestrator is primary in both.
 		expect(screen.getAllByRole("button", { name: "Spawn Orchestrator" }).length).toBeGreaterThan(0);
 		expect(screen.getAllByRole("button", { name: "New task" }).length).toBeGreaterThan(0);
-		expect(screen.queryByText("Import to Agent Orchestrator")).not.toBeInTheDocument();
+		expect(screen.queryByText("Import to GIT_WIZ")).not.toBeInTheDocument();
 		expect(columnCount()).toBe(0);
 	});
 

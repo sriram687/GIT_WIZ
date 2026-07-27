@@ -9,7 +9,7 @@ import { ChangelogEntry } from "./components/ChangelogEntry";
 export const metadata: Metadata = {
   title: "Changelog",
   description:
-    "The latest updates, improvements, and new features in Agent Orchestrator.",
+    "The latest updates, improvements, and new features in GIT_WIZ.",
   alternates: {
     canonical: "/changelog",
     types: {
@@ -17,17 +17,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Changelog | Agent Orchestrator",
+    title: "Changelog | GIT_WIZ",
     description:
-      "The latest updates, improvements, and new features in Agent Orchestrator.",
+      "The latest updates, improvements, and new features in GIT_WIZ.",
     url: "/changelog",
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Changelog | Agent Orchestrator",
+    title: "Changelog | GIT_WIZ",
     description:
-      "The latest updates, improvements, and new features in Agent Orchestrator.",
+      "The latest updates, improvements, and new features in GIT_WIZ.",
     images: ["/opengraph-image"],
   },
 };
@@ -58,7 +58,7 @@ export default async function ChangelogPage() {
             What's New
           </h1>
           <p className="text-muted-foreground mt-3 max-w-lg">
-            The latest updates, improvements, and new features in Agent Orchestrator.
+            The latest updates, improvements, and new features in GIT_WIZ.
             Updated weekly. For detailed release notes, see{" "}
             <a
               href={`${COMPANY.GITHUB_URL}/releases`}

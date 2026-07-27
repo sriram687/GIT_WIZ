@@ -1,4 +1,4 @@
-// Package daemon owns the Agent Orchestrator backend process: config loading,
+// Package daemon owns the GIT_WIZ backend process: config loading,
 // loopback HTTP serving, durable storage, CDC fan-out, lifecycle wiring, and
 // graceful shutdown.
 package daemon
@@ -14,26 +14,26 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/runtime/runtimeselect"
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/daemon/supervisor"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/controllers"
-	"github.com/aoagents/agent-orchestrator/backend/internal/mobilebridge"
-	"github.com/aoagents/agent-orchestrator/backend/internal/notify"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	"github.com/aoagents/agent-orchestrator/backend/internal/preview"
-	"github.com/aoagents/agent-orchestrator/backend/internal/push"
-	"github.com/aoagents/agent-orchestrator/backend/internal/runfile"
-	agentsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/agent"
-	devimportsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/devimport"
-	importsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/importer"
-	notificationsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/notification"
-	projectsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/project"
-	"github.com/aoagents/agent-orchestrator/backend/internal/skillassets"
-	"github.com/aoagents/agent-orchestrator/backend/internal/storage/sqlite"
-	"github.com/aoagents/agent-orchestrator/backend/internal/terminal"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/runtime/runtimeselect"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/daemon/supervisor"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/controllers"
+	"github.com/sriram687/GIT_WIZ/backend/internal/mobilebridge"
+	"github.com/sriram687/GIT_WIZ/backend/internal/notify"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/preview"
+	"github.com/sriram687/GIT_WIZ/backend/internal/push"
+	"github.com/sriram687/GIT_WIZ/backend/internal/runfile"
+	agentsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/agent"
+	devimportsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/devimport"
+	importsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/importer"
+	notificationsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/notification"
+	projectsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/project"
+	"github.com/sriram687/GIT_WIZ/backend/internal/skillassets"
+	"github.com/sriram687/GIT_WIZ/backend/internal/storage/sqlite"
+	"github.com/sriram687/GIT_WIZ/backend/internal/terminal"
 )
 
 // Run starts the daemon and blocks until it exits. SIGINT/SIGTERM drive

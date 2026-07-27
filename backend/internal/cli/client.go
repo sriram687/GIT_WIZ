@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/runfile"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/runfile"
 )
 
 // commandTimeout bounds a mutating daemon call. Spawns do real work (git

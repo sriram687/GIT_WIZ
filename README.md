@@ -1,34 +1,34 @@
 <div align="center">
-  <img src="assets/ao-logo.svg" alt="Agent Orchestrator" width="160" height="160" />
+  <img src="assets/ao-logo.svg" alt="GIT_WIZ" width="160" height="160" />
 
-# Agent Orchestrator
+# GIT_WIZ
 
 **The orchestration layer for parallel AI coding agents**
 
-[![Stars](https://img.shields.io/github/stars/AgentWrapper/agent-orchestrator)](https://github.com/AgentWrapper/agent-orchestrator/stargazers)
-[![Contributors](https://img.shields.io/github/contributors/AgentWrapper/agent-orchestrator)](https://github.com/AgentWrapper/agent-orchestrator/graphs/contributors)
+[![Stars](https://img.shields.io/github/stars/sriram687/GIT_WIZ)](https://github.com/sriram687/GIT_WIZ/stargazers)
+[![Contributors](https://img.shields.io/github/contributors/sriram687/GIT_WIZ)](https://github.com/sriram687/GIT_WIZ/graphs/contributors)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?logo=twitter&logoColor=white)](https://x.com/aoagents)
 [![Discord](https://img.shields.io/badge/Discord-join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/UZv7JjxbwG)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 
 An Agentic IDE that supervises parallel AI coding agents in isolated workspaces, with complete control and automatic feedback loops from CI failures, review comments, and merge conflicts.
 
-<img src="docs/assets/readme/dashboard.png" alt="Agent Orchestrator dashboard showing parallel coding agent sessions" width="100%" />
+
 </div>
 
 ---
 
-## What is Agent Orchestrator?
+## What is GIT_WIZ?
 
-Agent Orchestrator is a meta-harness agent IDE for running AI coding agents in parallel. It gives terminal-based agents like Claude Code, Codex, Cursor, Kimi Code, opencode, and others a shared workspace where their sessions, terminals, branches, pull requests, and feedback loops can be supervised from one place.
+GIT_WIZ is a meta-harness agent IDE for running AI coding agents in parallel. It gives terminal-based agents like Claude Code, Codex, Cursor, Kimi Code, opencode, and others a shared workspace where their sessions, terminals, branches, pull requests, and feedback loops can be supervised from one place.
 
 The agents still do the coding. AO provides the harness around them: isolated workspaces, live terminal access, session state, PR awareness, and automatic loops that send CI failures, review comments, and merge conflicts back to the right agent. Instead of manually coordinating a pile of agent terminals, AO turns parallel agent work into a managed workflow.
 
-## Why Agent Orchestrator?
+## Why GIT_WIZ?
 
 AI coding agents become much more useful when they can work in parallel, but parallel work gets messy quickly. Branches overlap, terminals get lost, CI failures need follow-up, review comments need replies, and merge conflicts have to reach the right worker.
 
-Agent Orchestrator is built to keep that loop visible and manageable. It helps you:
+GIT_WIZ is built to keep that loop visible and manageable. It helps you:
 
 - Start multiple agents from the same project without mixing their work
 - Keep every session in a separate git worktree
@@ -38,7 +38,7 @@ Agent Orchestrator is built to keep that loop visible and manageable. It helps y
 
 ## How it works
 
-At a high level, Agent Orchestrator follows a simple loop:
+At a high level, GIT_WIZ follows a simple loop:
 
 1. Add a project you want agents to work on.
 2. Start one or more sessions from the desktop app or CLI.
@@ -47,7 +47,7 @@ At a high level, Agent Orchestrator follows a simple loop:
 5. The local daemon watches session state, terminal activity, pull requests, CI, and review feedback.
 6. The desktop app and CLI show the current state and let you send follow-up instructions to the right session.
 
-The result is a local control layer for agentic coding: agents still do the coding, while Agent Orchestrator keeps their workspaces, status, terminals, and feedback loops organized.
+The result is a local control layer for agentic coding: agents still do the coding, while GIT_WIZ keeps their workspaces, status, terminals, and feedback loops organized.
 
 ## Features
 
@@ -60,7 +60,7 @@ The desktop app is the main control surface: projects on the left, active sessio
       <p>Start multiple coding agents from the same project without mixing files, branches, terminals, or pull request state.</p>
     </td>
     <td width="64%">
-      <img src="docs/assets/readme/dashboard.png" alt="Agent Orchestrator board with multiple parallel sessions" />
+      
     </td>
   </tr>
   <tr>
@@ -69,7 +69,7 @@ The desktop app is the main control surface: projects on the left, active sessio
       <p>Open any session and attach to the worker terminal while keeping session summary, PR state, and follow-up actions in view.</p>
     </td>
     <td width="64%">
-      <img src="docs/assets/readme/session-terminal.png" alt="Session terminal inside Agent Orchestrator" />
+      <img src="docs/assets/readme/session-terminal.png" alt="Session terminal inside GIT_WIZ" />
     </td>
   </tr>
   <tr>
@@ -130,7 +130,7 @@ Reviewer agents are configured separately. The current reviewer harnesses are:
   <a href="https://aoagents.dev/docs/plugins/agents/opencode"><img src="frontend/src/landing/public/docs/logos/opencode.svg" alt="" width="16" height="16" valign="middle" /> <code>opencode</code></a>
 </p>
 
-**If it runs in a terminal, it runs on Agent Orchestrator.**
+**If it runs in a terminal, it runs on GIT_WIZ.**
 
 ## Install
 
@@ -138,12 +138,12 @@ Download the latest desktop build for your platform:
 
 | Platform              | Download                                                                                                                      |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| macOS (Apple silicon) | [Download](https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-darwin-arm64.zip)   |
-| macOS (Intel)         | [Download](https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-darwin-x64.zip)     |
-| Windows               | [Download](https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-win32-x64.exe)      |
-| Linux                 | [Download](https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-linux-x64.AppImage) |
+| macOS (Apple silicon) | [Download](https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-darwin-arm64.zip)   |
+| macOS (Intel)         | [Download](https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-darwin-x64.zip)     |
+| Windows               | [Download](https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-win32-x64.exe)      |
+| Linux                 | [Download](https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-linux-x64.AppImage) |
 
-After installing, open Agent Orchestrator and point it at the repository you want AO to manage. The desktop app runs the daemon for you, so no CLI is required. Installed desktop builds check for updates on launch and periodically while the app is running. See the [installation guide](https://aoagents.dev/docs/installation) for agent CLI setup and troubleshooting.
+After installing, open GIT_WIZ and point it at the repository you want AO to manage. The desktop app runs the daemon for you, so no CLI is required. Installed desktop builds check for updates on launch and periodically while the app is running. See the [installation guide](https://aoagents.dev/docs/installation) for agent CLI setup and troubleshooting.
 
 <details>
 <summary>Install via npm (legacy CLI, no longer recommended)</summary>
@@ -163,12 +163,12 @@ ao start
   <tr>
     <td width="50%" align="center">
       <a href="https://x.com/agent_wrapper/status/2026329204405723180">
-        <img src="assets/tweet2.png" height="330" alt="Agent Orchestrator journey screenshot one" />
+        <img src="assets/tweet2.png" height="330" alt="GIT_WIZ journey screenshot one" />
       </a>
     </td>
     <td width="50%" align="center">
       <a href="https://x.com/agent_wrapper/status/2025986105485733945">
-        <img src="assets/tweet1.png" height="330" alt="Agent Orchestrator journey screenshot two" />
+        <img src="assets/tweet1.png" height="330" alt="GIT_WIZ journey screenshot two" />
       </a>
     </td>
   </tr>
@@ -186,7 +186,7 @@ ao start
 
 ## Telemetry
 
-Agent Orchestrator's Electron renderer sends anonymous usage events to PostHog for reliability and product understanding, and PostHog session recording is enabled with local paths and local URLs redacted before transmission. Set `VITE_AO_POSTHOG_KEY` to an empty string before building to disable transmission. See [docs/telemetry.md](docs/telemetry.md).
+GIT_WIZ's Electron renderer sends anonymous usage events to PostHog for reliability and product understanding, and PostHog session recording is enabled with local paths and local URLs redacted before transmission. Set `VITE_AO_POSTHOG_KEY` to an empty string before building to disable transmission. See [docs/telemetry.md](docs/telemetry.md).
 
 ## License
 

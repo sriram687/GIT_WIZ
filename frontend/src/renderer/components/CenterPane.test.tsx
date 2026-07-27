@@ -29,7 +29,7 @@ describe("CenterPane toolbar session label", () => {
 	const makeShells = (count: number) =>
 		Array.from({ length: count }, (_, i) => ({
 			handleId: `h-${i}`,
-			title: `agent-orchestrator-${i}`,
+			title: `git-wiz-${i}`,
 			workingDir: "/tmp/ws",
 			createdAt: "2026-07-22T00:00:00Z",
 		}));

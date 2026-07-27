@@ -13,11 +13,11 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apierr"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	aoprocess "github.com/aoagents/agent-orchestrator/backend/internal/process"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apierr"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	aoprocess "github.com/sriram687/GIT_WIZ/backend/internal/process"
 )
 
 // Manager is the controller-facing contract for the /api/v1/projects surface.
@@ -308,7 +308,7 @@ func (m *Service) InitializeRepository(ctx context.Context, in InitializeReposit
 	if _, err := gitOutput(ctx, path, "add", "-A"); err != nil {
 		return InitializeRepositoryResult{}, apierr.Invalid("GIT_ADD_FAILED", "Could not stage files for the initial commit.", map[string]any{"error": err.Error()})
 	}
-	if _, err := gitOutput(ctx, path, "-c", "user.name=Agent Orchestrator", "-c", "user.email=ao@example.com", "commit", "--allow-empty", "-m", "initial commit"); err != nil {
+	if _, err := gitOutput(ctx, path, "-c", "user.name=GIT_WIZ", "-c", "user.email=ao@example.com", "commit", "--allow-empty", "-m", "initial commit"); err != nil {
 		return InitializeRepositoryResult{}, apierr.Invalid("INITIAL_COMMIT_FAILED", "Could not create the initial commit.", map[string]any{"error": err.Error()})
 	}
 	return InitializeRepositoryResult{Path: path}, nil

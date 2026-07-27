@@ -3,7 +3,7 @@ import { isAllowedAppExternalURL, openAllowedAppExternalURL } from "./external-o
 
 describe("isAllowedAppExternalURL", () => {
 	it("allows web and mail handoff URLs from the app renderer", () => {
-		expect(isAllowedAppExternalURL("https://github.com/AgentWrapper/agent-orchestrator/issues/new")).toBe(true);
+		expect(isAllowedAppExternalURL("https://github.com/sriram687/GIT_WIZ/issues/new")).toBe(true);
 		expect(isAllowedAppExternalURL("http://localhost:5173/help")).toBe(true);
 		expect(isAllowedAppExternalURL("mailto:support@aoagents.dev?subject=AO%20feedback")).toBe(true);
 	});

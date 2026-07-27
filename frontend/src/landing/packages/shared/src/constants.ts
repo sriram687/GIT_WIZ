@@ -1,10 +1,10 @@
 export const COMPANY = {
-  NAME: "Agent Orchestrator",
+  NAME: "GIT_WIZ",
   SHORT_NAME: "AO",
   MARKETING_URL: "https://aoagents.dev",
   DOCS_URL: "https://aoagents.dev/docs",
-  GITHUB_URL: "https://github.com/AgentWrapper/agent-orchestrator",
-  GITHUB_REPO: "AgentWrapper/agent-orchestrator",
+  GITHUB_URL: "https://github.com/sriram687/GIT_WIZ",
+  GITHUB_REPO: "sriram687/GIT_WIZ",
   STATUS_URL: "https://status.aoagents.dev",
   TRUST_URL: "https://aoagents.dev/privacy",
   MAIL_TO: "mailto:hello@aoagents.dev",
@@ -15,9 +15,9 @@ export const COMPANY = {
   EMAIL_DOMAIN: "@aoagents.dev",
   FOUNDERS_MAIL_TO: "mailto:founders@aoagents.dev",
   FOUNDERS_EMAIL: "founders@aoagents.dev",
-  REPORT_ISSUE_URL: "https://github.com/AgentWrapper/agent-orchestrator/issues/new",
+  REPORT_ISSUE_URL: "https://github.com/sriram687/GIT_WIZ/issues/new",
   LICENSE: "Apache-2.0",
-  LICENSE_URL: "https://github.com/AgentWrapper/agent-orchestrator/blob/main/LICENSE",
+  LICENSE_URL: "https://github.com/sriram687/GIT_WIZ/blob/main/LICENSE",
 } as const;
 
 export const THEME_STORAGE_KEY = "ao-theme";
@@ -31,12 +31,12 @@ export const PLATFORMS = {
   LINUX: "linux",
 } as const;
 
-export const GITHUB_STARS_URL = "https://api.github.com/repos/AgentWrapper/agent-orchestrator";
+export const GITHUB_STARS_URL = "https://api.github.com/repos/sriram687/GIT_WIZ";
 
-export const DOWNLOAD_URL_MAC_ARM64 = "https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-darwin-arm64.zip";
-export const DOWNLOAD_URL_MAC_X64 = "https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-darwin-x64.zip";
-export const DOWNLOAD_URL_WINDOWS = "https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-win32-x64.exe";
-export const DOWNLOAD_URL_LINUX = "https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/agent-orchestrator-linux-x64.AppImage";
+export const DOWNLOAD_URL_MAC_ARM64 = "https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-darwin-arm64.zip";
+export const DOWNLOAD_URL_MAC_X64 = "https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-darwin-x64.zip";
+export const DOWNLOAD_URL_WINDOWS = "https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-win32-x64.exe";
+export const DOWNLOAD_URL_LINUX = "https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-linux-x64.AppImage";
 
 export const AGENT_HARNESSES = 23;
 export const TAGLINE = "Turn agent chaos into managable work.";

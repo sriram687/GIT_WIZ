@@ -11,9 +11,9 @@ import (
 
 	_ "embed"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	"github.com/aoagents/agent-orchestrator/backend/internal/skillassets"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/skillassets"
 )
 
 const (
@@ -35,7 +35,7 @@ const (
 	// opencodePluginSentinel marks the file as AO-managed. AreHooksInstalled and
 	// UninstallHooks key off it so AO never deletes a user file that happens to
 	// share the name. It must appear verbatim in the embedded plugin source.
-	opencodePluginSentinel = "agent-orchestrator: managed opencode activity plugin"
+	opencodePluginSentinel = "git-wiz: managed opencode activity plugin"
 
 	// opencodeHookCommandPrefix identifies the hook commands AO owns. The
 	// embedded plugin shells `ao hooks opencode <event>`; this prefix is the
@@ -56,7 +56,7 @@ const (
 
 	// opencodeSkillSentinel is written into the marker file. Keep it distinct
 	// from the plugin sentinel so ownership checks stay file-specific.
-	opencodeSkillSentinel = "agent-orchestrator: managed opencode using-ao skill"
+	opencodeSkillSentinel = "git-wiz: managed opencode using-ao skill"
 )
 
 // opencodePluginSource is the AO-managed opencode plugin, embedded so it ships

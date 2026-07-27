@@ -46,12 +46,12 @@ ao setup slack --status
 ao setup slack --refresh
 ```
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 notifiers:
   slack:
     plugin: slack
     webhookUrl: https://hooks.slack.com/services/...
-    username: "Agent Orchestrator"
+    username: "GIT_WIZ"
     channel: "#agents" # optional; should match the webhook's channel
 ```
 
@@ -61,7 +61,7 @@ notifiers:
 | ------------ | -------- | -------------------- | --------------------------------------------------------------------------------------------------- |
 | `webhookUrl` | ✓        | —                    | Slack incoming webhook URL                                                                          |
 | `channel`    | optional | webhook default      | Informational/compatibility channel name; should match the channel chosen when creating the webhook |
-| `username`   | optional | `Agent Orchestrator` | Requested display name                                                                              |
+| `username`   | optional | `GIT_WIZ` | Requested display name                                                                              |
 
 ## Notes
 

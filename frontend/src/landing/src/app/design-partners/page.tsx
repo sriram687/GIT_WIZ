@@ -7,7 +7,7 @@ import {
 } from "./RoadmapSlideshow";
 
 const CONTACT_EMAIL = "prateek@untrivial.ai";
-const CAL_URL = "https://cal.com/agentwrapper/ao-design-partner";
+const CAL_URL = "https://cal.com/sriram687/ao-design-partner";
 const MAILTO_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   "AO Design Partner Program",
 )}&body=${encodeURIComponent(
@@ -15,7 +15,7 @@ const MAILTO_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
 )}`;
 
 export const metadata: Metadata = {
-  title: "Design Partner Program - Agent Orchestrator",
+  title: "Design Partner Program - GIT_WIZ",
   description:
     "Mission control for your agent fleet: shared sessions, ROI observability, and an engine room your org fully owns. Your engineers get leverage; your leadership gets answers.",
   openGraph: {

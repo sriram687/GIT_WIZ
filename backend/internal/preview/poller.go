@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 )
 
 // DefaultPollInterval is the preview poller's scan interval when none is configured.

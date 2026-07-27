@@ -9,9 +9,9 @@ package claudecode
 import (
 	"context"
 
-	workeragent "github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/claudecode"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	workeragent "github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/claudecode"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // Reviewer is the claude-code code-review adapter.

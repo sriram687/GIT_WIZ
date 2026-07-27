@@ -89,17 +89,17 @@ jobs:
             darwin-*)
               # maker-zip output: out/make/zip/darwin/<arch>/<name>-<version>.zip
               src="$(find out/make/zip/darwin -name '*.zip' | head -n1)"
-              name="agent-orchestrator-$PLATFORM.zip"
+              name="git-wiz-$PLATFORM.zip"
               ;;
             win32-x64)
               # NSIS (electron-builder) output: out/make/<productName> Setup <version>.exe
               src="$(find out/make -maxdepth 1 -name '*Setup*.exe' | head -n1)"
-              name="agent-orchestrator-win32-x64.exe"
+              name="git-wiz-win32-x64.exe"
               ;;
             linux-x64)
               # AppImage (electron-builder) output: out/make/<productName>-<version>.AppImage
               src="$(find out/make -maxdepth 1 -name '*.AppImage' | head -n1)"
-              name="agent-orchestrator-linux-x64.AppImage"
+              name="git-wiz-linux-x64.AppImage"
               ;;
             *)
               echo "unknown platform: $PLATFORM" >&2
@@ -116,7 +116,7 @@ jobs:
           echo "$PLATFORM: $name sha256=$hash" >> "$GITHUB_STEP_SUMMARY"
       # The deb maker in forge.config.ts also runs on linux; capture its output
       # as a separate `linux-deb` artifact. It lives in its own dist-deb dir so
-      # the `linux` artifact's agent-orchestrator-linux-x64.* glob below cannot
+      # the `linux` artifact's git-wiz-linux-x64.* glob below cannot
       # pick it up. Its digest is merged into the linux-x64 digest fragment so
       # the digests job still reads one fragment per platform.
       - name: Collect Linux .deb and compute digest
@@ -127,7 +127,7 @@ jobs:
           # maker-deb output: out/make/deb/x64/<name>_<version>_amd64.deb
           src="$(find out/make -name '*.deb' | head -n1)"
           if [ -z "$src" ]; then echo "no .deb output found" >&2; exit 1; fi
-          name="agent-orchestrator-linux-x64.deb"
+          name="git-wiz-linux-x64.deb"
           cp "$src" "dist-deb/$name"
           hash="$(openssl dgst -sha256 "dist-deb/$name" | awk '{print $NF}')"
           jq --arg f "$name" --arg h "$hash" '. + {($f): $h}' \
@@ -139,14 +139,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linux-deb
-          path: frontend/dist-deb/agent-orchestrator-linux-x64.deb
+          path: frontend/dist-deb/git-wiz-linux-x64.deb
           retention-days: 1
           if-no-files-found: error
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-          path: frontend/dist-artifact/agent-orchestrator-${{ matrix.platform }}.*
+          path: frontend/dist-artifact/git-wiz-${{ matrix.platform }}.*
           retention-days: 1
           if-no-files-found: error
       - name: Upload digest

@@ -76,14 +76,14 @@ process.stdout.on("error", ignoreStdStreamError);
 process.stderr.on("error", ignoreStdStreamError);
 
 // Must run before app ready so the About panel and default-menu role labels use it.
-app.setName("Agent Orchestrator");
+app.setName("GIT_WIZ");
 
 // Windows shows native toasts only when the app declares an AppUserModelID that
 // matches its installer shortcut (the NSIS maker's appId). Without it,
 // Notification.isSupported() still returns true but show() silently drops the
 // toast, so notifications never appear. No-op on macOS/Linux.
 if (process.platform === "win32") {
-	app.setAppUserModelId("dev.agent-orchestrator.desktop");
+	app.setAppUserModelId("dev.git-wiz.desktop");
 }
 
 // Pin ALL Electron-owned state (Chromium cache, cookies, local/session storage,
@@ -266,7 +266,7 @@ function createWindow(): void {
 		height: 860,
 		minWidth: 960,
 		minHeight: 640,
-		title: "Agent Orchestrator",
+		title: "GIT_WIZ",
 		icon: windowIconPath(),
 		backgroundColor: "#0f1014",
 		// Windows goes frameless with a Window Controls Overlay: Electron still draws
@@ -1153,8 +1153,8 @@ ipcMain.handle("menu:action", (_event, action: string) => {
 		case "help.about":
 			void dialog.showMessageBox(win, {
 				type: "info",
-				title: "About Agent Orchestrator",
-				message: "Agent Orchestrator",
+				title: "About GIT_WIZ",
+				message: "GIT_WIZ",
 				detail: `Version ${app.getVersion()}`,
 				buttons: ["OK"],
 			});
@@ -1424,7 +1424,7 @@ function initAutoUpdates(): void {
 }
 
 // Resolve the bundle path `ao start` will later `open` and stat as a usable app.
-// On macOS process.execPath is .../Agent Orchestrator.app/Contents/MacOS/<exe>;
+// On macOS process.execPath is .../GIT_WIZ.app/Contents/MacOS/<exe>;
 // the thing `ao start` opens is the enclosing `.app` directory, so walk up three
 // levels (MacOS -> Contents -> .app). app.getAppPath() is WRONG here: it returns
 // the app.asar archive path inside the bundle, not the bundle itself.

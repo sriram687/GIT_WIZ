@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apispec"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apispec/specgen"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apispec"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apispec/specgen"
 )
 
 // TestBuild_MatchesEmbedded is the drift guard: the committed (embedded)

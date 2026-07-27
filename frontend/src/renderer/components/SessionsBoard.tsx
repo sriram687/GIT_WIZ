@@ -352,7 +352,7 @@ export function SessionsBoard({ projectId }: SessionsBoardProps) {
 
 			{archived.length > 0 && (
 				<div className="shrink-0 border-t border-border px-3">
-					{/* agent-orchestrator's archive bar (Dashboard.tsx + globals.css):
+					{/* git-wiz's archive bar (Dashboard.tsx + globals.css):
 					    a full-width chevron + label + count toggle row. The button is
 					    37px (not the 35.5px its text-control implies) because the
 					    unlayered `button { font: inherit }` in styles.css outranks

@@ -71,7 +71,7 @@ export default function FleetScreen() {
 				<EmptyState
 					icon="server"
 					title="Connect to AO"
-					message="Point the app at your Agent Orchestrator server to start controlling your fleet."
+					message="Point the app at your GIT_WIZ server to start controlling your fleet."
 					action={<Button title="Configure server" icon="settings" onPress={() => router.push("/settings")} />}
 				/>
 			</View>

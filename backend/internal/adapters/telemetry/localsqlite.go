@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	sqlitestore "github.com/aoagents/agent-orchestrator/backend/internal/storage/sqlite/store"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	sqlitestore "github.com/sriram687/GIT_WIZ/backend/internal/storage/sqlite/store"
 )
 
 const (

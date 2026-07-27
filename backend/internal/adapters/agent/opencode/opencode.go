@@ -31,12 +31,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/agentbase"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/binaryutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	aoprocess "github.com/aoagents/agent-orchestrator/backend/internal/process"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/agentbase"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/binaryutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	aoprocess "github.com/sriram687/GIT_WIZ/backend/internal/process"
 
 	_ "modernc.org/sqlite" // register sqlite driver for opencode session metadata probes
 )

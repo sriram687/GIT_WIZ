@@ -14,7 +14,7 @@ import { DesktopAppPreview, PhoneAppPreview } from "./StaticAppPreviews";
 
 export const metadata: Metadata = {
   title: "Download",
-  description: "Download Agent Orchestrator for macOS, Windows, or Linux.",
+  description: "Download GIT_WIZ for macOS, Windows, or Linux.",
 };
 
 interface GitHubReleaseAsset {
@@ -96,12 +96,12 @@ export default async function DownloadPage() {
         build("Mac (Intel)", DOWNLOAD_URL_MAC_X64, "Stable"),
         build(
           "Mac (Apple silicon)",
-          assetUrl(nightly, "agent-orchestrator-darwin-arm64.zip"),
+          assetUrl(nightly, "git-wiz-darwin-arm64.zip"),
           "Nightly",
         ),
         build(
           "Mac (Intel)",
-          assetUrl(nightly, "agent-orchestrator-darwin-x64.zip"),
+          assetUrl(nightly, "git-wiz-darwin-x64.zip"),
           "Nightly",
         ),
       ]),
@@ -113,7 +113,7 @@ export default async function DownloadPage() {
         build("Windows (x64)", DOWNLOAD_URL_WINDOWS, "Stable"),
         build(
           "Windows (x64)",
-          assetUrl(nightly, "agent-orchestrator-win32-x64.exe"),
+          assetUrl(nightly, "git-wiz-win32-x64.exe"),
           "Nightly",
         ),
       ]),
@@ -127,8 +127,8 @@ export default async function DownloadPage() {
           "Linux .deb (x64)",
           assetUrl(
             stable,
-            "agent-orchestrator-linux-x64.deb",
-            /^agent-orchestrator[_-].*(?:amd64|x86_64)\.deb$/i,
+            "git-wiz-linux-x64.deb",
+            /^git-wiz[_-].*(?:amd64|x86_64)\.deb$/i,
           ),
           "Stable",
         ),
@@ -136,19 +136,19 @@ export default async function DownloadPage() {
           "Linux RPM (x64)",
           assetUrl(
             stable,
-            "agent-orchestrator-linux-x64.rpm",
-            /^agent-orchestrator-.*x86_64\.rpm$/i,
+            "git-wiz-linux-x64.rpm",
+            /^git-wiz-.*x86_64\.rpm$/i,
           ),
           "Stable",
         ),
         build(
           "Linux AppImage (x64)",
-          assetUrl(nightly, "agent-orchestrator-linux-x64.AppImage"),
+          assetUrl(nightly, "git-wiz-linux-x64.AppImage"),
           "Nightly",
         ),
         build(
           "Linux .deb (x64)",
-          assetUrl(nightly, "agent-orchestrator-linux-x64.deb"),
+          assetUrl(nightly, "git-wiz-linux-x64.deb"),
           "Nightly",
         ),
       ]),

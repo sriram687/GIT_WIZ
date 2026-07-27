@@ -107,11 +107,13 @@ func TestLoadOverrides(t *testing.T) {
 	if cfg.ShutdownTimeout != 3*time.Second {
 		t.Errorf("ShutdownTimeout = %s, want 3s", cfg.ShutdownTimeout)
 	}
-	if cfg.RunFilePath != "/tmp/ao-test-running.json" {
-		t.Errorf("RunFilePath = %q, want /tmp/ao-test-running.json", cfg.RunFilePath)
+	wantRunFile, _ := filepath.Abs("/tmp/ao-test-running.json")
+	if cfg.RunFilePath != wantRunFile {
+		t.Errorf("RunFilePath = %q, want %q", cfg.RunFilePath, wantRunFile)
 	}
-	if cfg.DataDir != "/tmp/ao-test-data" {
-		t.Errorf("DataDir = %q, want /tmp/ao-test-data", cfg.DataDir)
+	wantDataDir, _ := filepath.Abs("/tmp/ao-test-data")
+	if cfg.DataDir != wantDataDir {
+		t.Errorf("DataDir = %q, want %q", cfg.DataDir, wantDataDir)
 	}
 	if !cfg.Telemetry.Events || cfg.Telemetry.Metrics {
 		t.Fatalf("Telemetry toggles = %+v", cfg.Telemetry)

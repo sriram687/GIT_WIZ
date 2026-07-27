@@ -10,14 +10,14 @@ name: Desktop release
 # host's platform, so cross-OS packaging (e.g. building the Windows installer on
 # macOS) would ship a non-Windows binary named `ao` and the app could not launch
 # the daemon (issues #235/#256). The per-OS matrix keeps host == target, and the
-# Linux daemon is built on the Linux runner (AgentWrapper/agent-orchestrator#2191).
+# Linux daemon is built on the Linux runner (sriram687/GIT_WIZ#2191).
 #
 # ⚠️ Until macOS code signing + notarization secrets are configured (see
 # frontend/docs/desktop-release.md), published builds are UNSIGNED and will
 # NOT auto-update on macOS. The workflow still produces installable artifacts.
 #
 # ── Cutting a FORK test release (dev loop) ────────────────────────────────────
-# Test releases go to harshitsinghbhandari/agent-orchestrator (the fork), never
+# Test releases go to harshitsinghbhandari/git-wiz (the fork), never
 # to AgentWrapper. To cut one, on the FORK:
 #   - push a `desktop-v*` tag (e.g. `git push fork desktop-v0.0.0-test1`), or
 #   - run this workflow via `workflow_dispatch` from the fork's Actions tab.
@@ -25,7 +25,7 @@ name: Desktop release
 # automatically below from `github.repository`, so a fork run publishes to the
 # fork and a run on AgentWrapper publishes to AgentWrapper, with no edit. The
 # matching test `ao` binary is built with
-# `-ldflags -X ...cli.releaseRepo=harshitsinghbhandari/agent-orchestrator` so it
+# `-ldflags -X ...cli.releaseRepo=harshitsinghbhandari/git-wiz` so it
 # fetches from the same fork (spec §6.3).
 
 on:
@@ -123,8 +123,8 @@ jobs:
           tag="v$(node -p "require('./package.json').version")"
           arch="$(uname -m)"
           case "$arch" in
-            arm64) alias_name="agent-orchestrator-darwin-arm64.zip" ;;
-            x86_64) alias_name="agent-orchestrator-darwin-x64.zip" ;;
+            arm64) alias_name="git-wiz-darwin-arm64.zip" ;;
+            x86_64) alias_name="git-wiz-darwin-x64.zip" ;;
             *) echo "unsupported macOS arch: $arch" >&2; exit 1 ;;
           esac
           # maker-zip output: out/make/zip/darwin/<arch>/<dir-basename>-<version>.zip
@@ -141,7 +141,7 @@ jobs:
         run: |
           # Forge publishes to v<version> (see the macOS step), not the git tag.
           tag="v$(node -p "require('./package.json').version")"
-          alias_name="agent-orchestrator-win32-x64.exe"
+          alias_name="git-wiz-win32-x64.exe"
           # NSIS (electron-builder) output: out/make/<productName> Setup <version>.exe
           src="$(ls "out/make/"*Setup*.exe | head -n1)"
           if [ -z "$src" ]; then echo "no NSIS installer found under out/make" >&2; exit 1; fi
@@ -161,7 +161,7 @@ jobs:
         run: |
           # Forge publishes to v<version> (see the macOS step), not the git tag.
           tag="v$(node -p "require('./package.json').version")"
-          alias_name="agent-orchestrator-linux-x64.AppImage"
+          alias_name="git-wiz-linux-x64.AppImage"
           # AppImage (electron-builder) output: out/make/<productName>-<version>.AppImage
           src="$(ls out/make/*.AppImage | head -n1)"
           if [ -z "$src" ]; then echo "no AppImage found under out/make" >&2; exit 1; fi
@@ -226,8 +226,8 @@ jobs:
           tag="v$(node -p "require('./package.json').version")"
           arch="$(uname -m)"
           case "$arch" in
-            arm64) alias_name="agent-orchestrator-darwin-arm64.zip" ;;
-            x86_64) alias_name="agent-orchestrator-darwin-x64.zip" ;;
+            arm64) alias_name="git-wiz-darwin-arm64.zip" ;;
+            x86_64) alias_name="git-wiz-darwin-x64.zip" ;;
             *) echo "unsupported macOS arch: $arch" >&2; exit 1 ;;
           esac
           src="$(ls out/make/zip/darwin/*/*.zip | head -n1)"

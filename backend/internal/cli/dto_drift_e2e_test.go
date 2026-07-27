@@ -31,15 +31,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/controllers"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	"github.com/aoagents/agent-orchestrator/backend/internal/runfile"
-	agentsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/agent"
-	projectsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/project"
-	sessionsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/session"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/controllers"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/runfile"
+	agentsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/agent"
+	projectsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/project"
+	sessionsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/session"
 )
 
 // fakeSessionService captures the ports.SpawnConfig the controller decodes from

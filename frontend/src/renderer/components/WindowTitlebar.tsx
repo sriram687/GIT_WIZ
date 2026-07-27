@@ -186,7 +186,7 @@ export function WindowTitlebar({
 						<DropdownMenuShortcut>Ctrl+/</DropdownMenuShortcut>
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem onSelect={act("help.about")}>About Agent Orchestrator</DropdownMenuItem>
+					<DropdownMenuItem onSelect={act("help.about")}>About GIT_WIZ</DropdownMenuItem>
 				</TopMenu>
 			</nav>
 		</header>

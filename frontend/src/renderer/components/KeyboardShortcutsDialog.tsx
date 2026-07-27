@@ -27,7 +27,7 @@ export function KeyboardShortcutsDialog({ open, onOpenChange, isMac = isMacPlatf
 				<DialogHeader className="border-b border-border px-5 py-4">
 					<DialogTitle className="text-[15px]">Keyboard shortcuts</DialogTitle>
 					<DialogDescription className="text-xs">
-						Move around Agent Orchestrator without leaving the keyboard.
+						Move around GIT_WIZ without leaving the keyboard.
 					</DialogDescription>
 				</DialogHeader>
 

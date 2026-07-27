@@ -10,8 +10,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/hookutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/hookutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 const (
@@ -19,7 +19,7 @@ const (
 	crushConfigFileName     = ".crush.json"
 	crushSystemPromptName   = "ao-system-prompt.md"
 	crushSystemPromptPath   = crushConfigDirName + "/" + crushSystemPromptName
-	crushSystemPromptMarker = "agent-orchestrator: managed crush system prompt"
+	crushSystemPromptMarker = "git-wiz: managed crush system prompt"
 )
 
 // GetAgentHooks installs AO's standing instructions as a Crush context file.

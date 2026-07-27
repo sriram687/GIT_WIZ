@@ -47,7 +47,7 @@ AO needs tmux 3.2 or newer.
 
 ## Use
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 runtime: tmux
 ```
 
@@ -70,4 +70,4 @@ Or from inside tmux, switch windows manually. You can detach at any time (`Ctrl-
 ## Troubleshooting
 
 - **`tmux server not running`.** `ao start` launches the server for you; if you killed it, run `ao start` again.
-- **Window disappears after agent exits.** Intentional — AO cleans up finished windows. The session metadata is archived under `~/.agent-orchestrator/.../archive/`.
+- **Window disappears after agent exits.** Intentional — AO cleans up finished windows. The session metadata is archived under `~/.git-wiz/.../archive/`.

@@ -4,9 +4,9 @@ import { API_URL, MARKDOWN_HEADERS, MCP_SERVER_URL } from "@/lib/llms";
 export const dynamic = "force-static";
 
 export function GET() {
-  const content = `# Agent Orchestrator agent authentication
+  const content = `# GIT_WIZ agent authentication
 
-How an AI agent obtains and uses credentials for the Agent Orchestrator API (${API_URL}). The flow is standard OAuth 2.1 with PKCE plus RFC 7591 dynamic client registration; no manual app setup is required. This document follows the auth.md convention (https://workos.com/auth-md).
+How an AI agent obtains and uses credentials for the GIT_WIZ API (${API_URL}). The flow is standard OAuth 2.1 with PKCE plus RFC 7591 dynamic client registration; no manual app setup is required. This document follows the auth.md convention (https://workos.com/auth-md).
 
 ## 1. Discover
 
@@ -27,7 +27,7 @@ Fetch the protected resource metadata (RFC 9728), read \`authorization_servers\`
 ## 2. Pick a method
 
 - **OAuth 2.1 (recommended)**: authorization code + PKCE with dynamic client registration. The user approves your agent in a browser; you get a scoped, revocable access token and a refresh token.
-- **API key**: a user can create an API key in the Agent Orchestrator app and hand it to your agent. Send it as a Bearer token. Skip to "Use the credential".
+- **API key**: a user can create an API key in the GIT_WIZ app and hand it to your agent. Send it as a Bearer token. Skip to "Use the credential".
 
 Identity assertions (\`identity_assertion\`, \`urn:ietf:params:oauth:token-type:id-jag\`) are not yet supported; registration is anonymous until the user claims it via the browser consent step below.
 
@@ -98,7 +98,7 @@ Content-Type: application/x-www-form-urlencoded
 token=<access_or_refresh_token>&client_id=...
 \`\`\`
 
-Users can also revoke your agent's access and API keys at any time from the Agent Orchestrator app; revoked tokens fail with \`401\` on the next request.
+Users can also revoke your agent's access and API keys at any time from the GIT_WIZ app; revoked tokens fail with \`401\` on the next request.
 `;
 
   return new Response(content, { headers: MARKDOWN_HEADERS });

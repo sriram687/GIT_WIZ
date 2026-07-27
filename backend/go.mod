@@ -1,4 +1,4 @@
-module github.com/aoagents/agent-orchestrator/backend
+module github.com/sriram687/GIT_WIZ/backend
 
 go 1.25.7
 

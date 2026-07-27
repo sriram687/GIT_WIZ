@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
 )
 
 // corsMiddleware grants cross-origin read access to the allowlisted browser

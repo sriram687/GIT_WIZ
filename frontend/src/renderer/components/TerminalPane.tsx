@@ -364,7 +364,7 @@ function AttachedTerminal({ session, theme, daemonReady, terminalTarget, fontSiz
 	const banner = bannerText(state, error);
 	const showEmptyState = !handleId;
 	const showEndedState = state === "exited" || canRestoreSession;
-	const emptyStateTitle = session ? "Starting session" : "Agent Orchestrator";
+	const emptyStateTitle = session ? "Starting session" : "GIT_WIZ";
 	const emptyStateMessage = session
 		? session.kind === "orchestrator"
 			? "Preparing the orchestrator terminal. This can take a moment while AO creates the workspace and starts the agent."

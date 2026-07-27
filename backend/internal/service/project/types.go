@@ -1,6 +1,6 @@
 package project
 
-import "github.com/aoagents/agent-orchestrator/backend/internal/domain"
+import "github.com/sriram687/GIT_WIZ/backend/internal/domain"
 
 // Summary is the row shape returned by GET /api/v1/projects.
 type Summary struct {

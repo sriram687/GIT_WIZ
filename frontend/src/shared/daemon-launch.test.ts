@@ -29,13 +29,13 @@ describe("resolveDaemonLaunch", () => {
 			resolveDaemonLaunch(
 				{},
 				true,
-				"/Applications/Agent Orchestrator.app/Contents/Resources",
+				"/Applications/GIT_WIZ.app/Contents/Resources",
 				"/app",
 				"/Users/alice",
 				"darwin",
 			),
 		).toEqual({
-			command: "/Applications/Agent Orchestrator.app/Contents/Resources/daemon/ao",
+			command: "/Applications/GIT_WIZ.app/Contents/Resources/daemon/ao",
 			args: ["daemon"],
 			cwd: "/Users/alice/.ao",
 			shell: false,

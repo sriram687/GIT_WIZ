@@ -10,11 +10,11 @@
 
 ## Global Constraints
 
-- Module path: `github.com/aoagents/agent-orchestrator/backend`.
+- Module path: `github.com/sriram687/GIT_WIZ/backend`.
 - **No em dashes** anywhere (prose, comments, copy). Use `.`/`,`/`(...)`.
 - `openapi.yaml` and `frontend/src/api/schema.ts` are **generated** (never hand-edit); change the Go reflection source then run `npm run api:spec && npm run api:ts`.
 - All app state under `~/.ao` only (already enforced; don't regress).
-- Branch: `ao/agent-orchestrator-3/import-offer` (sibling of `…/root`). PR target `main` on `AgentWrapper/agent-orchestrator`.
+- Branch: `ao/git-wiz-3/import-offer` (sibling of `…/root`). PR target `main` on `sriram687/GIT_WIZ`.
 - **Reference:** this repo sits exactly at PR #320's base, so the change set lines up 1:1 with that PR. Where a step says "PR-verbatim," copy the PR's content for that file.
 - Commit immediately after each task (AO worktrees can be force-removed).
 
@@ -126,8 +126,8 @@ package importer
 import (
 	"context"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/legacyimport"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/legacyimport"
 )
 
 // Store is the storage slice the import service needs: the legacy importer's
@@ -266,7 +266,7 @@ type ImportRunResponse struct {
   - `NewAPI`: add `imports: &controllers.ImportController{Svc: deps.Import},` (after the `notifications:` line).
   - `Register` timeout group: add `a.imports.Register(r)` (after `a.notifications.Register(r)`).
 - [ ] **Step 2:** `daemon.go` edits:
-  - Add import: `importsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/importer"`.
+  - Add import: `importsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/importer"`.
   - In the `httpd.APIDeps{...}` literal, add: `Import: importsvc.New(importsvc.Deps{Store: store}),` (projects-only: **no** `DataDir`).
 - [ ] **Step 3:** `cd backend && go build ./... && go test ./internal/httpd/... ./internal/service/importer/...` → expect PASS (gate for Task 3's tests too).
 - [ ] **Step 4:** Commit: `feat(daemon): mount import service on the API`
@@ -356,7 +356,7 @@ type ImportRunResponse struct {
 - [ ] `npm --prefix frontend run typecheck && npm --prefix frontend run test` → green.
 - [ ] Confirm `git status` shows **no** uncommitted drift in `openapi.yaml`/`schema.ts` after a fresh `npm run api:spec && npm run api:ts`.
 - [ ] **Full build** (per the build-verification rule; rollup tree-shaking can hide missing emits): run the frontend production build.
-- [ ] `ao preview` the dashboard against a daemon pointed at a seeded `~/.agent-orchestrator` legacy root with an empty rewrite DB; verify the banner appears, Import imports the projects + retires the banner, Not now dismisses.
+- [ ] `ao preview` the dashboard against a daemon pointed at a seeded `~/.git-wiz` legacy root with an empty rewrite DB; verify the banner appears, Import imports the projects + retires the banner, Not now dismisses.
 
 ---
 

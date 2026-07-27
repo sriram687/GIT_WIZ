@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	shelltermsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/shellterm"
+	shelltermsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/shellterm"
 )
 
 func shellTerminalRecord(handleID, appRunID string) shelltermsvc.ShellTerminalRecord {

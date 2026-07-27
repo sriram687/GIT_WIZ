@@ -15,9 +15,9 @@ import (
 	openapi "github.com/swaggest/openapi-go"
 	"github.com/swaggest/openapi-go/openapi31"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/controllers"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/envelope"
-	projectsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/project"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/controllers"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
+	projectsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/project"
 )
 
 // Build reflects the Go contract types and the operation registry below into
@@ -47,7 +47,7 @@ func Build() ([]byte, error) {
 		jsonschema.InterceptDefName(schemaName),
 	)
 
-	r.Spec.SetTitle("Agent Orchestrator HTTP daemon")
+	r.Spec.SetTitle("GIT_WIZ HTTP daemon")
 	r.Spec.SetVersion("0.1.0-route-shell")
 	r.Spec.SetDescription("Loopback-only HTTP surface served by the Go daemon. " +
 		"Generated from Go (code-first) — do not edit by hand; run `go generate ./...`.")

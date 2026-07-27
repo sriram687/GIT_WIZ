@@ -5,15 +5,15 @@
 > - Radix/shadcn + xterm, in `frontend/src/renderer`). Read this before any visual
 >   or UI change. Created by `/design-consultation` on 2026-06-09.
 
-## ⚠️ Design direction — clone agent-orchestrator verbatim (SUPERSEDES prior direction · 2026-06-10)
+## ⚠️ Design direction — clone git-wiz verbatim (SUPERSEDES prior direction · 2026-06-10)
 
 By explicit user decision (2026-06-10), the renderer **clones the
-agent-orchestrator web app verbatim** in looks and design. This **supersedes the
+git-wiz web app verbatim** in looks and design. This **supersedes the
 "match the reference" direction** documented in _Aesthetic Direction_ and the palette
-sections below — where they conflict, **agent-orchestrator wins**. Do not re-flag
-"this doesn't match the old reference" in QA/review; flag divergence from **agent-orchestrator**.
+sections below — where they conflict, **git-wiz wins**. Do not re-flag
+"this doesn't match the old reference" in QA/review; flag divergence from **git-wiz**.
 
-- **Reference (the user's own app):** `~/Projects/agent-orchestrator/packages/web/src`
+- **Reference (the user's own app):** `~/Projects/git-wiz/packages/web/src`
   — `app/globals.css`, `app/mc-board.css`, `app/mc-sidebar.css`,
   `components/{ProjectSidebar,Dashboard,SessionCard,SessionDetailHeader,SessionInspector,StatusBadge}.tsx`.
 - **Palette (live in `frontend/src/renderer/styles.css` `:root`):** `--bg #0a0b0d`,
@@ -27,10 +27,10 @@ sections below — where they conflict, **agent-orchestrator wins**. Do not re-f
   the shared `DashboardTopbar`/`DashboardSubhead` chrome (Coding/Reviews tabs · "N
   working" pill · subhead) reused across board/review/PR/settings.
 - **Build with shadcn primitives** where a component fits (`components/ui/*`:
-  dropdown-menu, select, card, table, tooltip, …); agent-orchestrator's own
+  dropdown-menu, select, card, table, tooltip, …); git-wiz's own
   hand-rolled CSS components are structure/behaviour reference only.
 - The one carried-over divergence still holds: the **accent is refined blue**, and
-  the **terminal keeps its own palette**. Everything else tracks agent-orchestrator.
+  the **terminal keeps its own palette**. Everything else tracks git-wiz.
 - **Approved divergence (2026-06-10):** on macOS, a titlebar cluster (sidebar toggle +
   back/forward history arrows, `TitlebarNav`) lives in the sidebar header below the
   traffic lights — the web reference has no window chrome, so no analogue exists.
@@ -87,9 +87,9 @@ list of independent sessions. Grounded in the daemon
 
 ## Aesthetic Direction
 
-> **Superseded (2026-06-10):** see the _Design direction — clone agent-orchestrator
+> **Superseded (2026-06-10):** see the _Design direction — clone git-wiz
 > verbatim_ banner at the top. The earlier reference framing below is retained for
-> history; the live look tracks agent-orchestrator (same flat near-black / hairline
+> history; the live look tracks git-wiz (same flat near-black / hairline
 > family, so most of this still reads true).
 
 - **Direction:** flat, near-black, hairline-bordered, utilitarian. Industrial control
@@ -257,7 +257,7 @@ mirrors the reference exactly. Launching from a project row pre-fills the Projec
 - Keep tokens as CSS custom properties under `:root` (dark) and `:root[data-theme="light"]`.
 - A faithful HTML reference of all of the above (both views + topbar + spawn modal,
   light/dark) is saved under
-  `~/.gstack/projects/aoagents-agent-orchestrator/designs/design-system-20260609/`.
+  `~/.gstack/projects/aoagents-git-wiz/designs/design-system-20260609/`.
 
 ## Decisions Log
 

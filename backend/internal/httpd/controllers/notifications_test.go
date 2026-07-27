@@ -11,12 +11,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/apierr"
-	"github.com/aoagents/agent-orchestrator/backend/internal/httpd/controllers"
-	notificationsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/notification"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apierr"
+	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/controllers"
+	notificationsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/notification"
 )
 
 type fakeNotificationService struct {

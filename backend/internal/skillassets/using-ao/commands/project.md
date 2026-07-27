@@ -36,7 +36,7 @@ ao project add [flags]
 
 ```bash
 # Register a repo as a project
-ao project add --path /Users/harshit/Downloads/side-quests/agent-orchestrator --name "agent-orchestrator"
+ao project add --path /Users/harshit/Downloads/side-quests/git-wiz --name "git-wiz"
 ```
 
 ```bash
@@ -88,8 +88,8 @@ ao project get <id> [flags]
 **Examples:**
 
 ```bash
-# Get details for the agent-orchestrator project
-ao project get agent-orchestrator
+# Get details for the git-wiz project
+ao project get git-wiz
 ```
 
 ---
@@ -114,12 +114,12 @@ ao project rm <id> [flags]
 
 ```bash
 # Remove a project (with confirmation)
-ao project rm agent-orchestrator
+ao project rm git-wiz
 ```
 
 ```bash
 # Remove without prompt
-ao project rm agent-orchestrator -y
+ao project rm git-wiz -y
 ```
 
 ---
@@ -157,20 +157,20 @@ ao project set-config <id> [flags]
 
 ```bash
 # Set default branch and model for a project
-ao project set-config agent-orchestrator --default-branch main --model claude-opus-4-5
+ao project set-config git-wiz --default-branch main --model claude-opus-4-5
 ```
 
 ```bash
 # Set an env var and a post-create command
-ao project set-config agent-orchestrator --env "NODE_ENV=development" --post-create "npm install"
+ao project set-config git-wiz --env "NODE_ENV=development" --post-create "npm install"
 ```
 
 ```bash
 # Set worker and orchestrator standing rules
-ao project set-config agent-orchestrator --agent-rules "Run focused tests before reporting done." --orchestrator-rules "Delegate implementation work to worker sessions."
+ao project set-config git-wiz --agent-rules "Run focused tests before reporting done." --orchestrator-rules "Delegate implementation work to worker sessions."
 ```
 
 ```bash
 # Load worker rules from a repo-relative file
-ao project set-config agent-orchestrator --agent-rules-file docs/ao-worker-rules.md
+ao project set-config git-wiz --agent-rules-file docs/ao-worker-rules.md
 ```

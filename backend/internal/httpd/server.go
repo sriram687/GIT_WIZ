@@ -11,9 +11,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/runfile"
-	"github.com/aoagents/agent-orchestrator/backend/internal/terminal"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/runfile"
+	"github.com/sriram687/GIT_WIZ/backend/internal/terminal"
 )
 
 // Server is the daemon's HTTP server together with its lifecycle: bind the

@@ -59,13 +59,13 @@ command -v xvfb-run >/dev/null 2>&1 || fail_infra "xvfb-missing" "xvfb-run unava
 
 echo "== install release build: $DEB =="
 # Guard against a STALE binary masquerading as a fresh install: drop any
-# pre-existing agent-orchestrator so the ONLY binary that can satisfy the check
+# pre-existing git-wiz so the ONLY binary that can satisfy the check
 # below is one THIS .deb installs. Trusting `command -v` alone would let a broken
 # package pass against a leftover binary on PATH.
-if command -v agent-orchestrator >/dev/null 2>&1; then
-	sudo rm -f "$(command -v agent-orchestrator)" 2>/dev/null || true
+if command -v git-wiz >/dev/null 2>&1; then
+	sudo rm -f "$(command -v git-wiz)" 2>/dev/null || true
 fi
-sudo rm -f /usr/lib/agent-orchestrator/agent-orchestrator 2>/dev/null || true
+sudo rm -f /usr/lib/git-wiz/git-wiz 2>/dev/null || true
 
 # dpkg -i unpacks the package's files; runtime-dependency *configuration* may be
 # deferred to apt-get -f below (dpkg then exits non-zero with "dependency
@@ -99,18 +99,18 @@ fi
 # must OWN the resolved binary (dpkg -s / dpkg -L) — not merely resolve to some
 # binary on PATH. This is what makes a stale/foreign binary unable to green a
 # broken package.
-if ! dpkg -s agent-orchestrator >/dev/null 2>&1; then
-	fail_app "package-install" "agent-orchestrator is not registered as installed after dpkg/apt (dpkg rc=$dpkg_rc)"
+if ! dpkg -s git-wiz >/dev/null 2>&1; then
+	fail_app "package-install" "git-wiz is not registered as installed after dpkg/apt (dpkg rc=$dpkg_rc)"
 fi
-APP="$(command -v agent-orchestrator || echo /usr/lib/agent-orchestrator/agent-orchestrator)"
+APP="$(command -v git-wiz || echo /usr/lib/git-wiz/git-wiz)"
 if [ ! -x "$APP" ]; then
 	fail_app "package-install" "release .deb installed no runnable app binary (dpkg rc=$dpkg_rc, path=$APP)"
 fi
 # Confirm the resolved binary is a file the package owns (following symlinks).
 APP_REAL="$(readlink -f "$APP" 2>/dev/null || echo "$APP")"
-if ! dpkg -L agent-orchestrator 2>/dev/null | grep -qxF "$APP" &&
-	! dpkg -L agent-orchestrator 2>/dev/null | grep -qxF "$APP_REAL"; then
-	fail_app "package-install" "resolved binary $APP is not owned by the agent-orchestrator package (stale/foreign binary)"
+if ! dpkg -L git-wiz 2>/dev/null | grep -qxF "$APP" &&
+	! dpkg -L git-wiz 2>/dev/null | grep -qxF "$APP_REAL"; then
+	fail_app "package-install" "resolved binary $APP is not owned by the git-wiz package (stale/foreign binary)"
 fi
 echo "app: $APP (dpkg rc=$dpkg_rc)"
 

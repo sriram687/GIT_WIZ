@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/authprobe"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
-	aoprocess "github.com/aoagents/agent-orchestrator/backend/internal/process"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/authprobe"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	aoprocess "github.com/sriram687/GIT_WIZ/backend/internal/process"
 )
 
 var _ ports.AgentAuthChecker = (*Plugin)(nil)

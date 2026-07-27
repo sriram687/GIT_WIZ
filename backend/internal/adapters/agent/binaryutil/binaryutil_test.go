@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 func TestResolveBinaryPrefersPath(t *testing.T) {

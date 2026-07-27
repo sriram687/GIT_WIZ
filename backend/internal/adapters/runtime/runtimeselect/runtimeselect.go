@@ -7,9 +7,9 @@ import (
 	"log/slog"
 	"runtime"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/runtime/conpty"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/runtime/tmux"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/runtime/conpty"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/runtime/tmux"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // Runtime is the union interface that both tmux and conpty satisfy.

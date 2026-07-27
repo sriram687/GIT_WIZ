@@ -8,7 +8,7 @@ package agentbase
 import (
 	"context"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 // Base provides no-op defaults for the optional ports.Agent methods. Embed it in

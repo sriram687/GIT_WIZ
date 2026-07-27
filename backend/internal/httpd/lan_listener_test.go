@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/mobilebridge"
+	"github.com/sriram687/GIT_WIZ/backend/internal/mobilebridge"
 )
 
 func TestLANManagerAuthGatesSharedHandler(t *testing.T) {

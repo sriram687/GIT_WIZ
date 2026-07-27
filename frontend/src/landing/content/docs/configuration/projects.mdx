@@ -3,11 +3,11 @@ title: Projects
 description: "Configure one AO project: agent, runtime, workspace, setup commands, rules, tracker, SCM, and per-role overrides."
 ---
 
-A project is one repository that AO can run agents against. The global registry remembers the project identity; the local `agent-orchestrator.yaml` controls how sessions behave inside that repo.
+A project is one repository that AO can run agents against. The global registry remembers the project identity; the local `git-wiz.yaml` controls how sessions behave inside that repo.
 
 Most teams only need these fields:
 
-```yaml title="agent-orchestrator.yaml"
+```yaml title="git-wiz.yaml"
 agent: claude-code
 runtime: tmux
 workspace: worktree

@@ -23,10 +23,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/agentbase"
-	"github.com/aoagents/agent-orchestrator/backend/internal/adapters/agent/binaryutil"
-	"github.com/aoagents/agent-orchestrator/backend/internal/ports"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/agentbase"
+	"github.com/sriram687/GIT_WIZ/backend/internal/adapters/agent/binaryutil"
+	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
 const (

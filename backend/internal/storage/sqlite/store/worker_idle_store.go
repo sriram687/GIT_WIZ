@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	"github.com/aoagents/agent-orchestrator/backend/internal/storage/sqlite/gen"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	"github.com/sriram687/GIT_WIZ/backend/internal/storage/sqlite/gen"
 )
 
 // RecordWorkerIdle persists a worker's activity transition and its worker_idle

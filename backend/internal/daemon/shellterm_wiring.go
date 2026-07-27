@@ -4,11 +4,11 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/config"
-	"github.com/aoagents/agent-orchestrator/backend/internal/domain"
-	projectsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/project"
-	shelltermsvc "github.com/aoagents/agent-orchestrator/backend/internal/service/shellterm"
-	"github.com/aoagents/agent-orchestrator/backend/internal/storage/sqlite"
+	"github.com/sriram687/GIT_WIZ/backend/internal/config"
+	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
+	projectsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/project"
+	shelltermsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/shellterm"
+	"github.com/sriram687/GIT_WIZ/backend/internal/storage/sqlite"
 )
 
 // startShellTerminals builds the standalone shell terminal service and sweeps

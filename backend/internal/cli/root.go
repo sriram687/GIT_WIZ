@@ -14,9 +14,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/aoagents/agent-orchestrator/backend/internal/daemon"
-	aoprocess "github.com/aoagents/agent-orchestrator/backend/internal/process"
-	"github.com/aoagents/agent-orchestrator/backend/internal/processalive"
+	"github.com/sriram687/GIT_WIZ/backend/internal/daemon"
+	aoprocess "github.com/sriram687/GIT_WIZ/backend/internal/process"
+	"github.com/sriram687/GIT_WIZ/backend/internal/processalive"
 )
 
 // Execute runs the ao CLI with process stdio.
@@ -157,8 +157,8 @@ func NewRootCommand(deps Deps) *cobra.Command {
 
 	root := &cobra.Command{
 		Use:           "ao",
-		Short:         "Agent Orchestrator",
-		Long:          "Agent Orchestrator manages the local daemon that supervises parallel coding-agent sessions.",
+		Short:         "GIT_WIZ",
+		Long:          "GIT_WIZ manages the local daemon that supervises parallel coding-agent sessions.",
 		Version:       VersionString(),
 		SilenceUsage:  true,
 		SilenceErrors: true,

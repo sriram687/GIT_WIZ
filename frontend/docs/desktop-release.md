@@ -8,7 +8,7 @@ on `main`; the PR-based flow below supersedes it.
 ## How releases work
 
 - **Stable** releases are triggered by pushing a `desktop-vX.Y.Z` tag to
-  `AgentWrapper/agent-orchestrator`. `.github/workflows/frontend-release.yml`
+  `sriram687/GIT_WIZ`. `.github/workflows/frontend-release.yml`
   builds on four runners (macOS arm64, macOS Intel, Windows, Linux), signs and
   notarizes the macOS builds, and publishes a GitHub Release.
 - **Nightly** releases run on a schedule via `frontend-nightly.yml` with no
@@ -26,7 +26,7 @@ on `main`; the PR-based flow below supersedes it.
 
 ## Prerequisites
 
-- Push access to `AgentWrapper/agent-orchestrator` (the tag push is the trigger).
+- Push access to `sriram687/GIT_WIZ` (the tag push is the trigger).
 - Authenticated `gh` CLI for the notes/verify steps.
 - A release approver available (see "Who can approve" below); the build jobs
   wait on the `release` environment until someone approves.
@@ -34,7 +34,7 @@ on `main`; the PR-based flow below supersedes it.
 ## Cutting a stable release
 
 Throughout, `X.Y.Z` is the new version (e.g. `0.10.2`) and `upstream` is the
-`AgentWrapper/agent-orchestrator` remote.
+`sriram687/GIT_WIZ` remote.
 
 ### 1. Decide the version and review what ships
 
@@ -60,7 +60,7 @@ git checkout -b release-X.Y.Z upstream/main
 git add frontend/package.json
 git commit -m "chore(release): stamp desktop app version X.Y.Z"
 git push <your-remote> release-X.Y.Z
-gh pr create -R AgentWrapper/agent-orchestrator --base main \
+gh pr create -R sriram687/GIT_WIZ --base main \
   --head <owner>:release-X.Y.Z \
   --title "chore(release): stamp desktop app version X.Y.Z"
 ```
@@ -86,17 +86,17 @@ approver either clicks "Review deployments" > approve in the run page, or from
 the CLI:
 
 ```bash
-run_id=$(gh run list -R AgentWrapper/agent-orchestrator --workflow frontend-release.yml --limit 1 --json databaseId --jq '.[0].databaseId')
-gh api repos/AgentWrapper/agent-orchestrator/actions/runs/$run_id/pending_deployments \
+run_id=$(gh run list -R sriram687/GIT_WIZ --workflow frontend-release.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+gh api repos/sriram687/GIT_WIZ/actions/runs/$run_id/pending_deployments \
   --jq '.[] | {env: .environment.id, can_approve: .current_user_can_approve}'
-gh api -X POST repos/AgentWrapper/agent-orchestrator/actions/runs/$run_id/pending_deployments \
+gh api -X POST repos/sriram687/GIT_WIZ/actions/runs/$run_id/pending_deployments \
   -F 'environment_ids[]=<env id from above>' -f state=approved -f comment='Release X.Y.Z approved'
 ```
 
 Then wait (roughly 30 minutes; macOS notarization dominates):
 
 ```bash
-gh run watch $run_id -R AgentWrapper/agent-orchestrator --exit-status --interval 60
+gh run watch $run_id -R sriram687/GIT_WIZ --exit-status --interval 60
 ```
 
 The workflow retries transient macOS sign/notary flakes on its own. The
@@ -109,29 +109,29 @@ The publisher creates the release with an empty body. Generate the standard
 What's Changed / New Contributors / Full Changelog body and attach it:
 
 ```bash
-gh api repos/AgentWrapper/agent-orchestrator/releases/generate-notes \
+gh api repos/sriram687/GIT_WIZ/releases/generate-notes \
   -f tag_name=vX.Y.Z -f previous_tag_name=v<last-stable> --jq '.body' > /tmp/notes.md
-gh release edit vX.Y.Z -R AgentWrapper/agent-orchestrator --notes-file /tmp/notes.md
+gh release edit vX.Y.Z -R sriram687/GIT_WIZ --notes-file /tmp/notes.md
 ```
 
 ### 6. Verify
 
 ```bash
 # published, not draft/prerelease, 17 assets:
-gh release view vX.Y.Z -R AgentWrapper/agent-orchestrator \
+gh release view vX.Y.Z -R sriram687/GIT_WIZ \
   --json isDraft,isPrerelease,assets --jq '{isDraft,isPrerelease,count:(.assets|length)}'
 # latest points at the new release:
-gh api repos/AgentWrapper/agent-orchestrator/releases/latest --jq '.tag_name'
+gh api repos/sriram687/GIT_WIZ/releases/latest --jq '.tag_name'
 # updater feed carries the new version:
-curl -sL https://github.com/AgentWrapper/agent-orchestrator/releases/latest/download/latest-mac.yml | head -3
+curl -sL https://github.com/sriram687/GIT_WIZ/releases/latest/download/latest-mac.yml | head -3
 ```
 
 Expected assets (17): versioned installers for every platform
 (`Agent.Orchestrator-darwin-{arm64,x64}-X.Y.Z.zip`, `Agent.Orchestrator.Setup.X.Y.Z.exe`,
 `Agent.Orchestrator-X.Y.Z.AppImage`, deb, rpm) plus their `.blockmap` sidecars,
 the five version-free aliases `ao start` fetches
-(`agent-orchestrator-darwin-arm64.zip`, `agent-orchestrator-darwin-x64.zip`,
-`agent-orchestrator-win32-x64.exe`, `agent-orchestrator-linux-x64.AppImage`,
+(`git-wiz-darwin-arm64.zip`, `git-wiz-darwin-x64.zip`,
+`git-wiz-win32-x64.exe`, `git-wiz-linux-x64.AppImage`,
 and the deb/rpm published under versioned names), and the electron-updater
 feeds `latest.yml`, `latest-mac.yml`, `latest-linux.yml`.
 
@@ -157,7 +157,7 @@ pusher who is not an approver still needs one of the five. Repo admins can
 bypass the gate. The current list is readable by anyone with repo access:
 
 ```bash
-gh api repos/AgentWrapper/agent-orchestrator/environments/release \
+gh api repos/sriram687/GIT_WIZ/environments/release \
   --jq '.protection_rules[] | select(.type=="required_reviewers") | .reviewers[].reviewer.login'
 ```
 
