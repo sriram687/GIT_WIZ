@@ -13,7 +13,6 @@
 
 An Agentic IDE that supervises parallel AI coding agents in isolated workspaces, with complete control and automatic feedback loops from CI failures, review comments, and merge conflicts.
 
-
 </div>
 
 ---
@@ -22,7 +21,7 @@ An Agentic IDE that supervises parallel AI coding agents in isolated workspaces,
 
 GIT_WIZ is a meta-harness agent IDE for running AI coding agents in parallel. It gives terminal-based agents like Claude Code, Codex, Cursor, Kimi Code, opencode, and others a shared workspace where their sessions, terminals, branches, pull requests, and feedback loops can be supervised from one place.
 
-The agents still do the coding. AO provides the harness around them: isolated workspaces, live terminal access, session state, PR awareness, and automatic loops that send CI failures, review comments, and merge conflicts back to the right agent. Instead of manually coordinating a pile of agent terminals, AO turns parallel agent work into a managed workflow.
+The agents still do the coding. GIT_WIZ provides the harness around them: isolated workspaces, live terminal access, session state, PR awareness, and automatic loops that send CI failures, review comments, and merge conflicts back to the right agent. Instead of manually coordinating a pile of agent terminals, GIT_WIZ turns parallel agent work into a managed workflow.
 
 ## Why GIT_WIZ?
 
@@ -30,11 +29,11 @@ AI coding agents become much more useful when they can work in parallel, but par
 
 GIT_WIZ is built to keep that loop visible and manageable. It helps you:
 
-- Start multiple agents from the same project without mixing their work
-- Keep every session in a separate git worktree
-- See which agents are working, waiting, finished, or blocked
-- Route CI failures, review comments, and merge conflicts back to the right session
-- Use different agent CLIs through one common supervisor
+* **Start multiple agents from the same project without mixing their work**
+* **Keep every session in a separate git worktree**
+* **See which agents are working, waiting, finished, or blocked**
+* **Route CI failures, review comments, and merge conflicts back to the right session**
+* **Use different agent CLIs through one common supervisor**
 
 ## How it works
 
@@ -42,8 +41,8 @@ At a high level, GIT_WIZ follows a simple loop:
 
 1. Add a project you want agents to work on.
 2. Start one or more sessions from the desktop app or CLI.
-3. AO creates an isolated git worktree for each session.
-4. AO launches the selected coding agent in that session's terminal runtime.
+3. GIT_WIZ creates an isolated git worktree for each session.
+4. GIT_WIZ launches the selected coding agent in that session's terminal runtime.
 5. The local daemon watches session state, terminal activity, pull requests, CI, and review feedback.
 6. The desktop app and CLI show the current state and let you send follow-up instructions to the right session.
 
@@ -53,48 +52,14 @@ The result is a local control layer for agentic coding: agents still do the codi
 
 The desktop app is the main control surface: projects on the left, active sessions in the center, and the selected session's terminal, pull request state, review runs, and browser preview in the inspector.
 
-<table>
-  <tr>
-    <td width="36%">
-      <h3>Parallel agent sessions</h3>
-      <p>Start multiple coding agents from the same project without mixing files, branches, terminals, or pull request state.</p>
-    </td>
-    <td width="64%">
-      
-    </td>
-  </tr>
-  <tr>
-    <td width="36%">
-      <h3>Live terminal control</h3>
-      <p>Open any session and attach to the worker terminal while keeping session summary, PR state, and follow-up actions in view.</p>
-    </td>
-    <td width="64%">
-      <img src="docs/assets/readme/session-terminal.png" alt="Session terminal inside GIT_WIZ" />
-    </td>
-  </tr>
-  <tr>
-    <td width="36%">
-      <h3>Review feedback loop</h3>
-      <p>Run reviewer agents, inspect review status, and route requested changes back to the right worker session.</p>
-    </td>
-    <td width="64%">
-      <img src="docs/assets/readme/reviews-tab.png" alt="Reviews tab showing reviewer runs and actions" />
-    </td>
-  </tr>
-  <tr>
-    <td width="36%">
-      <h3>In-app browser preview</h3>
-      <p>Preview a session's local app beside the terminal so UI work, browser state, and agent output stay together.</p>
-    </td>
-    <td width="64%">
-      <img src="docs/assets/readme/browser-preview.png" alt="Browser preview tab showing a local app preview" />
-    </td>
-  </tr>
-</table>
+* **Parallel agent sessions**: Start multiple coding agents from the same project without mixing files, branches, terminals, or pull request state.
+* **Live terminal control**: Open any session and attach to the worker terminal while keeping session summary, PR state, and follow-up actions in view.
+* **Review feedback loop**: Run reviewer agents, inspect review status, and route requested changes back to the right worker session.
+* **In-app browser preview**: Preview a session's local app beside the terminal so UI work, browser state, and agent output stay together.
 
 ## Supported Agents
 
-AO ships adapters for 23 worker agent harnesses:
+GIT_WIZ ships adapters for 23 worker agent harnesses:
 
 <p>
   <a href="https://aoagents.dev/docs/plugins/agents/claude-code"><img src="frontend/src/landing/public/docs/logos/claude-code.svg" alt="" width="16" height="16" valign="middle" /> <code>claude-code</code></a> ·
@@ -106,7 +71,7 @@ AO ships adapters for 23 worker agent harnesses:
   <a href="https://aoagents.dev/docs/plugins/agents"><code>amp</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><code>agy</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/crush.png" alt="" width="16" height="16" valign="middle" /> <code>crush</code></a> ·
-  <a href="https://aoagents.dev/docs/plugins/agents/cursor"><img src="frontend/src/landing/public/docs/logos/cursor.svg" alt="" width="16" height="16" valign="middle" /> <code>cursor</code></a> ·
+  <a href="https://aoagents.dev/docs/plugins/agents/cursor"><img src="frontend/src/landing/public/logos/cursor.svg" alt="" width="16" height="16" valign="middle" /> <code>cursor</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/qwen.png" alt="" width="16" height="16" valign="middle" /> <code>qwen</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/copilot.png" alt="" width="16" height="16" valign="middle" /> <code>copilot</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/goose.png" alt="" width="16" height="16" valign="middle" /> <code>goose</code></a> ·
@@ -115,9 +80,9 @@ AO ships adapters for 23 worker agent harnesses:
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/devin.png" alt="" width="16" height="16" valign="middle" /> <code>devin</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><code>cline</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/kimi.png" alt="" width="16" height="16" valign="middle" /> <code>kimi</code></a> ·
-  <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/kiro.png" alt="" width="16" height="16" valign="middle" /> <code>kiro</code></a> ·
+  <a href="https://aoagents.dev/docs/plugins/logos/kiro.png" alt="" width="16" height="16" valign="middle" /> <code>kiro</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/kilocode.png" alt="" width="16" height="16" valign="middle" /> <code>kilocode</code></a> ·
-  <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/vibe.png" alt="" width="16" height="16" valign="middle" /> <code>vibe</code></a> ·
+  <a href="https://aoagents.dev/docs/plugins/logos/vibe.png" alt="" width="16" height="16" valign="middle" /> <code>vibe</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><img src="frontend/src/landing/public/docs/logos/pi.png" alt="" width="16" height="16" valign="middle" /> <code>pi</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents"><code>autohand</code></a>
 </p>
@@ -126,7 +91,7 @@ Reviewer agents are configured separately. The current reviewer harnesses are:
 
 <p>
   <a href="https://aoagents.dev/docs/plugins/agents/claude-code"><img src="frontend/src/landing/public/docs/logos/claude-code.svg" alt="" width="16" height="16" valign="middle" /> <code>claude-code</code></a> ·
-  <a href="https://aoagents.dev/docs/plugins/agents/codex"><img src="frontend/src/landing/public/docs/logos/codex.svg" alt="" width="16" height="16" valign="middle" /> <code>codex</code></a> ·
+  <a href="https://aoagents.dev/docs/plugins/logos/codex.svg" alt="" width="16" height="16" valign="middle" /> <code>codex</code></a> ·
   <a href="https://aoagents.dev/docs/plugins/agents/opencode"><img src="frontend/src/landing/public/docs/logos/opencode.svg" alt="" width="16" height="16" valign="middle" /> <code>opencode</code></a>
 </p>
 
@@ -143,7 +108,7 @@ Download the latest desktop build for your platform:
 | Windows               | [Download](https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-win32-x64.exe)      |
 | Linux                 | [Download](https://github.com/sriram687/GIT_WIZ/releases/latest/download/git-wiz-linux-x64.AppImage) |
 
-After installing, open GIT_WIZ and point it at the repository you want AO to manage. The desktop app runs the daemon for you, so no CLI is required. Installed desktop builds check for updates on launch and periodically while the app is running. See the [installation guide](https://aoagents.dev/docs/installation) for agent CLI setup and troubleshooting.
+After installing, open GIT_WIZ and point it at the repository you want GIT_WIZ to manage. The desktop app runs the daemon for you, so no CLI is required. Installed desktop builds check for updates on launch and periodically while the app is running. See the [installation guide](https://aoagents.dev/docs/installation) for agent CLI setup and troubleshooting.
 
 <details>
 <summary>Install via npm (legacy CLI, no longer recommended)</summary>
@@ -157,29 +122,12 @@ ao start
 
 </details>
 
-## Witness AO's Journey on X
-
-<table>
-  <tr>
-    <td width="50%" align="center">
-      <a href="https://x.com/agent_wrapper/status/2026329204405723180">
-        <img src="assets/tweet2.png" height="330" alt="GIT_WIZ journey screenshot one" />
-      </a>
-    </td>
-    <td width="50%" align="center">
-      <a href="https://x.com/agent_wrapper/status/2025986105485733945">
-        <img src="assets/tweet1.png" height="330" alt="GIT_WIZ journey screenshot two" />
-      </a>
-    </td>
-  </tr>
-</table>
-
 ## Documentation
 
 | Document                                                         | Start here when you need                                                                     |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | [docs/architecture.md](docs/architecture.md)                     | Backend mental model, lifecycle, persistence, CDC, status derivation, and daemon boundaries. |
-| [docs/backend-code-structure.md](docs/backend-code-structure.md) | Package ownership and where each backend concern belongs.                                    |
+| [docs/backend-code-structure.md](docs/backend-code-structure.md) | Package ownership and where each backend concern belongs. |
 | [docs/cli/README.md](docs/cli/README.md)                         | CLI behavior and daemon route mapping.                                                       |
 | [docs/STATUS.md](docs/STATUS.md)                                 | What currently ships on `main` and what remains in flight.                                   |
 | [docs/stack.md](docs/stack.md)                                   | Library, runtime, and dependency decisions.                                                  |
