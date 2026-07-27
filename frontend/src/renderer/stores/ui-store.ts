@@ -1,0 +1,285 @@
+import { create } from "zustand";
+import {
+	readStoredThemePreference,
+	resolveTheme,
+	systemTheme,
+	themeStorageKey,
+	type Theme,
+	type ThemePreference,
+} from "../lib/theme";
+
+export type { Theme, ThemePreference } from "../lib/theme";
+export { readStoredThemePreference, resolveTheme } from "../lib/theme";
+
+/** Worker detail view toggles — Changes (Git rail) is the default. */
+export type WorkbenchTab = "changes" | "files" | "terminal";
+export type InspectorView = "summary" | "reviews" | "browser" | "files";
+
+export type InspectorSessionState = {
+	isOpen: boolean;
+	view: InspectorView;
+	previewKey?: string;
+	// A preview target arrived (ao preview, or a clicked link) while the Browser
+	// tab was not the open/active view. We badge the Browser icon instead of
+	// stealing focus; cleared once the user opens the Browser tab.
+	browserUnseen?: boolean;
+};
+
+// Selection (which project/session is open) now lives in the URL — the router
+// is the single source of truth, read via route params. This store holds only
+// ephemeral UI: theme, sidebar collapse, command palette, per-session inspector
+// state, and the active workbench tab within a session.
+type UiState = {
+	workbenchTab: WorkbenchTab;
+	isSidebarOpen: boolean;
+	inspectorSessions: Record<string, InspectorSessionState>;
+	/** Extra worker tabs pinned to each originating session's terminal strip. */
+	sessionTabsByOwner: Record<string, string[]>;
+	isCommandPaletteOpen: boolean;
+	themePreference: ThemePreference;
+	/** Resolved light/dark for React consumers; may track OS while preference is system. */
+	resolvedTheme: Theme;
+	/** When true, developer-only surfaces (e.g. Feature Releases) are revealed. Default off. */
+	developerMode: boolean;
+	restartingProjectIds: ReadonlySet<string>;
+	orchestratorReplacementErrors: Record<string, string>;
+	orchestratorStartupErrors: Record<string, string>;
+	// Transient "open the New Task dialog for this project" signal. The nonce
+	// bumps on every request so a repeat press (even for the same project) still
+	// re-fires; the always-mounted GlobalNewTaskDialog consumes it. Selection
+	// still lives in the URL — this is a one-shot action, not persisted state.
+	newTaskRequest: { projectId: string; nonce: number } | null;
+	// Bumps to ask the sidebar's create-project flow to open (the ⌘N fallback
+	// when no project is in scope).
+	createProjectNonce: number;
+	// Bumps to ask for a new standalone shell terminal. Like newTaskRequest this
+	// is a one-shot signal, not state: the tab-strip + button and Ctrl+Shift+` both
+	// raise it so they cannot drift apart, and a repeat press re-fires because
+	// the nonce always changes. The shell layout is its single consumer — it is
+	// mounted on every route, so the request is honoured from anywhere in the app.
+	newShellTerminalNonce: number;
+	// The shell terminal the user most recently opened or selected. Both the
+	// session view (tabs beside the session's pane) and the standalone terminals
+	// view read it, so whichever one is on screen shows the same shell.
+	activeShellTerminalHandleId: string | null;
+	setWorkbenchTab: (tab: WorkbenchTab) => void;
+	setThemePreference: (theme: ThemePreference) => void;
+	setDeveloperMode: (enabled: boolean) => void;
+	/** Refresh resolvedTheme from OS without writing light/dark to storage. */
+	syncSystemTheme: () => void;
+	toggleSidebar: () => void;
+	setInspectorOpen: (sessionId: string, isOpen: boolean) => void;
+	toggleInspector: (sessionId: string) => void;
+	setInspectorView: (sessionId: string, view: InspectorView) => void;
+	addSessionTab: (ownerSessionId: string, sessionId: string) => void;
+	removeSessionTab: (ownerSessionId: string, sessionId: string) => void;
+	markInspectorPreviewSeen: (sessionId: string, previewKey: string) => void;
+	setBrowserUnseen: (sessionId: string, unseen: boolean) => void;
+	setCommandPaletteOpen: (open: boolean) => void;
+	setProjectRestarting: (projectId: string, restarting: boolean) => void;
+	setOrchestratorReplacementError: (projectId: string, message: string | null) => void;
+	setOrchestratorStartupError: (projectId: string, message: string | null) => void;
+	requestNewTask: (projectId: string) => void;
+	requestCreateProject: () => void;
+	requestNewShellTerminal: () => void;
+	setActiveShellTerminal: (handleId: string | null) => void;
+};
+
+const sidebarStorageKey = "ao.sidebar.open";
+const developerModeStorageKey = "ao.developerMode";
+const sessionTabsStorageKey = "ao.sessionTabs";
+
+function getLocalStorage() {
+	if (typeof window === "undefined" || !window.localStorage) return null;
+	return window.localStorage;
+}
+
+function initialSidebarOpen() {
+	return getLocalStorage()?.getItem(sidebarStorageKey) !== "false";
+}
+
+function initialDeveloperMode() {
+	return getLocalStorage()?.getItem(developerModeStorageKey) === "true";
+}
+
+function initialSessionTabs(): Record<string, string[]> {
+	const raw = getLocalStorage()?.getItem(sessionTabsStorageKey);
+	if (!raw) return {};
+	try {
+		const parsed = JSON.parse(raw) as unknown;
+		if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+		return Object.fromEntries(
+			Object.entries(parsed).flatMap(([ownerSessionId, sessionIds]) =>
+				Array.isArray(sessionIds) && sessionIds.every((sessionId) => typeof sessionId === "string")
+					? [[ownerSessionId, sessionIds]]
+					: [],
+			),
+		);
+	} catch {
+		return {};
+	}
+}
+
+function storeSessionTabs(sessionTabsByOwner: Record<string, string[]>) {
+	getLocalStorage()?.setItem(sessionTabsStorageKey, JSON.stringify(sessionTabsByOwner));
+}
+
+function inspectorState(sessions: Record<string, InspectorSessionState>, sessionId: string): InspectorSessionState {
+	return sessions[sessionId] ?? { isOpen: true, view: "summary" };
+}
+
+const initialThemePreference = readStoredThemePreference();
+
+export const useUiStore = create<UiState>((set) => ({
+	workbenchTab: "changes",
+	isSidebarOpen: initialSidebarOpen(),
+	inspectorSessions: {},
+	sessionTabsByOwner: initialSessionTabs(),
+	isCommandPaletteOpen: false,
+	themePreference: initialThemePreference,
+	resolvedTheme: resolveTheme(initialThemePreference),
+	developerMode: initialDeveloperMode(),
+	restartingProjectIds: new Set<string>(),
+	orchestratorReplacementErrors: {},
+	orchestratorStartupErrors: {},
+	newTaskRequest: null,
+	createProjectNonce: 0,
+	newShellTerminalNonce: 0,
+	activeShellTerminalHandleId: null,
+	setWorkbenchTab: (workbenchTab) => set({ workbenchTab }),
+	setThemePreference: (themePreference) => {
+		getLocalStorage()?.setItem(themeStorageKey, themePreference);
+		set({ themePreference, resolvedTheme: resolveTheme(themePreference) });
+	},
+	setDeveloperMode: (developerMode) => {
+		getLocalStorage()?.setItem(developerModeStorageKey, String(developerMode));
+		set({ developerMode });
+	},
+	syncSystemTheme: () =>
+		set((state) => {
+			if (state.themePreference !== "system") return state;
+			const next = systemTheme();
+			return next === state.resolvedTheme ? state : { resolvedTheme: next };
+		}),
+	toggleSidebar: () =>
+		set((state) => {
+			const isSidebarOpen = !state.isSidebarOpen;
+			getLocalStorage()?.setItem(sidebarStorageKey, String(isSidebarOpen));
+			return { isSidebarOpen };
+		}),
+	setInspectorOpen: (sessionId, isOpen) =>
+		set((state) => {
+			const current = inspectorState(state.inspectorSessions, sessionId);
+			return {
+				inspectorSessions: {
+					...state.inspectorSessions,
+					[sessionId]: { ...current, isOpen },
+				},
+			};
+		}),
+	toggleInspector: (sessionId) =>
+		set((state) => {
+			const current = inspectorState(state.inspectorSessions, sessionId);
+			return {
+				inspectorSessions: {
+					...state.inspectorSessions,
+					[sessionId]: { ...current, isOpen: !current.isOpen },
+				},
+			};
+		}),
+	setInspectorView: (sessionId, view) =>
+		set((state) => {
+			const current = inspectorState(state.inspectorSessions, sessionId);
+			// Opening the Browser tab consumes any pending preview badge.
+			const browserUnseen = view === "browser" ? false : current.browserUnseen;
+			return {
+				inspectorSessions: {
+					...state.inspectorSessions,
+					[sessionId]: { ...current, view, browserUnseen },
+				},
+			};
+		}),
+	addSessionTab: (ownerSessionId, sessionId) =>
+		set((state) => {
+			const current = state.sessionTabsByOwner[ownerSessionId] ?? [];
+			if (ownerSessionId === sessionId || current.includes(sessionId)) return state;
+			const sessionTabsByOwner = {
+				...state.sessionTabsByOwner,
+				[ownerSessionId]: [...current, sessionId],
+			};
+			storeSessionTabs(sessionTabsByOwner);
+			return { sessionTabsByOwner };
+		}),
+	removeSessionTab: (ownerSessionId, sessionId) =>
+		set((state) => {
+			const current = state.sessionTabsByOwner[ownerSessionId] ?? [];
+			if (!current.includes(sessionId)) return state;
+			const remaining = current.filter((id) => id !== sessionId);
+			const sessionTabsByOwner = { ...state.sessionTabsByOwner };
+			if (remaining.length > 0) sessionTabsByOwner[ownerSessionId] = remaining;
+			else delete sessionTabsByOwner[ownerSessionId];
+			storeSessionTabs(sessionTabsByOwner);
+			return { sessionTabsByOwner };
+		}),
+	markInspectorPreviewSeen: (sessionId, previewKey) =>
+		set((state) => {
+			const current = inspectorState(state.inspectorSessions, sessionId);
+			return {
+				inspectorSessions: {
+					...state.inspectorSessions,
+					[sessionId]: { ...current, previewKey },
+				},
+			};
+		}),
+	setBrowserUnseen: (sessionId, browserUnseen) =>
+		set((state) => {
+			const current = inspectorState(state.inspectorSessions, sessionId);
+			if (Boolean(current.browserUnseen) === browserUnseen) return state;
+			return {
+				inspectorSessions: {
+					...state.inspectorSessions,
+					[sessionId]: { ...current, browserUnseen },
+				},
+			};
+		}),
+	setCommandPaletteOpen: (isCommandPaletteOpen) => set({ isCommandPaletteOpen }),
+	setProjectRestarting: (projectId, restarting) =>
+		set((state) => {
+			const restartingProjectIds = new Set(state.restartingProjectIds);
+			if (restarting) {
+				restartingProjectIds.add(projectId);
+			} else {
+				restartingProjectIds.delete(projectId);
+			}
+			return { restartingProjectIds };
+		}),
+	setOrchestratorReplacementError: (projectId, message) =>
+		set((state) => {
+			const orchestratorReplacementErrors = { ...state.orchestratorReplacementErrors };
+			if (message) {
+				orchestratorReplacementErrors[projectId] = message;
+			} else {
+				delete orchestratorReplacementErrors[projectId];
+			}
+			return { orchestratorReplacementErrors };
+		}),
+	setOrchestratorStartupError: (projectId, message) =>
+		set((state) => {
+			const orchestratorStartupErrors = { ...state.orchestratorStartupErrors };
+			if (message) {
+				orchestratorStartupErrors[projectId] = message;
+			} else {
+				delete orchestratorStartupErrors[projectId];
+			}
+			return { orchestratorStartupErrors };
+		}),
+	requestNewTask: (projectId) =>
+		set((state) => ({ newTaskRequest: { projectId, nonce: (state.newTaskRequest?.nonce ?? 0) + 1 } })),
+	requestCreateProject: () => set((state) => ({ createProjectNonce: state.createProjectNonce + 1 })),
+	requestNewShellTerminal: () => set((state) => ({ newShellTerminalNonce: state.newShellTerminalNonce + 1 })),
+	setActiveShellTerminal: (activeShellTerminalHandleId) => set({ activeShellTerminalHandleId }),
+}));
+
+export function useResolvedTheme(): Theme {
+	return useUiStore((state) => state.resolvedTheme);
+}
