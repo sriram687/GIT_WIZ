@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"os"
@@ -21,6 +22,7 @@ import (
 	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/envelope"
 	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 	previewutil "github.com/sriram687/GIT_WIZ/backend/internal/preview"
+	reviewsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/review"
 	sessionsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/session"
 )
 
@@ -78,6 +80,7 @@ type SessionService interface {
 	ClaimPR(ctx context.Context, id domain.SessionID, ref string, opts sessionsvc.ClaimPROptions) (sessionsvc.ClaimPRResult, error)
 	ListWorkspaceFiles(ctx context.Context, id domain.SessionID) (sessionsvc.WorkspaceFiles, error)
 	GetWorkspaceFile(ctx context.Context, id domain.SessionID, path string) (sessionsvc.WorkspaceFileDetail, error)
+	Approve(ctx context.Context, id domain.SessionID) (domain.Session, error)
 }
 
 // ActivityRecorder applies an agent activity-state signal to a session. It is
@@ -94,6 +97,7 @@ type ActivityRecorder interface {
 type SessionsController struct {
 	Svc      SessionService
 	Activity ActivityRecorder
+	Reviews  reviewsvc.Manager
 }
 
 // Register mounts the session routes on the supplied router.
@@ -114,6 +118,7 @@ func (c *SessionsController) Register(r chi.Router) {
 	r.Patch("/sessions/{sessionId}/merge-policy", c.setMergePolicy)
 	r.Post("/sessions/{sessionId}/restore", c.restore)
 	r.Post("/sessions/{sessionId}/resume-agent", c.resumeAgent)
+	r.Post("/sessions/{sessionId}/approve", c.approve)
 	r.Post("/sessions/{sessionId}/kill", c.kill)
 	r.Post("/sessions/{sessionId}/rollback", c.rollback)
 	r.Post("/sessions/{sessionId}/send", c.send)
@@ -603,6 +608,28 @@ func (c *SessionsController) resumeAgent(w http.ResponseWriter, r *http.Request)
 		ResumeMode: out.Mode,
 		Session:    sessionView(out.Session),
 	})
+}
+
+func (c *SessionsController) approve(w http.ResponseWriter, r *http.Request) {
+	if c.Svc == nil {
+		apispec.NotImplemented(w, r, "POST", "/api/v1/sessions/{sessionId}/approve")
+		return
+	}
+	id := sessionID(r)
+	sess, err := c.Svc.Approve(r.Context(), id)
+	if err != nil {
+		envelope.WriteError(w, r, err)
+		return
+	}
+
+	// Automatically trigger code review
+	if c.Reviews != nil {
+		if _, err := c.Reviews.Trigger(r.Context(), id); err != nil {
+			slog.Default().Error("auto-trigger review failed after PR creation", "session", id, "err", err)
+		}
+	}
+
+	envelope.WriteJSON(w, http.StatusOK, SessionResponse{Session: sessionView(sess)})
 }
 
 func (c *SessionsController) kill(w http.ResponseWriter, r *http.Request) {

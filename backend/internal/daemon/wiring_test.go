@@ -633,6 +633,10 @@ func (f *fakeSessionLifecycle) RestoreAll(_ context.Context) error {
 	return f.restoreErr
 }
 
+func (f *fakeSessionLifecycle) ResumeAgentWithMode(_ context.Context, _ domain.SessionID) (sessionmanager.RestoreResult, error) {
+	return sessionmanager.RestoreResult{}, nil
+}
+
 // TestWiring_SessionLifecycleInterfaceInvokedByDaemon asserts the
 // sessionLifecycle interface is satisfied by *sessionmanager.Manager (compile
 // check) and that Reconcile and RestoreAll dispatch correctly through the

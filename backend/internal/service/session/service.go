@@ -11,6 +11,7 @@ import (
 	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 	"github.com/sriram687/GIT_WIZ/backend/internal/httpd/apierr"
 	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
+	aoprocess "github.com/sriram687/GIT_WIZ/backend/internal/process"
 	sessionmanager "github.com/sriram687/GIT_WIZ/backend/internal/session_manager"
 	"github.com/sriram687/GIT_WIZ/backend/internal/telemetrymeta"
 )
@@ -103,6 +104,7 @@ type scmProvider interface {
 	ParseRepository(remote string) (ports.SCMRepo, bool)
 	FetchPullRequests(ctx context.Context, refs []ports.SCMPRRef) ([]ports.SCMObservation, error)
 	FetchReviewThreads(ctx context.Context, ref ports.SCMPRRef) (ports.SCMReviewObservation, error)
+	CreatePullRequest(ctx context.Context, repo string, title, body, head, base string) (string, int, error)
 }
 
 // Service is the controller-facing session service. It delegates command-side
@@ -440,6 +442,105 @@ func (s *Service) ResumeAgent(ctx context.Context, id domain.SessionID) (ResumeA
 		return ResumeAgentOutcome{}, err
 	}
 	return ResumeAgentOutcome{Session: session, Mode: restoreModeView(res.Mode)}, nil
+}
+
+// Approve pushes the session's workspace branch, creates a PR on GitHub, and claims it.
+func (s *Service) Approve(ctx context.Context, id domain.SessionID) (domain.Session, error) {
+	// 1. Get session
+	rec, ok, err := s.store.GetSession(ctx, id)
+	if err != nil {
+		return domain.Session{}, fmt.Errorf("get session: %w", err)
+	}
+	if !ok {
+		return domain.Session{}, apierr.NotFound("SESSION_NOT_FOUND", "Unknown session")
+	}
+
+	// 2. Validate session state
+	if rec.IsTerminated {
+		return domain.Session{}, apierr.Conflict("SESSION_TERMINATED", "Session is terminated", nil)
+	}
+
+	prs, err := s.store.ListPRsBySession(ctx, id)
+	if err != nil {
+		return domain.Session{}, fmt.Errorf("list session PRs: %w", err)
+	}
+	for _, pr := range prs {
+		if !pr.Merged && !pr.Closed {
+			return domain.Session{}, apierr.Conflict("PR_ALREADY_OPEN", "A PR is already open for this session", nil)
+		}
+	}
+
+	workspacePath := rec.Metadata.WorkspacePath
+	branch := rec.Metadata.Branch
+	if workspacePath == "" || branch == "" {
+		return domain.Session{}, apierr.Conflict("INVALID_WORKSPACE", "Session is missing workspace path or branch", nil)
+	}
+
+	// 3. Resolve project & repo origin url
+	project, ok, err := s.store.GetProject(ctx, string(rec.ProjectID))
+	if err != nil {
+		return domain.Session{}, fmt.Errorf("get project: %w", err)
+	}
+	if !ok {
+		return domain.Session{}, apierr.NotFound("PROJECT_NOT_FOUND", "Unknown project")
+	}
+	if project.RepoOriginURL == "" {
+		return domain.Session{}, apierr.Conflict("NO_GIT_REMOTE", "Project has no repository origin configured", nil)
+	}
+
+	owner, repoName, err := githubRepoFromURL(project.RepoOriginURL)
+	if err != nil {
+		return domain.Session{}, apierr.Conflict("INVALID_GIT_REMOTE", fmt.Sprintf("Failed to parse repository URL: %v", err), nil)
+	}
+
+	// 4. Git Push
+	pushCmd := aoprocess.CommandContext(ctx, "git", "-C", workspacePath, "push", "origin", branch)
+	if out, err := pushCmd.CombinedOutput(); err != nil {
+		return domain.Session{}, apierr.Conflict("GIT_PUSH_FAILED", fmt.Sprintf("git push failed: %v\n%s", err, string(out)), nil)
+	}
+
+	// 5. Determine base branch
+	baseBranch := "main"
+	baseCmd := aoprocess.CommandContext(ctx, "git", "-C", workspacePath, "symbolic-ref", "refs/remotes/origin/HEAD")
+	if out, err := baseCmd.CombinedOutput(); err == nil {
+		ref := strings.TrimSpace(string(out))
+		if idx := strings.LastIndex(ref, "/"); idx != -1 {
+			baseBranch = ref[idx+1:]
+		}
+	} else {
+		fallbackCmd := aoprocess.CommandContext(ctx, "git", "-C", workspacePath, "branch", "-r")
+		if out, err := fallbackCmd.CombinedOutput(); err == nil {
+			branches := string(out)
+			if strings.Contains(branches, "origin/main") {
+				baseBranch = "main"
+			} else if strings.Contains(branches, "origin/master") {
+				baseBranch = "master"
+			}
+		}
+	}
+
+	// 6. Raise PR via GitHub API
+	if s.scm == nil {
+		return domain.Session{}, apierr.Conflict("SCM_NOT_CONFIGURED", "GitHub SCM provider is not configured", nil)
+	}
+
+	prTitle := rec.DisplayName
+	if prTitle == "" {
+		prTitle = fmt.Sprintf("PR from session %s", id)
+	}
+	prBody := fmt.Sprintf("This Pull Request was raised automatically from GIT_WIZ session: %s\n\nPrompt:\n%s", rec.DisplayName, rec.Metadata.Prompt)
+
+	prURL, _, err := s.scm.CreatePullRequest(ctx, owner+"/"+repoName, prTitle, prBody, branch, baseBranch)
+	if err != nil {
+		return domain.Session{}, apierr.Conflict("PR_CREATE_FAILED", fmt.Sprintf("Failed to create GitHub pull request: %v", err), nil)
+	}
+
+	// 7. Claim the created PR for this session
+	if _, err := s.ClaimPR(ctx, id, prURL, ClaimPROptions{}); err != nil {
+		return domain.Session{}, fmt.Errorf("claim created PR %s: %w", prURL, err)
+	}
+
+	return s.Get(ctx, id)
 }
 
 func restoreModeView(mode sessionmanager.RestoreMode) RestoreModeView {

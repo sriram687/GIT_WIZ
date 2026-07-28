@@ -56,7 +56,12 @@ func (m *Manager) ApplyReviewBatch(ctx context.Context, workerID domain.SessionI
 	if err != nil || !ok {
 		return ReviewDeliveryNoop, err
 	}
-	if cannotNudge(rec) {
+	var skip bool
+	rec, skip, err = m.cannotNudge(ctx, rec)
+	if err != nil {
+		return ReviewDeliveryNoop, err
+	}
+	if skip {
 		return ReviewDeliveryNoop, nil
 	}
 	if m.guard == nil {
@@ -169,7 +174,12 @@ func (m *Manager) ApplyPRObservation(ctx context.Context, id domain.SessionID, o
 	if err != nil || !ok {
 		return err
 	}
-	if cannotNudge(rec) {
+	var skip bool
+	rec, skip, err = m.cannotNudge(ctx, rec)
+	if err != nil {
+		return err
+	}
+	if skip {
 		return nil
 	}
 	// A single PR can trip several actionable conditions at once (failing CI,
@@ -271,7 +281,12 @@ func (m *Manager) ApplyReviewResult(ctx context.Context, workerID domain.Session
 	if err != nil || !ok {
 		return ReviewDeliveryNoop, err
 	}
-	if cannotNudge(rec) {
+	var skip bool
+	rec, skip, err = m.cannotNudge(ctx, rec)
+	if err != nil {
+		return ReviewDeliveryNoop, err
+	}
+	if skip {
 		return ReviewDeliveryNoop, nil
 	}
 	if m.guard == nil {
@@ -533,7 +548,12 @@ func (m *Manager) ApplyTrackerFacts(ctx context.Context, id domain.SessionID, o 
 	if err != nil || !ok {
 		return err
 	}
-	if cannotNudge(rec) {
+	var skip bool
+	rec, skip, err = m.cannotNudge(ctx, rec)
+	if err != nil {
+		return err
+	}
+	if skip {
 		return nil
 	}
 	if o.Changed.Assignee {
@@ -561,8 +581,29 @@ func (m *Manager) ApplyTrackerFacts(ctx context.Context, id domain.SessionID, o 
 // cannotNudge is the lifecycle entry guard for automated pane delivery. The
 // just-in-time sessionguard remains authoritative, but refusing exited agents
 // here avoids repeated dedup/store work for a pane that now contains a shell.
-func cannotNudge(rec domain.SessionRecord) bool {
-	return rec.IsTerminated || rec.Activity.State.NeedsInput() || rec.Activity.State == domain.ActivityExited
+// If the agent is in the exited state, we attempt to auto-resume it so it can
+// receive and process the nudge.
+func (m *Manager) cannotNudge(ctx context.Context, rec domain.SessionRecord) (domain.SessionRecord, bool, error) {
+	if rec.IsTerminated || rec.Activity.State.NeedsInput() {
+		return rec, true, nil
+	}
+	if rec.Activity.State == domain.ActivityExited {
+		if m.resumer != nil {
+			slog.Default().Info("lifecycle: auto-resuming exited agent for nudge", "session", rec.ID)
+			if _, err := m.resumer.ResumeAgentWithMode(ctx, rec.ID); err != nil {
+				slog.Default().Error("lifecycle: failed to auto-resume agent", "session", rec.ID, "err", err)
+				return rec, true, err
+			}
+			// Re-fetch the session record since it has now been resumed
+			nextRec, ok, err := m.store.GetSession(ctx, rec.ID)
+			if err != nil || !ok {
+				return rec, true, err
+			}
+			return nextRec, false, nil
+		}
+		return rec, true, nil
+	}
+	return rec, false, nil
 }
 
 func isTerminalTrackerState(state domain.NormalizedIssueState) bool {

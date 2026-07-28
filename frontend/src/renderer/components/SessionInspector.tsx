@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import {
 	ArrowUpRight,
+	CheckCircle,
 	ChevronDown,
 	ChevronRight,
 	Files as FilesIcon,
@@ -292,7 +293,10 @@ function SummaryView({ session }: { session: WorkspaceSession }) {
 		<div role="tabpanel">
 			<Section title={prSectionTitle}>
 				{prSummaries.length === 0 ? (
-					<p className={inspectorEmptyClass}>No pull request opened yet.</p>
+					<>
+						<p className={inspectorEmptyClass}>No pull request opened yet.</p>
+						<ApproveWorkControl session={session} prCount={prSummaries.length} />
+					</>
 				) : (
 					<div className="flex flex-col gap-1.5">
 						{prSummaries.map((pr) => (
@@ -364,6 +368,48 @@ function ResumeAgentControl({ session }: { session: WorkspaceSession }) {
 			>
 				<Play className="size-icon-sm" aria-hidden="true" />
 				{resume.isPending ? "Resuming agent…" : "Resume agent"}
+			</Button>
+			{error ? (
+				<p className="mt-2 text-2xs leading-normal text-error" role="status">
+					{error}
+				</p>
+			) : null}
+		</div>
+	);
+}
+
+function ApproveWorkControl({ session, prCount }: { session: WorkspaceSession; prCount: number }) {
+	const queryClient = useQueryClient();
+	const approve = useMutation({
+		mutationFn: async () => {
+			if (usePreviewData) return;
+			const { data, error, response } = await apiClient.POST("/api/v1/sessions/{sessionId}/approve", {
+				params: { path: { sessionId: session.id } },
+			});
+			if (error) throw new Error(apiErrorMessage(error, `Failed to approve work (${response.status})`));
+			return data;
+		},
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: workspaceQueryKey });
+		},
+	});
+
+	if (session.isTerminated === true || prCount > 0) return null;
+	if (session.activity?.state !== "idle" && session.activity?.state !== "exited") return null;
+
+	const error = approve.error instanceof Error ? approve.error.message : null;
+	return (
+		<div className="mt-3 border-t border-(--color-border-settings-input) pt-3">
+			<Button
+				className="w-full gap-1.5"
+				disabled={approve.isPending}
+				onClick={() => approve.mutate()}
+				size="sm"
+				type="button"
+				variant="primary"
+			>
+				<CheckCircle className="size-icon-sm" aria-hidden="true" />
+				{approve.isPending ? "Approving & Raising PR…" : "Approve & Raise PR"}
 			</Button>
 			{error ? (
 				<p className="mt-2 text-2xs leading-normal text-error" role="status">

@@ -441,11 +441,14 @@ function notificationIcon(type: string) {
 			return GitMerge;
 		case "pr_closed_unmerged":
 			return XCircle;
+		case "ready_for_review":
+			return BellRing;
 		default:
 			return Bell;
 	}
 }
 
+// notificationIconClass resolves the color accent for a notification icon box.
 function notificationIconClass(type: string): string {
 	switch (type) {
 		case "needs_input":
@@ -456,6 +459,8 @@ function notificationIconClass(type: string): string {
 			return "text-accent";
 		case "pr_closed_unmerged":
 			return "text-error";
+		case "ready_for_review":
+			return "text-accent";
 		default:
 			return "text-muted-foreground";
 	}

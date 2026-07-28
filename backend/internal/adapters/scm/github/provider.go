@@ -736,3 +736,48 @@ func scrubError(err error) string {
 	msg = strings.ReplaceAll(msg, "\r", " ")
 	return strings.TrimSpace(msg)
 }
+
+// CreatePullRequest creates a pull request on GitHub via the API.
+// repo is expected to be "owner/name".
+func (p *Provider) CreatePullRequest(ctx context.Context, repo string, title, body, head, base string) (string, int, error) {
+	parts := strings.Split(repo, "/")
+	if len(parts) != 2 {
+		return "", 0, fmt.Errorf("github scm: invalid repository name %q", repo)
+	}
+	owner, name := parts[0], parts[1]
+
+	type createPRRequest struct {
+		Title string `json:"title"`
+		Body  string `json:"body"`
+		Head  string `json:"head"`
+		Base  string `json:"base"`
+	}
+
+	reqBody := createPRRequest{
+		Title: title,
+		Body:  body,
+		Head:  head,
+		Base:  base,
+	}
+
+	p.logger.Info("github scm: creating pull request", "repo", repo, "head", head, "base", base)
+	resp, err := p.client.doREST(ctx, http.MethodPost, repoPath(owner, name, "pulls"), nil, reqBody)
+	if err != nil {
+		return "", 0, fmt.Errorf("github scm: post pull request: %w", err)
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return "", 0, fmt.Errorf("github scm: create PR status %d: %s", resp.StatusCode, string(resp.Body))
+	}
+
+	var res struct {
+		HTMLURL string `json:"html_url"`
+		Number  int    `json:"number"`
+	}
+	if err := json.Unmarshal(resp.Body, &res); err != nil {
+		return "", 0, fmt.Errorf("github scm: decode response: %w", err)
+	}
+
+	return res.HTMLURL, res.Number, nil
+}
+

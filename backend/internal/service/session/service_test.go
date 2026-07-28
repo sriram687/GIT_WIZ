@@ -1260,6 +1260,13 @@ func (f fakeSCM) FetchReviewThreads(context.Context, ports.SCMPRRef) (ports.SCMR
 	return f.review, f.reviewErr
 }
 
+func (f fakeSCM) CreatePullRequest(ctx context.Context, repo string, title, body, head, base string) (string, int, error) {
+	if f.fetchErr != nil {
+		return "", 0, f.fetchErr
+	}
+	return f.obs.PR.URL, f.obs.PR.Number, nil
+}
+
 func TestClaimPRRejectsScratchProject(t *testing.T) {
 	st := newFakeStore()
 	st.sessions["scratch-1"] = domain.SessionRecord{

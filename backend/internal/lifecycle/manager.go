@@ -52,6 +52,10 @@ type sessionTerminator interface {
 	Kill(ctx context.Context, id domain.SessionID) (bool, error)
 }
 
+type agentResumer interface {
+	ResumeAgentWithMode(ctx context.Context, id domain.SessionID) (any, error)
+}
+
 type pendingLaunch struct {
 	launchID string
 	ready    chan struct{}
@@ -93,6 +97,7 @@ type Manager struct {
 	// completionTerminator is late-bound because Session Manager itself depends
 	// on this lifecycle reducer. It is required before the SCM observer starts.
 	completionTerminator sessionTerminator
+	resumer              agentResumer
 
 	mu        sync.Mutex
 	window    time.Duration
@@ -150,6 +155,13 @@ func (m *Manager) SetCompletionTerminator(terminator sessionTerminator) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.completionTerminator = terminator
+}
+
+// SetAgentResumer wires the resumer to auto-resume exited agents on nudge requests.
+func (m *Manager) SetAgentResumer(resumer agentResumer) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	m.resumer = resumer
 }
 
 // PrepareLaunch registers a supervised generation before the runtime starts.
@@ -391,6 +403,28 @@ func (m *Manager) ApplyActivitySignal(ctx context.Context, id domain.SessionID, 
 			ProjectID:          next.ProjectID,
 			CreatedAt:          next.Activity.LastActivityAt,
 			SessionDisplayName: next.DisplayName,
+		}
+	} else if next.Kind == domain.KindWorker && !next.IsTerminated &&
+		(next.Activity.State == domain.ActivityIdle || next.Activity.State == domain.ActivityExited) &&
+		(prevState != domain.ActivityIdle && prevState != domain.ActivityExited) {
+		prs, err := m.store.ListPRsBySession(ctx, next.ID)
+		if err == nil {
+			hasOpenPR := false
+			for _, pr := range prs {
+				if !pr.Merged && !pr.Closed {
+					hasOpenPR = true
+					break
+				}
+			}
+			if !hasOpenPR {
+				intent = &ports.NotificationIntent{
+					Type:               domain.NotificationReadyForReview,
+					SessionID:          next.ID,
+					ProjectID:          next.ProjectID,
+					CreatedAt:          next.Activity.LastActivityAt,
+					SessionDisplayName: next.DisplayName,
+				}
+			}
 		}
 	}
 	waitingEvents := m.waitingInputEvents(next, prevState, prevAt, now)

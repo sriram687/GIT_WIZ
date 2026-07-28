@@ -124,6 +124,10 @@ func (f *fakeSessionService) GetWorkspaceFile(context.Context, domain.SessionID,
 	return sessionsvc.WorkspaceFileDetail{}, nil
 }
 
+func (f *fakeSessionService) Approve(context.Context, domain.SessionID) (domain.Session, error) {
+	return domain.Session{}, nil
+}
+
 type fakeAgentCatalog struct{}
 
 var _ controllers.AgentCatalog = (*fakeAgentCatalog)(nil)

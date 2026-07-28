@@ -156,6 +156,7 @@ func Run() error {
 		return fmt.Errorf("wire session service: %w", err)
 	}
 	lcStack.LCM.SetCompletionTerminator(sessMgr)
+	lcStack.LCM.SetAgentResumer(&lifecycleAgentResumer{mgr: sessMgr})
 	lcStack.scmDone = startSCMObserver(ctx, store, lcStack.LCM, log)
 	projectSvc := projectsvc.NewWithDeps(projectsvc.Deps{Store: store, Sessions: sessionSvc, DefaultHarness: domain.AgentHarness(cfg.Agent), Telemetry: telemetrySink})
 	if err := seedScratchProjectOnBoot(ctx, cfg, projectSvc); err != nil {
@@ -351,4 +352,12 @@ func stabilizeWorkingDirectory(dataDir string) error {
 		return fmt.Errorf("daemon working directory: chdir %s: %w", dataDir, err)
 	}
 	return nil
+}
+
+type lifecycleAgentResumer struct {
+	mgr sessionLifecycle
+}
+
+func (a *lifecycleAgentResumer) ResumeAgentWithMode(ctx context.Context, id domain.SessionID) (any, error) {
+	return a.mgr.ResumeAgentWithMode(ctx, id)
 }
