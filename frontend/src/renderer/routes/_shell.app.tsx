@@ -4,7 +4,7 @@ import { MigrationPopup } from "../components/MigrationPopup";
 import { SessionsBoard } from "../components/SessionsBoard";
 import { useWorkspaceQuery } from "../hooks/useWorkspaceQuery";
 
-export const Route = createFileRoute("/_shell/")({
+export const Route = createFileRoute("/_shell/app")({
 	component: ShellIndex,
 });
 
