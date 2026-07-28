@@ -235,6 +235,21 @@ describe("SessionInspector PR section", () => {
 			"https://example.com/pr/42",
 		]);
 	});
+
+	it("shows the merge action in GitHub green and a merged PR in gray", () => {
+		const first = renderWithQuery(<SessionInspector session={session([pr(7, "open")])} />);
+
+		expect(prSection("Pull request").getByRole("button", { name: "Merge Pull Request" })).toHaveClass(
+			"border-[#2da44e]",
+			"bg-[#2da44e]",
+			"text-white",
+		);
+		first.unmount();
+
+		renderWithQuery(<SessionInspector session={session([pr(8, "merged")], { status: "merged" })} />);
+
+		expect(prSection("Pull request").getByText("merged")).toHaveClass("text-muted-foreground");
+	});
 });
 
 describe("SessionInspector completion controls", () => {

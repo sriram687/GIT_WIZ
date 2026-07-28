@@ -3,20 +3,33 @@ package pr
 
 import (
 	"context"
+	"fmt"
+	"net/url"
+	"strings"
 	"time"
 
 	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 )
 
+type store interface {
+	GetPR(ctx context.Context, url string) (domain.PullRequest, bool, error)
+}
+
+type scmProvider interface {
+	MergePullRequest(ctx context.Context, repo string, prNumber int) error
+}
+
 type lifecycle interface {
 	ApplyPRObservation(ctx context.Context, id domain.SessionID, o ports.PRObservation) error
 }
 
 // Manager persists PR observations and forwards them to lifecycle for agent
-// nudges and direct lifecycle effects.
+// nudges and direct lifecycle effects. It also implements ActionManager for merging.
 type Manager struct {
 	writer    ports.PRWriter
+	store     store
+	scm       scmProvider
 	lifecycle lifecycle
 	clock     func() time.Time
 }
@@ -24,13 +37,16 @@ type Manager struct {
 // Deps are the collaborators a PR Manager needs.
 type Deps struct {
 	Writer    ports.PRWriter
+	Store     store
+	SCM       scmProvider
 	Lifecycle lifecycle
 	Clock     func() time.Time
 }
 
 // New builds a PR Manager from its dependencies, defaulting the clock to time.Now.
 func New(d Deps) *Manager {
-	m := &Manager{writer: d.Writer, lifecycle: d.Lifecycle, clock: d.Clock}
+	m := &Manager{writer: d.Writer, store: d.Store, scm: d.SCM, lifecycle: d.Lifecycle, clock: d.Clock}
+
 	if m.clock == nil {
 		m.clock = time.Now
 	}
@@ -65,3 +81,52 @@ func (m *Manager) write(ctx context.Context, id domain.SessionID, o ports.PRObse
 	}
 	return m.writer.WritePR(ctx, row, checks, comments)
 }
+
+// Merge triggers the pull request merge via SCM.
+func (m *Manager) Merge(ctx context.Context, prURL string) (MergeResult, error) {
+	if m.scm == nil {
+		return MergeResult{}, ErrSCMUnavailable
+	}
+	pr, ok, err := m.store.GetPR(ctx, prURL)
+	if err != nil {
+		return MergeResult{}, err
+	}
+	if !ok {
+		return MergeResult{}, ErrPRNotFound
+	}
+	if pr.Merged {
+		return MergeResult{PRNumber: pr.Number, Method: "merge"}, nil
+	}
+	if pr.Closed {
+		return MergeResult{}, ErrPRNotMergeable
+	}
+
+	repo := pr.Repo
+	if repo == "" {
+		// Fallback: extract repo from URL if empty
+		// e.g. "https://github.com/owner/repo/pull/123" -> repo "owner/repo"
+		u, err := url.Parse(prURL)
+		if err == nil {
+			parts := strings.Split(strings.Trim(u.Path, "/"), "/")
+			if len(parts) >= 2 {
+				repo = parts[0] + "/" + parts[1]
+			}
+		}
+	}
+	if repo == "" {
+		return MergeResult{}, fmt.Errorf("could not resolve repository for PR: %s", prURL)
+	}
+
+	err = m.scm.MergePullRequest(ctx, repo, pr.Number)
+	if err != nil {
+		return MergeResult{}, fmt.Errorf("merge PR: %w", err)
+	}
+
+	return MergeResult{PRNumber: pr.Number, Method: "merge"}, nil
+}
+
+// ResolveComments stub to satisfy ActionManager interface.
+func (m *Manager) ResolveComments(ctx context.Context, prID string, commentIDs []string) (ResolveResult, error) {
+	return ResolveResult{}, nil
+}
+

@@ -176,6 +176,7 @@ var schemaNames = map[string]string{
 	"ControllersSessionPRSummary":                 "SessionPRSummary",
 	"ControllersSessionPRCISummary":               "SessionPRCISummary",
 	"ControllersSessionPRFailingCheck":            "SessionPRFailingCheck",
+	"ControllersSessionPRCheck":                   "SessionPRCheck",
 	"ControllersSessionPRReviewSummary":           "SessionPRReviewSummary",
 	"ControllersSessionPRReviewEntry":             "SessionPRReviewEntry",
 	"ControllersSessionPRUnresolvedReviewer":      "SessionPRUnresolvedReviewer",

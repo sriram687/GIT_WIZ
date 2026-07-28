@@ -44,6 +44,15 @@ type PRSummary struct {
 type PRCISummary struct {
 	State         domain.CIState
 	FailingChecks []PRFailingCheck
+	Checks        []PRCheck
+}
+
+// PRCheck is one CI check status for a PR.
+type PRCheck struct {
+	Name       string
+	Status     domain.PRCheckStatus
+	Conclusion string
+	URL        string
 }
 
 // PRFailingCheck is one failed or cancelled CI check for a PR.
@@ -53,6 +62,7 @@ type PRFailingCheck struct {
 	Conclusion string
 	URL        string
 }
+
 
 // PRReviewSummary describes the latest review decision and unresolved comments.
 type PRReviewSummary struct {
@@ -190,25 +200,31 @@ func summarizePRStateChangedAt(pr domain.PullRequest) time.Time {
 func summarizeCI(pr domain.PullRequest, checks []domain.PullRequestCheck) PRCISummary {
 	state := ciOrUnknown(pr.CI)
 	out := PRCISummary{State: state}
-	if state != domain.CIFailing || pr.Merged || pr.Closed {
-		return out
-	}
 	for _, ch := range checks {
-		if ch.Status != domain.PRCheckFailed && ch.Status != domain.PRCheckCancelled {
-			continue
-		}
 		if pr.HeadSHA != "" && ch.CommitHash != "" && !strings.EqualFold(ch.CommitHash, pr.HeadSHA) {
 			continue
 		}
-		out.FailingChecks = append(out.FailingChecks, PRFailingCheck{
+		out.Checks = append(out.Checks, PRCheck{
 			Name:       ch.Name,
 			Status:     ch.Status,
 			Conclusion: ch.Conclusion,
 			URL:        ch.URL,
 		})
+
+		if state == domain.CIFailing && !pr.Merged && !pr.Closed {
+			if ch.Status == domain.PRCheckFailed || ch.Status == domain.PRCheckCancelled {
+				out.FailingChecks = append(out.FailingChecks, PRFailingCheck{
+					Name:       ch.Name,
+					Status:     ch.Status,
+					Conclusion: ch.Conclusion,
+					URL:        ch.URL,
+				})
+			}
+		}
 	}
 	return out
 }
+
 
 func summarizeReview(pr domain.PullRequest, comments []domain.PullRequestComment, reviews []domain.PullRequestReview) PRReviewSummary {
 	out := PRReviewSummary{Decision: reviewOrNone(pr.Review)}

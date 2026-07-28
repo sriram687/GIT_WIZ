@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
@@ -230,13 +232,30 @@ func (s *Store) UpdatePRLastNudgeSignature(ctx context.Context, url, payload str
 }
 
 // GetPR returns the PR facts for a URL, or ok=false if absent.
-func (s *Store) GetPR(ctx context.Context, url string) (domain.PullRequest, bool, error) {
-	p, err := s.qr.GetPR(ctx, url)
+func (s *Store) GetPR(ctx context.Context, rawURL string) (domain.PullRequest, bool, error) {
+	unescaped, err := url.PathUnescape(rawURL)
+	if err == nil {
+		rawURL = unescaped
+	}
+
+	if n, err := strconv.Atoi(rawURL); err == nil && n > 0 {
+		var prURLFromNum string
+		err := s.readDB.QueryRowContext(ctx, "SELECT url FROM pr WHERE number = ? LIMIT 1", n).Scan(&prURLFromNum)
+		if errors.Is(err, sql.ErrNoRows) {
+			return domain.PullRequest{}, false, nil
+		}
+		if err != nil {
+			return domain.PullRequest{}, false, fmt.Errorf("get pr url by number %d: %w", n, err)
+		}
+		rawURL = prURLFromNum
+	}
+
+	p, err := s.qr.GetPR(ctx, rawURL)
 	if errors.Is(err, sql.ErrNoRows) {
 		return domain.PullRequest{}, false, nil
 	}
 	if err != nil {
-		return domain.PullRequest{}, false, fmt.Errorf("get pr %s: %w", url, err)
+		return domain.PullRequest{}, false, fmt.Errorf("get pr %s: %w", rawURL, err)
 	}
 	return prRowFromGen(p), true, nil
 }

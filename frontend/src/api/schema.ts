@@ -1218,9 +1218,16 @@ export interface components {
             sessionId: string;
         };
         SessionPRCISummary: {
+            checks?: components["schemas"]["SessionPRCheck"][];
             failingChecks: components["schemas"]["SessionPRFailingCheck"][];
             /** @enum {string} */
             state: "unknown" | "pending" | "passing" | "failing";
+        };
+        SessionPRCheck: {
+            conclusion: string;
+            name: string;
+            status: string;
+            url?: string;
         };
         SessionPRConflictFile: {
             path: string;

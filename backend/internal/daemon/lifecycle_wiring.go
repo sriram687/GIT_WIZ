@@ -22,6 +22,7 @@ import (
 	"github.com/sriram687/GIT_WIZ/backend/internal/observe/reaper"
 	"github.com/sriram687/GIT_WIZ/backend/internal/ports"
 	reviewcore "github.com/sriram687/GIT_WIZ/backend/internal/review"
+	prsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/pr"
 	reviewsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/review"
 	sessionsvc "github.com/sriram687/GIT_WIZ/backend/internal/service/session"
 	sessionmanager "github.com/sriram687/GIT_WIZ/backend/internal/session_manager"
@@ -156,7 +157,7 @@ type sessionLifecycle interface {
 // LCM, the per-session agent resolver, and the agent messenger. The returned
 // service is mounted at httpd APIDeps.Sessions. It also returns the manager so
 // the caller can wire Reconcile into the boot sequence.
-func startSession(cfg config.Config, runtime runtimeselect.Runtime, store *sqlite.Store, lcm *lifecycle.Manager, messenger ports.AgentMessenger, telemetry ports.EventSink, agents ports.AgentResolver, log *slog.Logger) (*sessionsvc.Service, reviewsvc.Manager, sessionLifecycle, error) {
+func startSession(cfg config.Config, runtime runtimeselect.Runtime, store *sqlite.Store, lcm *lifecycle.Manager, messenger ports.AgentMessenger, telemetry ports.EventSink, agents ports.AgentResolver, log *slog.Logger) (*sessionsvc.Service, reviewsvc.Manager, prsvc.ActionManager, sessionLifecycle, error) {
 	gitWS, err := gitworktree.New(gitworktree.Options{
 		// Per-session worktrees live under the data dir, so a single AO_DATA_DIR
 		// override moves all durable per-user state together.
@@ -167,13 +168,13 @@ func startSession(cfg config.Config, runtime runtimeselect.Runtime, store *sqlit
 		RepoResolver: projectRepoResolver{store: store},
 	})
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("session workspace: %w", err)
+		return nil, nil, nil, nil, fmt.Errorf("session workspace: %w", err)
 	}
 	scratchWS, err := scratchworkspace.New(scratchworkspace.Options{
 		ManagedRoot: filepath.Join(cfg.DataDir, "worktrees"),
 	})
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("scratch session workspace: %w", err)
+		return nil, nil, nil, nil, fmt.Errorf("scratch session workspace: %w", err)
 	}
 	ws := workspacerouter.New(workspacerouter.Deps{
 		Git:      gitWS,
@@ -224,7 +225,7 @@ func startSession(cfg config.Config, runtime runtimeselect.Runtime, store *sqlit
 	// writer.
 	reviewers, err := reviewer.NewResolver()
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("reviewer resolver: %w", err)
+		return nil, nil, nil, nil, fmt.Errorf("reviewer resolver: %w", err)
 	}
 	reviewEngine := reviewcore.New(reviewcore.Deps{
 		Store:    store,
@@ -234,8 +235,15 @@ func startSession(cfg config.Config, runtime runtimeselect.Runtime, store *sqlit
 		Launcher: reviewcore.NewLauncher(reviewers, runtime, cfg.DataDir),
 	})
 	reviewSvc := reviewsvc.New(reviewEngine, store, reviewsvc.WithLifecycleReducer(lcm))
-	return sessionSvc, reviewSvc, mgr, nil
+	prSvc := prsvc.New(prsvc.Deps{
+		Writer:    store,
+		Store:     store,
+		SCM:       scmProvider,
+		Lifecycle: lcm,
+	})
+	return sessionSvc, reviewSvc, prSvc, mgr, nil
 }
+
 
 // runtimeMessageSender is the narrow part of the concrete runtime needed by
 // ao send. Both tmux.Runtime and conpty.Runtime implement this via SendMessage.

@@ -13,6 +13,10 @@ import {
 	Terminal,
 	Trash2,
 	X,
+	CheckCircle2,
+	XCircle,
+	Loader2,
+	AlertCircle,
 } from "lucide-react";
 import type { components } from "../../api/schema";
 import { apiClient, apiErrorMessage } from "../lib/api-client";
@@ -92,7 +96,7 @@ const usePreviewData = import.meta.env.VITE_NO_ELECTRON === "1";
 const prStateTone: Record<SessionPRSummary["state"], string> = {
 	open: "border-success/40 bg-success/10 text-success",
 	draft: "border-border bg-raised text-muted-foreground",
-	merged: "border-accent/40 bg-accent-weak text-accent",
+	merged: "border-border bg-raised text-muted-foreground",
 	closed: "border-error/40 bg-error/10 text-error",
 };
 
@@ -526,6 +530,24 @@ function updateSessionMergePolicy(
 }
 
 function PRSummaryCard({ pr }: { pr: SessionPRSummary }) {
+	const queryClient = useQueryClient();
+	const [showTests, setShowTests] = useState(false);
+
+	const merge = useMutation({
+		mutationFn: async () => {
+			const { data, error, response } = await apiClient.POST("/api/v1/prs/{id}/merge", {
+				params: { path: { id: pr.url } },
+			});
+			if (error) throw new Error(apiErrorMessage(error, `Failed to merge PR (${response.status})`));
+			return data;
+		},
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: workspaceQueryKey });
+		},
+	});
+
+	const checks = pr.ci?.checks ?? [];
+
 	return (
 		<div className="rounded-lg border border-(--color-border-settings-input) bg-(--color-bg-settings-input) px-2.5 py-1.5">
 			<div className="flex items-center gap-2">
@@ -550,6 +572,79 @@ function PRSummaryCard({ pr }: { pr: SessionPRSummary }) {
 			{pr.title ? <div className="mt-1.5 text-xs font-medium leading-snug text-settings-label">{pr.title}</div> : null}
 			<PRSummaryMeta className="mt-1" pr={pr} />
 			<PRSummaryParts className="mt-1.5" pr={pr} variant="stacked" />
+
+			{checks.length > 0 && (
+				<div className="mt-3 border-t border-(--color-border-settings-input) pt-2">
+					<button
+						type="button"
+						onClick={() => setShowTests(!showTests)}
+						className="flex w-full items-center justify-between text-2xs font-medium text-settings-muted hover:text-settings-label transition-colors"
+					>
+						<span>CI Status Checks ({checks.length})</span>
+						{showTests ? <ChevronDown className="size-3" /> : <ChevronRight className="size-3" />}
+					</button>
+					{showTests && (
+						<ul className="mt-1.5 space-y-1 max-h-48 overflow-y-auto pr-1">
+							{checks.map((check, index) => {
+								const isPassed = check.status === "passed";
+								const isFailed = check.status === "failed" || check.status === "cancelled";
+								const isPending = check.status === "queued" || check.status === "in_progress";
+
+								return (
+									<li key={index} className="flex items-center justify-between gap-2 rounded px-1.5 py-1 text-2xs bg-black/10 hover:bg-black/20">
+										<div className="flex items-center gap-1.5 min-w-0">
+											{isPassed && <CheckCircle2 className="size-3 text-success shrink-0" />}
+											{isFailed && <XCircle className="size-3 text-error shrink-0" />}
+											{isPending && <Loader2 className="size-3 text-working animate-spin shrink-0" />}
+											{!isPassed && !isFailed && !isPending && <AlertCircle className="size-3 text-settings-muted shrink-0" />}
+											<span className="truncate text-settings-label" title={check.name}>
+												{check.name}
+											</span>
+										</div>
+										{check.url ? (
+											<a
+												href={check.url}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="text-accent hover:underline flex items-center shrink-0"
+											>
+												<ArrowUpRight className="size-3" />
+											</a>
+										) : null}
+									</li>
+								);
+							})}
+						</ul>
+					)}
+				</div>
+			)}
+
+			{pr.state === "open" && (
+				<div className="mt-3 border-t border-(--color-border-settings-input) pt-2.5">
+					<Button
+						className="w-full gap-1.5"
+						disabled={merge.isPending || pr.mergeability?.state === "conflicting" || pr.ci?.state === "failing"}
+						onClick={() => merge.mutate()}
+						size="sm"
+						type="button"
+						variant={pr.mergeability?.state === "mergeable" ? "success" : "secondary"}
+					>
+						<GitPullRequest className="size-icon-sm" aria-hidden="true" />
+						{merge.isPending
+							? "Merging Pull Request…"
+							: pr.mergeability?.state === "conflicting"
+								? "Merge Blocked (Conflicts)"
+								: pr.ci?.state === "failing"
+									? "Merge Blocked (CI Failing)"
+									: "Merge Pull Request"}
+					</Button>
+					{merge.error instanceof Error ? (
+						<p className="mt-2 text-2xs leading-normal text-error" role="status">
+							{merge.error.message}
+						</p>
+					) : null}
+				</div>
+			)}
 		</div>
 	);
 }

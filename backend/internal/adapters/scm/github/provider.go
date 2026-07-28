@@ -767,7 +767,23 @@ func (p *Provider) CreatePullRequest(ctx context.Context, repo string, title, bo
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return "", 0, fmt.Errorf("github scm: create PR status %d: %s", resp.StatusCode, string(resp.Body))
+		if resp.StatusCode == 422 && strings.Contains(string(resp.Body), "already exists") {
+			p.logger.Info("github scm: PR already exists, fetching existing PR", "repo", repo, "head", head)
+			qParams := url.Values{}
+			qParams.Set("head", fmt.Sprintf("%s:%s", owner, head))
+			qParams.Set("state", "open")
+			getResp, getErr := p.client.doREST(ctx, http.MethodGet, repoPath(owner, name, "pulls"), qParams, nil)
+			if getErr == nil && getResp.StatusCode == 200 {
+				var getList []struct {
+					HTMLURL string `json:"html_url"`
+					Number  int    `json:"number"`
+				}
+				if json.Unmarshal(getResp.Body, &getList) == nil && len(getList) > 0 {
+					return getList[0].HTMLURL, getList[0].Number, nil
+				}
+			}
+		}
+		return "", 0, parseGitHubError(resp.StatusCode, resp.Body)
 	}
 
 	var res struct {
@@ -780,4 +796,60 @@ func (p *Provider) CreatePullRequest(ctx context.Context, repo string, title, bo
 
 	return res.HTMLURL, res.Number, nil
 }
+
+// MergePullRequest merges the specified pull request.
+func (p *Provider) MergePullRequest(ctx context.Context, repo string, number int) error {
+	parts := strings.Split(repo, "/")
+	if len(parts) != 2 {
+		return fmt.Errorf("github scm: invalid repository name %q", repo)
+	}
+	owner, name := parts[0], parts[1]
+
+	p.logger.Info("github scm: merging pull request", "repo", repo, "number", number)
+	path := fmt.Sprintf("%s/%d/merge", repoPath(owner, name, "pulls"), number)
+	resp, err := p.client.doREST(ctx, http.MethodPut, path, nil, nil)
+	if err != nil {
+		return fmt.Errorf("github scm: put pull request merge: %w", err)
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return parseGitHubError(resp.StatusCode, resp.Body)
+	}
+	return nil
+}
+
+type githubErrorResponse struct {
+	Message          string `json:"message"`
+	Errors           []struct {
+		Resource string `json:"resource"`
+		Field    string `json:"field"`
+		Code     string `json:"code"`
+		Message  string `json:"message"`
+	} `json:"errors"`
+	DocumentationURL string `json:"documentation_url"`
+}
+
+func parseGitHubError(statusCode int, body []byte) error {
+	var errResp githubErrorResponse
+	if err := json.Unmarshal(body, &errResp); err == nil {
+		var details []string
+		for _, e := range errResp.Errors {
+			if e.Message != "" {
+				details = append(details, e.Message)
+			} else if e.Field != "" {
+				details = append(details, fmt.Sprintf("field %s: %s", e.Field, e.Code))
+			} else {
+				details = append(details, e.Code)
+			}
+		}
+		if len(details) > 0 {
+			return fmt.Errorf("github scm: %s (%s)", errResp.Message, strings.Join(details, "; "))
+		}
+		if errResp.Message != "" {
+			return fmt.Errorf("github scm: %s", errResp.Message)
+		}
+	}
+	return fmt.Errorf("github scm: status %d: %s", statusCode, string(body))
+}
+
 

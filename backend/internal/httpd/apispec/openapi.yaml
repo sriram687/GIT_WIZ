@@ -3288,6 +3288,10 @@ components:
       type: object
     SessionPRCISummary:
       properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/SessionPRCheck'
+          type: array
         failingChecks:
           items:
             $ref: '#/components/schemas/SessionPRFailingCheck'
@@ -3302,6 +3306,21 @@ components:
       required:
       - state
       - failingChecks
+      type: object
+    SessionPRCheck:
+      properties:
+        conclusion:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - status
+      - conclusion
       type: object
     SessionPRConflictFile:
       properties:

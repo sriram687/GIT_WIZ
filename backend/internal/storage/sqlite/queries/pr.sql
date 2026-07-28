@@ -161,3 +161,6 @@ SELECT pr.session_id, sessions.is_terminated
 FROM pr
 JOIN sessions ON sessions.id = pr.session_id
 WHERE pr.url = ?;
+
+-- name: GetPRByNumber :one
+SELECT * FROM pr WHERE number = ? LIMIT 1;

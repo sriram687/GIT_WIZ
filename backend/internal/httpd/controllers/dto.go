@@ -369,6 +369,15 @@ type SessionPRSummary struct {
 type SessionPRCISummary struct {
 	State         domain.CIState          `json:"state" enum:"unknown,pending,passing,failing"`
 	FailingChecks []SessionPRFailingCheck `json:"failingChecks"`
+	Checks        []SessionPRCheck        `json:"checks,omitempty"`
+}
+
+// SessionPRCheck is one CI check status for a PR.
+type SessionPRCheck struct {
+	Name       string               `json:"name"`
+	Status     domain.PRCheckStatus `json:"status"`
+	Conclusion string               `json:"conclusion"`
+	URL        string               `json:"url,omitempty"`
 }
 
 // SessionPRFailingCheck is one failed or cancelled CI check for a PR.
@@ -378,6 +387,7 @@ type SessionPRFailingCheck struct {
 	Conclusion string               `json:"conclusion"`
 	URL        string               `json:"url,omitempty"`
 }
+
 
 // SessionPRReviewSummary is the review state block for a session PR summary.
 type SessionPRReviewSummary struct {
@@ -471,12 +481,17 @@ func optionalTime(value time.Time) *time.Time {
 }
 
 func newSessionPRCISummary(in sessionsvc.PRCISummary) SessionPRCISummary {
-	checks := make([]SessionPRFailingCheck, 0, len(in.FailingChecks))
+	failing := make([]SessionPRFailingCheck, 0, len(in.FailingChecks))
 	for _, ch := range in.FailingChecks {
-		checks = append(checks, SessionPRFailingCheck{Name: ch.Name, Status: ch.Status, Conclusion: ch.Conclusion, URL: ch.URL})
+		failing = append(failing, SessionPRFailingCheck{Name: ch.Name, Status: ch.Status, Conclusion: ch.Conclusion, URL: ch.URL})
 	}
-	return SessionPRCISummary{State: in.State, FailingChecks: checks}
+	allChecks := make([]SessionPRCheck, 0, len(in.Checks))
+	for _, ch := range in.Checks {
+		allChecks = append(allChecks, SessionPRCheck{Name: ch.Name, Status: ch.Status, Conclusion: ch.Conclusion, URL: ch.URL})
+	}
+	return SessionPRCISummary{State: in.State, FailingChecks: failing, Checks: allChecks}
 }
+
 
 func newSessionPRReviewSummary(in sessionsvc.PRReviewSummary) SessionPRReviewSummary {
 	reviewers := make([]SessionPRUnresolvedReviewer, 0, len(in.UnresolvedBy))
