@@ -219,6 +219,10 @@ func Run() error {
 		go dispatcher.Run(ctx)
 	}
 
+	// Hermes Webhook Dispatcher (Slack & Discord)
+	hermes := notify.NewHermes(notificationHub, log)
+	go hermes.Run(ctx)
+
 	srv, err := httpd.NewWithDeps(cfg, log, termMgr, httpd.APIDeps{
 		Projects:           projectSvc,
 		Agents:             agentSvc,
