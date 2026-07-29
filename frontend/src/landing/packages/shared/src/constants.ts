@@ -47,5 +47,4 @@ export const NAV_ITEMS = [
   { label: "Demo", href: "/#see-it" },
   { label: "Features", href: "/#features" },
   { label: "Changelog", href: "/changelog" },
-  { label: "Docs", href: "/docs" },
 ] as const;

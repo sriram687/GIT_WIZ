@@ -39,7 +39,7 @@ export function OrbisLanding() {
         {/* Header / Navbar (Moved outside section to prevent clipping) */}
         <header className="flex items-center justify-between py-8 z-[100] fixed top-4 sm:top-8 left-0 right-0 px-6 sm:px-12 lg:px-24 pointer-events-none">
           <div className="font-grotesk text-[40px] uppercase tracking-wider text-cream pointer-events-auto liquid-glass rounded-[28px] px-[40px] py-[16px] lg:px-[52px] lg:py-[24px] flex items-center justify-center leading-none">
-            Drake
+            Chronos
           </div>
           
           <nav className="hidden lg:flex items-center gap-2 liquid-glass rounded-[28px] px-[40px] py-[16px] pointer-events-auto">
@@ -92,7 +92,7 @@ export function OrbisLanding() {
               {/* Added Content & Button Container (above the heading) */}
               <div className="mb-8 flex flex-col items-start gap-6 max-w-[600px]">
                 <p className="font-mono text-[14px] sm:text-[16px] text-cream/80 leading-relaxed uppercase">
-                  Drake is the ultimate environment for multi-agent coding. Run 23+ agents simultaneously, review their pull requests, and orchestrate complex workflows from a single intuitive dashboard.
+                  Chronos is the ultimate environment for multi-agent coding. Run 23+ agents simultaneously, review their pull requests, and orchestrate complex workflows from a single intuitive dashboard.
                 </p>
                 <Link to="/app" className="liquid-glass px-8 py-4 rounded-full text-neon font-grotesk text-[16px] tracking-widest hover:bg-white/10 transition-colors border border-white/20 uppercase flex items-center gap-2">
                   Launch Workspace
@@ -156,10 +156,10 @@ export function OrbisLanding() {
               <div className="relative inline-block w-fit">
                 <h2 className="font-grotesk text-[32px] sm:text-[48px] lg:text-[60px] uppercase leading-none text-cream">
                   Hello!<br />
-                  I'm Drake
+                  I'm Chronos
                 </h2>
                 <div className="font-condiment text-[36px] sm:text-[52px] lg:text-[68px] text-neon mix-blend-exclusion absolute -bottom-6 -right-12 -rotate-2">
-                  Drake
+                  Chronos
                 </div>
               </div>
               <p className="font-mono text-[14px] sm:text-[16px] uppercase text-cream max-w-[266px]">
@@ -275,8 +275,8 @@ export function OrbisLanding() {
             
             <div className="flex flex-col gap-6">
               {[
-                { q: "How many agents can I run?", a: "You can run up to 23+ worker agents simultaneously in parallel, all coordinated by the Drake orchestration layer." },
-                { q: "Does Drake support custom models?", a: "Yes, you can configure custom LLMs for any of your agents to suit your specific workflow." },
+                { q: "How many agents can I run?", a: "You can run up to 23+ worker agents simultaneously in parallel, all coordinated by the Chronos orchestration layer." },
+                { q: "Does Chronos support custom models?", a: "Yes, you can configure custom LLMs for any of your agents to suit your specific workflow." },
                 { q: "How are conflicts resolved?", a: "Our platform includes dedicated reviewer agents to handle merge conflicts automatically in the background." },
               ].map((faq, i) => (
                 <FaqItem key={i} q={faq.q} a={faq.a} />
@@ -303,14 +303,14 @@ export function OrbisLanding() {
         {/* SECTION 5: FOOTER */}
         <footer className="w-full py-12 px-6 sm:px-12 lg:px-24 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between z-10 relative mt-8">
           <div className="font-grotesk text-[24px] uppercase text-cream tracking-wider mb-4 sm:mb-0">
-            Drake
+            Chronos
           </div>
           <div className="flex gap-6">
             <a href="#" className="font-mono text-[13px] text-cream/70 hover:text-neon uppercase transition-colors">Terms of Service</a>
             <a href="#" className="font-mono text-[13px] text-cream/70 hover:text-neon uppercase transition-colors">Privacy Policy</a>
           </div>
           <div className="font-mono text-[13px] text-cream/50 mt-4 sm:mt-0 uppercase">
-            © 2026 Drake Orchestration Layer. All rights reserved.
+            © 2026 Chronos Orchestration Layer. All rights reserved.
           </div>
         </footer>
       </div>

@@ -114,19 +114,9 @@ ao start
 
 </details>
 
-## Documentation
-
-| Document                                                         | Start here when you need                                                                     |
-| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| [docs/architecture.md](docs/architecture.md)                     | Backend mental model, lifecycle, persistence, CDC, status derivation, and daemon boundaries. |
-| [docs/backend-code-structure.md](docs/backend-code-structure.md) | Package ownership and where each backend concern belongs. |
-| [docs/cli/README.md](docs/cli/README.md)                         | CLI behavior and daemon route mapping.                                                       |
-| [docs/STATUS.md](docs/STATUS.md)                                 | What currently ships on `main` and what remains in flight.                                   |
-| [docs/stack.md](docs/stack.md)                                   | Library, runtime, and dependency decisions.                                                  |
-
 ## Telemetry
 
-GIT_WIZ's Electron renderer sends anonymous usage events to PostHog for reliability and product understanding, and PostHog session recording is enabled with local paths and local URLs redacted before transmission. Set `VITE_AO_POSTHOG_KEY` to an empty string before building to disable transmission. See [docs/telemetry.md](docs/telemetry.md).
+GIT_WIZ's Electron renderer sends anonymous usage events to PostHog for reliability and product understanding, and PostHog session recording is enabled with local paths and local URLs redacted before transmission. Set `VITE_AO_POSTHOG_KEY` to an empty string before building to disable transmission.
 
 ## License
 
