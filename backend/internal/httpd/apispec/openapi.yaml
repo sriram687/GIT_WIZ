@@ -2395,6 +2395,8 @@ components:
       properties:
         activity:
           $ref: '#/components/schemas/DomainActivity'
+        behindUpstream:
+          type: boolean
         branch:
           type: string
         createdAt:
@@ -2450,6 +2452,7 @@ components:
           - idle
           - terminated
           - no_signal
+          - behind_upstream
           type: string
         terminalHandleId:
           type: string
@@ -2464,6 +2467,7 @@ components:
       - kind
       - activity
       - isTerminated
+      - behindUpstream
       - terminateOnPrMerge
       - createdAt
       - updatedAt

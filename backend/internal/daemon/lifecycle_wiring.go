@@ -45,6 +45,7 @@ type lifecycleStack struct {
 	activityDone  <-chan struct{}
 	scmDone       <-chan struct{}
 	trackerDone   <-chan struct{}
+	irisDone      <-chan struct{}
 	sweepDone     <-chan struct{}
 }
 
@@ -134,6 +135,9 @@ func (l *lifecycleStack) Stop() {
 	}
 	if l.trackerDone != nil {
 		<-l.trackerDone
+	}
+	if l.irisDone != nil {
+		<-l.irisDone
 	}
 }
 

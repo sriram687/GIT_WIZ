@@ -13,6 +13,7 @@ export type SessionStatus =
 	| "needs_input"
 	| "exited"
 	| "no_signal"
+	| "behind_upstream"
 	| "idle"
 	| "terminated"
 	| "unknown";
@@ -30,6 +31,7 @@ const sessionStatuses = new Set<SessionStatus>([
 	"needs_input",
 	"exited",
 	"no_signal",
+	"behind_upstream",
 	"idle",
 	"terminated",
 ]);

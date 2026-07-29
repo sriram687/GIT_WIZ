@@ -24,4 +24,5 @@ const (
 	// agent is working or stuck (broken hook pipeline, blocked interactive
 	// prompt). Rendered instead of a confident idle.
 	StatusNoSignal SessionStatus = "no_signal"
+	StatusBehindUpstream SessionStatus = "behind_upstream"
 )

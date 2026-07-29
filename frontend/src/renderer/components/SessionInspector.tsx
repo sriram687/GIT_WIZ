@@ -714,6 +714,11 @@ function ActivityTimeline({ prs, session }: { prs: SessionPRSummary[]; session: 
 						<TimelinePill {...getSessionTimelinePillView("no_signal")} />
 					</span>
 				) : null}
+				{session.status === "behind_upstream" ? (
+					<span className="inline-flex align-middle">
+						<TimelinePill {...getSessionTimelinePillView("behind_upstream")} />
+					</span>
+				) : null}
 				{scmTimelineStates(session).map((state) => (
 					<span key={state} className="inline-flex align-middle">
 						<InspectorScmPill state={state} />

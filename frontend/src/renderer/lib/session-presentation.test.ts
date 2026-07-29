@@ -60,6 +60,7 @@ describe("session presentation", () => {
 		["idle", "Idle"],
 		["needs_input", "Input needed"],
 		["no_signal", "No signal"],
+		["behind_upstream", "Behind upstream"],
 		["ci_failed", "CI failed"],
 		["changes_requested", "Changes requested"],
 		["review_pending", "Review pending"],
@@ -92,6 +93,7 @@ describe("session presentation", () => {
 		["no_signal", "action", "Needs you"],
 		["ci_failed", "action", "Needs you"],
 		["changes_requested", "action", "Needs you"],
+		["behind_upstream", "action", "Needs you"],
 		["unknown", "action", "Needs you"],
 		["review_pending", "pending", "In review"],
 		["pr_open", "pending", "In review"],
@@ -235,6 +237,7 @@ describe("session presentation", () => {
 		["no_signal", "No Signal", "var(--color-status-unknown)"],
 		["ci_failed", "CI Failed", "var(--color-status-exited)"],
 		["changes_requested", "Changes Requested", "var(--color-status-needs-you)"],
+		["behind_upstream", "Behind Upstream", "var(--color-status-needs-you)"],
 	] as const)("centralizes the %s timeline pill", (status, label, tone) => {
 		expect(getSessionTimelinePillView(status)).toMatchObject({ label, tone, breathe: false });
 	});
