@@ -25,7 +25,7 @@ vi.mock("../hooks/useWorkspaceQuery", () => ({
 vi.mock("../components/MigrationPopup", () => ({ MigrationPopup: () => null }));
 vi.mock("../components/SessionsBoard", () => ({ SessionsBoard: () => <div data-testid="sessions-board" /> }));
 
-import { Route } from "../routes/_shell.index";
+import { Route } from "../routes/_shell.app";
 
 async function renderIndex() {
 	const Component = Route.options.component as ComponentType;

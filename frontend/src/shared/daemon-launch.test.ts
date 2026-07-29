@@ -16,13 +16,13 @@ describe("resolveDaemonLaunch", () => {
 
 	it("runs the backend daemon from source in dev without an explicit command", () => {
 		expect(resolveDaemonLaunch({}, false, "/resources", "/repo/frontend", "/home/user", "darwin")).toEqual({
-			command: "go",
-			args: ["run", "./cmd/ao", "daemon"],
-			cwd: "/repo/frontend/../backend",
+			command: "/repo/frontend/daemon/ao",
+			args: ["daemon"],
+			cwd: "/repo/frontend",
 			shell: false,
 			source: "dev",
 		});
-	});
+	});x
 
 	it("uses the bundled daemon binary for packaged macOS/Linux builds", () => {
 		expect(

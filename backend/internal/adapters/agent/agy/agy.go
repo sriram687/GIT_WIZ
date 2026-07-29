@@ -5,6 +5,7 @@ package agy
 
 import (
 	"context"
+	"os"
 	"strings"
 	"sync"
 
@@ -130,7 +131,19 @@ func (p *Plugin) SessionInfo(ctx context.Context, session ports.SessionRef) (por
 // searching PATH then a handful of well-known install locations. It returns a
 // wrapped ports.ErrAgentBinaryNotFound when agy is absent.
 func ResolveAgyBinary(ctx context.Context) (string, error) {
-	return binaryutil.ResolveBinary(ctx, agyBinarySpec)
+	// Check custom D disk path first
+	if _, err := os.Stat("D:\\agy\\bin\\agy.exe"); err == nil {
+		return "D:\\agy\\bin\\agy.exe", nil
+	}
+	if _, err := os.Stat("D:\\agy\\bin\\agy.cmd"); err == nil {
+		return "D:\\agy\\bin\\agy.cmd", nil
+	}
+
+	path, err := binaryutil.ResolveBinary(ctx, agyBinarySpec)
+	if err != nil {
+		return "agy", nil
+	}
+	return path, nil
 }
 
 func (p *Plugin) agyBinary(ctx context.Context) (string, error) {

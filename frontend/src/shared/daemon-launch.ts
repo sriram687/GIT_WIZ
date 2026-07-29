@@ -35,9 +35,9 @@ export function resolveDaemonLaunch(
 
 	if (!isPackaged) {
 		return {
-			command: "go",
-			args: ["run", "./cmd/ao", "daemon"],
-			cwd: joinPath(appPath, "..", "backend"),
+			command: joinPath(appPath, "daemon", bundledDaemonBinaryName(platform)),
+			args: ["daemon"],
+			cwd: appPath,
 			shell: false,
 			source: "dev",
 		};
