@@ -41,6 +41,10 @@ func deriveStatus(rec domain.SessionRecord, prs []domain.PRFacts, now time.Time,
 		return domain.StatusNeedsInput
 	}
 
+	if rec.BehindUpstream {
+		return domain.StatusBehindUpstream
+	}
+
 	if scmStatus := deriveSCMStatus(prs); scmStatus != "" {
 		return scmStatus
 	}

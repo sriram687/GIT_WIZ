@@ -80,6 +80,7 @@ const sessionStatusViews: Record<SessionStatus, SessionStatusView> = {
 	needs_input: { label: "Input needed", className: "text-status-needs-you" },
 	exited: { label: "Exited", className: "text-status-exited" },
 	no_signal: { label: "No signal", className: "text-status-unknown" },
+	behind_upstream: { label: "Behind upstream", className: "text-status-needs-you" },
 	ci_failed: { label: "CI failed", className: "text-status-exited" },
 	changes_requested: { label: "Changes requested", className: "text-status-needs-you" },
 	review_pending: { label: "Review pending", className: "text-status-in-review" },
@@ -185,6 +186,7 @@ export function attentionZone(input: SessionStatus | Pick<WorkspaceSession, "sta
 		case "no_signal":
 		case "ci_failed":
 		case "changes_requested":
+		case "behind_upstream":
 		case "unknown":
 			return "action";
 		case "review_pending":
@@ -210,6 +212,7 @@ const activeSessionDotClassNames: Partial<Record<SessionStatus, string>> = {
 	working: "bg-status-working",
 	ci_failed: "bg-status-needs-you",
 	changes_requested: "bg-status-needs-you",
+	behind_upstream: "bg-status-needs-you",
 	draft: "bg-status-in-review",
 	review_pending: "bg-status-in-review",
 	pr_open: "bg-status-in-review",
@@ -266,7 +269,7 @@ export function getSessionDotView(session: Pick<WorkspaceSession, "activity" | "
 	};
 }
 
-export type SessionTimelinePillStatus = Extract<SessionStatus, "no_signal" | "ci_failed" | "changes_requested">;
+export type SessionTimelinePillStatus = Extract<SessionStatus, "no_signal" | "ci_failed" | "changes_requested" | "behind_upstream">;
 
 export type SessionTimelinePillView = {
 	label: string;
@@ -278,6 +281,7 @@ const sessionTimelinePillViews: Record<SessionTimelinePillStatus, SessionTimelin
 	no_signal: { label: "No Signal", tone: "var(--color-status-unknown)", breathe: false },
 	ci_failed: { label: "CI Failed", tone: "var(--color-status-exited)", breathe: false },
 	changes_requested: { label: "Changes Requested", tone: "var(--color-status-needs-you)", breathe: false },
+	behind_upstream: { label: "Behind Upstream", tone: "var(--color-status-needs-you)", breathe: false },
 };
 
 export function getSessionTimelinePillView(status: SessionTimelinePillStatus): SessionTimelinePillView {

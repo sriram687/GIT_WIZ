@@ -168,6 +168,7 @@ func Run() error {
 		return err
 	}
 	lcStack.trackerDone = startTrackerIntake(ctx, store, sessionSvc, log)
+	lcStack.irisDone = startIrisObserver(ctx, store, log)
 
 	agentSvc := agentsvc.New()
 	go func() {

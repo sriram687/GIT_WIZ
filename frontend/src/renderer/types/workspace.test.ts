@@ -193,7 +193,7 @@ describe("findProjectOrchestrator", () => {
 });
 
 describe("sessionNeedsAttention", () => {
-	it.each(["needs_input", "exited", "no_signal", "changes_requested", "ci_failed", "unknown"] as const)(
+	it.each(["needs_input", "exited", "no_signal", "behind_upstream", "changes_requested", "ci_failed", "unknown"] as const)(
 		"is true for %s",
 		(status) => {
 			expect(sessionNeedsAttention(sessionWith({ status }))).toBe(true);
