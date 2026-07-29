@@ -3,14 +3,6 @@
 
 # GIT_WIZ
 
-**The orchestration layer for parallel AI coding agents**
-
-[![Stars](https://img.shields.io/github/stars/sriram687/GIT_WIZ)](https://github.com/sriram687/GIT_WIZ/stargazers)
-[![Contributors](https://img.shields.io/github/contributors/sriram687/GIT_WIZ)](https://github.com/sriram687/GIT_WIZ/graphs/contributors)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?logo=twitter&logoColor=white)](https://x.com/aoagents)
-[![Discord](https://img.shields.io/badge/Discord-join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/UZv7JjxbwG)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
-
 An Agentic IDE that supervises parallel AI coding agents in isolated workspaces, with complete control and automatic feedback loops from CI failures, review comments, and merge conflicts.
 
 </div>
