@@ -6,12 +6,12 @@ import {
   type RoadmapPhase,
 } from "./RoadmapSlideshow";
 
-const CONTACT_EMAIL = "prateek@untrivial.ai";
+const CONTACT_EMAIL = "contact@gitwiz.ai";
 const CAL_URL = "https://cal.com/sriram687/ao-design-partner";
 const MAILTO_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   "AO Design Partner Program",
 )}&body=${encodeURIComponent(
-  "Hi Prateek,\n\nWe're interested in the AO design partner program.\n\nCompany:\nEngineering team size:\nAgent harnesses we use today (Claude Code / Codex / Cursor / ...):\nWhat we want out of AO:\n",
+  "Hi GIT_WIZ Team,\n\nWe're interested in the AO design partner program.\n\nCompany:\nEngineering team size:\nAgent harnesses we use today (Claude Code / Codex / Cursor / ...):\nWhat we want out of AO:\n",
 )}`;
 
 export const metadata: Metadata = {
