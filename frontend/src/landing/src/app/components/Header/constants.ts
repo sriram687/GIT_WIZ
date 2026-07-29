@@ -22,11 +22,6 @@ export const PRODUCT_LINKS: NavLink[] = [
 
 export const RESOURCE_LINKS: NavLink[] = [
   {
-    href: "/docs",
-    label: "Documentation",
-    description: "Guides, references, and integrations.",
-  },
-  {
     href: COMPANY.GITHUB_URL,
     label: "GitHub",
     description: "Open source under Apache 2.0.",
