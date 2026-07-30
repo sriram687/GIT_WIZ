@@ -22,7 +22,7 @@ describe("resolveDaemonLaunch", () => {
 			shell: false,
 			source: "dev",
 		});
-	});x
+	});
 
 	it("uses the bundled daemon binary for packaged macOS/Linux builds", () => {
 		expect(

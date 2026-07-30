@@ -11,6 +11,7 @@ import (
 
 	"github.com/sriram687/GIT_WIZ/backend/internal/domain"
 	"github.com/sriram687/GIT_WIZ/backend/internal/observe"
+	aoprocess "github.com/sriram687/GIT_WIZ/backend/internal/process"
 )
 
 const (
@@ -94,7 +95,7 @@ func (o *Observer) syncSession(ctx context.Context, s domain.SessionRecord) erro
 	dir := s.Metadata.WorkspacePath
 
 	// 1. Run git fetch to update remote branches
-	fetchCmd := exec.CommandContext(ctx, "git", "-C", dir, "fetch", "origin")
+	fetchCmd := aoprocess.CommandContext(ctx, "git", "-C", dir, "fetch", "origin")
 	if err := fetchCmd.Run(); err != nil {
 		// Log but proceed (offline mode fallback)
 		o.logger.Warn("iris: git fetch failed", "session_id", s.ID, "dir", dir, "err", err)
@@ -102,12 +103,12 @@ func (o *Observer) syncSession(ctx context.Context, s domain.SessionRecord) erro
 
 	// 2. Identify the target ref
 	targetRef := "origin/" + defaultBranch
-	revCmd := exec.CommandContext(ctx, "git", "-C", dir, "rev-list", "--count", "HEAD.."+targetRef)
+	revCmd := aoprocess.CommandContext(ctx, "git", "-C", dir, "rev-list", "--count", "HEAD.."+targetRef)
 	countBytes, err := revCmd.Output()
 	if err != nil {
 		// Fallback to local default branch
 		targetRef = defaultBranch
-		revCmd = exec.CommandContext(ctx, "git", "-C", dir, "rev-list", "--count", "HEAD.."+targetRef)
+		revCmd = aoprocess.CommandContext(ctx, "git", "-C", dir, "rev-list", "--count", "HEAD.."+targetRef)
 		countBytes, err = revCmd.Output()
 		if err != nil {
 			return fmt.Errorf("git rev-list check failed: %w", err)
@@ -133,7 +134,7 @@ func (o *Observer) syncSession(ctx context.Context, s domain.SessionRecord) erro
 	}
 
 	// 3. We are behind. Run trial in-memory merge using git merge-tree
-	mergeTreeCmd := exec.CommandContext(ctx, "git", "-C", dir, "merge-tree", "HEAD", targetRef)
+	mergeTreeCmd := aoprocess.CommandContext(ctx, "git", "-C", dir, "merge-tree", "HEAD", targetRef)
 	mergeClean := false
 	if err := mergeTreeCmd.Run(); err == nil {
 		mergeClean = true
@@ -147,7 +148,7 @@ func (o *Observer) syncSession(ctx context.Context, s domain.SessionRecord) erro
 	if mergeClean {
 		if s.Activity.State == domain.ActivityIdle {
 			// Clean & idle: apply merge directly
-			mergeCmd := exec.CommandContext(ctx, "git", "-C", dir, "merge", targetRef, "--no-edit", "-m", "Merge upstream changes")
+			mergeCmd := aoprocess.CommandContext(ctx, "git", "-C", dir, "merge", targetRef, "--no-edit", "-m", "Merge upstream changes")
 			if err := mergeCmd.Run(); err != nil {
 				// Failed to merge (unexpected workspace lock or state)
 				s.BehindUpstream = true

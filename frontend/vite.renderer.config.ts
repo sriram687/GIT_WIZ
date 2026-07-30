@@ -50,6 +50,7 @@ const injectCspMeta: Plugin = {
 };
 
 export default defineConfig({
+	clearScreen: false,
 	// "@/" → the renderer root (src/renderer), the shadcn/ui import convention.
 	resolve: {
 		alias: {

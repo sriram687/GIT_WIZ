@@ -31,7 +31,35 @@ if (versionResult.status !== 0 || !actualGoVersion || !meetsMinimumVersion(actua
 	process.exit(1);
 }
 
-rmSync(outDir, { recursive: true, force: true });
+try {
+	rmSync(outDir, { recursive: true, force: true });
+} catch (err) {
+	if (err.code === "EPERM" && process.platform === "win32") {
+		console.log("Detecting running daemon process. Attempting to automatically terminate 'ao.exe'...");
+		spawnSync("taskkill", ["/F", "/IM", "ao.exe"], { stdio: "ignore" });
+		
+		// Synchronous sleep for 500ms to allow file locks to release
+		const start = Date.now();
+		while (Date.now() - start < 500) {
+			// wait
+		}
+
+		try {
+			rmSync(outDir, { recursive: true, force: true });
+		} catch (retryErr) {
+			console.error("\n========================================================================================");
+			console.error("Error: Could not clean up the daemon directory because D:\\GIT_WIZ\\frontend\\daemon\\ao.exe");
+			console.error("is currently running or locked by Windows and could not be automatically terminated.");
+			console.error("Please terminate any running 'ao' daemon processes before building.");
+			console.error("You can stop them by running this command in PowerShell:\n");
+			console.error("    Get-Process ao -ErrorAction SilentlyContinue | Stop-Process -Force");
+			console.error("========================================================================================\n");
+			throw retryErr;
+		}
+	} else {
+		throw err;
+	}
+}
 mkdirSync(outDir, { recursive: true });
 
 const result = spawnSync("go", ["build", "-o", outPath, "./cmd/ao"], {
