@@ -26,6 +26,10 @@ func (f *fakePreviewSessions) ListAllSessions(_ context.Context) ([]domain.Sessi
 	return append([]domain.SessionRecord(nil), f.sessions...), nil
 }
 
+func (f *fakePreviewSessions) GetProject(_ context.Context, id string) (domain.ProjectRecord, bool, error) {
+	return domain.ProjectRecord{Path: "/fake/path"}, true, nil
+}
+
 func (f *fakePreviewSessions) SetPreview(_ context.Context, id domain.SessionID, previewURL string) (domain.Session, error) {
 	f.sets = append(f.sets, previewSet{id: id, url: previewURL})
 	for i, sess := range f.sessions {
@@ -300,4 +304,40 @@ func assertSets(t *testing.T, got []previewSet, want ...previewSet) {
 
 func discardLogger() *slog.Logger {
 	return slog.New(slog.NewTextHandler(io.Discard, nil))
+}
+
+func TestPollerSpawnsDevServerForPackageJSON(t *testing.T) {
+	workspace := t.TempDir()
+	pkgJSON := `{
+		"scripts": {
+			"dev": "echo started-dev-server"
+		}
+	}`
+	if err := os.WriteFile(filepath.Join(workspace, "package.json"), []byte(pkgJSON), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	svc := &fakePreviewSessions{sessions: []domain.SessionRecord{workerSession("ao-1", workspace, "")}}
+	poller := NewPoller(svc, svc, "http://127.0.0.1:3001", PollerConfig{Logger: discardLogger()})
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	if err := poller.Poll(ctx); err != nil {
+		t.Fatalf("Poll: %v", err)
+	}
+
+	poller.mu.Lock()
+	server, exists := poller.devServers["ao-1"]
+	poller.mu.Unlock()
+
+	if !exists {
+		t.Fatal("expected dev server process to be registered")
+	}
+
+	if server.cmd.Process == nil {
+		t.Fatal("expected dev server cmd process to be started")
+	}
+
+	poller.cleanupAll()
 }
