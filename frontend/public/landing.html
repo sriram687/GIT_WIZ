@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIT_WIZ — Supervise Parallel AI Coding Agents in Isolated Git Worktrees</title>
+  <meta name="description" content="GIT_WIZ is an agentic IDE meta-harness for supervising parallel AI coding agents in isolated Git worktrees with automated CI feedback routing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090b10;
+      --bg-card: #111520;
+      --bg-card-hover: #161c2a;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-bright: rgba(255, 255, 255, 0.16);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.25);
+      --accent-purple: #8b5cf6;
+      --accent-amber: #f59e0b;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 11, 16, 0.75);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+    .header-container {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+    nav { display: flex; gap: 24px; align-items: center; }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--text); }
+    .btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-bright);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 140px 24px 60px;
+      max-width: 1280px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 900px;
+      margin: 0 auto 20px;
+      background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 32px;
+      font-weight: 400;
+    }
+    .hero-ctas {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .install-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+    .install-code code { color: #60a5fa; }
+    .copy-btn {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+    }
+    .copy-btn:hover { color: var(--text); }
+
+    /* Mockup Surface */
+    .mockup-container {
+      margin-top: 50px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 30px 90px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--border);
+      text-align: left;
+    }
+    .mockup-header {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dots { display: flex; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+    .mockup-title { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      divide-x: 1px solid var(--border);
+      min-height: 380px;
+      background: #0d111a;
+    }
+    .column { padding: 16px; border-right: 1px solid var(--border); }
+    .column:last-child { border-right: none; }
+    .col-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .col-header .count {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
+    .card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+    }
+    .card-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
+    .card-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+    .tag {
+      display: inline-flex; items-center; gap: 4px; padding: 2px 6px;
+      border-radius: 4px; font-size: 0.7rem; font-weight: 500;
+    }
+    .tag-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .tag-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .tag-green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .tag-red { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+
+    /* Features */
+    .features {
+      max-width: 1280px;
+      margin: 100px auto;
+      padding: 0 24px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 60px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.25s;
+    }
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-bright);
+    }
+    .feature-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(59, 130, 246, 0.1);
+      display: grid; place-items: center;
+      font-size: 1.2rem; margin-bottom: 20px;
+      color: #60a5fa;
+    }
+    .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 60px 24px;
+      background: #06080d;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo">
+        <div class="logo-badge">W</div>
+        <span>GIT_WIZ</span>
+      </a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/sriram687/GIT_WIZ" target="_blank">GitHub</a>
+      </nav>
+      <a href="https://github.com/sriram687/GIT_WIZ/releases" class="btn btn-primary">Download App</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="pill">⚡ Meta-Harness Agentic IDE</div>
+    <h1>Supervise Parallel AI Coding Agents in Isolated Worktrees</h1>
+    <p class="subtitle">
+      Run a fleet of coding agents (Claude Code, Cursor, Aider, Codex, OpenCode) with zero file collisions, automated CI feedback routing, and live terminal oversight.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="https://github.com/sriram687/GIT_WIZ/releases" class="btn btn-primary" style="padding: 12px 28px; font-size: 1rem;">Download Desktop App</a>
+      <a href="https://github.com/sriram687/GIT_WIZ" target="_blank" class="btn btn-outline" style="padding: 12px 24px; font-size: 1rem;">View on GitHub ★</a>
+    </div>
+
+    <div class="install-code">
+      <span>brew install command:</span>
+      <code class="mono">brew install sriram687/tap/git-wiz</code>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('brew install sriram687/tap/git-wiz')">Copy</button>
+    </div>
+
+    <!-- Live Board Mockup -->
+    <div class="mockup-container">
+      <div class="mockup-header">
+        <div class="dots">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+        </div>
+        <div class="mockup-title mono">GIT_WIZ Supervisor — sriram687/GIT_WIZ</div>
+      </div>
+      <div class="board-grid">
+
+        <!-- Column 1 -->
+        <div class="column">
+          <div class="col-header">
+            <span>Pending Work</span>
+            <span class="count mono">2</span>
+          </div>
+          <div class="card">
+            <div class="card-title">Verify avatar fallbacks in project list</div>
+            <div class="card-meta">
+              <span class="tag tag-blue">Aider</span>
+              <span class="mono">now</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Tune card metadata spacing</div>
+            <div class="card-meta">
+              <span class="tag tag-blue">Cursor</span>
+              <span class="mono">now</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2 -->
+        <div class="column">
+          <div class="col-header">
+            <span>Iterating</span>
+            <span class="count mono">2</span>
+          </div>
+          <div class="card">
+            <div class="card-title">Tighten window border alignment</div>
+            <div class="card-meta">
+              <span class="tag tag-amber">Claude Code</span>
+              <span class="mono">2m ago</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Migrate auth tokens to short JWTs</div>
+            <div class="card-meta">
+              <span class="tag tag-amber">OpenCode</span>
+              <span class="mono">14m ago</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3 -->
+        <div class="column">
+          <div class="col-header">
+            <span>In Review</span>
+            <span class="count mono">2</span>
+          </div>
+          <div class="card">
+            <div class="card-title">Fix memory leak in terminal resize</div>
+            <div class="card-meta">
+              <span class="tag tag-red">PR #333 (CI Fail)</span>
+              <span class="mono">31m ago</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Lazy load session terminals</div>
+            <div class="card-meta">
+              <span class="tag tag-amber">PR #328 (Reviewing)</span>
+              <span class="mono">46m ago</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 4 -->
+        <div class="column">
+          <div class="col-header">
+            <span>Ready to Merge</span>
+            <span class="count mono">2</span>
+          </div>
+          <div class="card">
+            <div class="card-title">Add keyboard shortcut for session focus</div>
+            <div class="card-meta">
+              <span class="tag tag-green">PR #330 (Approved)</span>
+              <span class="mono">31m ago</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Throttle agent spawn rate under load</div>
+            <div class="card-meta">
+              <span class="tag tag-green">PR #336 (Approved)</span>
+              <span class="mono">14m ago</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <h2 class="section-title">Why Developers Choose GIT_WIZ</h2>
+    <p class="section-sub">A structured, observable control layer for parallel AI coding agents.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌳</div>
+        <h3>Isolated Git Worktrees</h3>
+        <p>Every agent session gets its own Git worktree directory on a dedicated branch. Run 10+ agents in parallel without file collisions or git tree dirty states.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Automated Feedback Loops</h3>
+        <p>When CI checks fail or PR review comments are left on GitHub, GIT_WIZ routes error logs and reviewer feedback back to the agent session context.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💻</div>
+        <h3>Live Terminal Oversight</h3>
+        <p>Attach directly to any worker terminal session in real time with interactive xterm terminals, live log streams, and input permission gates.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🛠️</div>
+        <h3>23+ Agent Harnesses</h3>
+        <p>Works natively with Claude Code, Cursor, Codex, OpenCode, Aider, Goose, and more. Choose different agents for different projects or tasks.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile Companion</h3>
+        <p>Pair your physical mobile device over your local network to monitor your fleet, approve terminal prompts, and triage sessions on the go.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>100% Local & Private</h3>
+        <p>GIT_WIZ runs as a local Go daemon on your machine. Your code, database records, and logs stay on localhost under standard Apache 2.0 open-source license.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>GIT_WIZ &copy; 2026. Free and Open Source under Apache 2.0 License.</p>
+  </footer>
+
+</body>
+</html>
