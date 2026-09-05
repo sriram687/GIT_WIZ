@@ -49,6 +49,64 @@ The desktop app is the main control surface: projects on the left, active sessio
 * **Review feedback loop**: Run reviewer agents, inspect review status, and route requested changes back to the right worker session.
 * **In-app browser preview**: Preview a session's local app beside the terminal so UI work, browser state, and agent output stay together.
 
+## Quickstart & Development
+
+### Prerequisites
+
+- **Go** (1.22+ recommended)
+- **Node.js** (v18+) & **npm**
+
+### Backend (Go Daemon & CLI)
+
+The backend daemon (`ao`) manages parallel worker sessions, terminal muxing, git worktrees, and loopback HTTP services.
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Build backend binaries
+go build ./...
+
+# Run backend unit tests
+go test ./...
+
+# Start the local daemon
+go run ./cmd/ao start
+```
+
+### Frontend (Electron + React Supervisor)
+
+The desktop app is an Electron supervisor wired to the daemon via typed HTTP API calls.
+
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Run application in development mode
+npm run dev
+
+# Run TypeScript type check
+npm run typecheck
+```
+
+### Code Generation & Repository Scripts
+
+Run root-level scripts for linting and code generation when modifying database schemas or API specs:
+
+```bash
+# Run lint checks across backend and frontend
+npm run lint
+npm run frontend:typecheck
+
+# Regenerate SQLite queries (sqlc)
+npm run sqlc
+
+# Regenerate OpenAPI spec and frontend TypeScript client types
+npm run api
+```
 
 ## Telemetry
 
